@@ -1,0 +1,710 @@
+{
+  "$defs": {
+    "ArchitecturalDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "document": {
+          "title": "Document",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "document"
+      ],
+      "title": "ArchitecturalDecision",
+      "type": "object"
+    },
+    "Component": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description"
+      ],
+      "title": "Component",
+      "type": "object"
+    },
+    "Concern": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "provenance": {
+          "enum": [
+            "synthetic",
+            "document",
+            "human-interview"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "provenance"
+      ],
+      "title": "Concern",
+      "type": "object"
+    },
+    "Conflict": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "resolution_decision": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Resolution Decision"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "requirements",
+        "resolution_decision"
+      ],
+      "title": "Conflict",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "provenance": {
+          "enum": [
+            "synthetic",
+            "measured",
+            "assumed",
+            "pending"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        },
+        "path": {
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "provenance",
+        "path"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "QualityAttributeScenario": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "requirement": {
+          "title": "Requirement",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "stimulus": {
+          "title": "Stimulus",
+          "type": "string"
+        },
+        "artefact": {
+          "title": "Artefact",
+          "type": "string"
+        },
+        "environment": {
+          "title": "Environment",
+          "type": "string"
+        },
+        "response": {
+          "title": "Response",
+          "type": "string"
+        },
+        "response_measure": {
+          "title": "Response Measure",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "requirement",
+        "source",
+        "stimulus",
+        "artefact",
+        "environment",
+        "response",
+        "response_measure"
+      ],
+      "title": "QualityAttributeScenario",
+      "type": "object"
+    },
+    "RegulatorySource": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "verified",
+            "pending",
+            "blocked"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "url",
+        "status"
+      ],
+      "title": "RegulatorySource",
+      "type": "object"
+    },
+    "Risk": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "consequence": {
+          "title": "Consequence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "consequence"
+      ],
+      "title": "Risk",
+      "type": "object"
+    },
+    "Stakeholder": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "human",
+            "organisation",
+            "component"
+          ],
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "kind"
+      ],
+      "title": "Stakeholder",
+      "type": "object"
+    },
+    "Tactic": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "component": {
+          "title": "Component",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "component"
+      ],
+      "title": "Tactic",
+      "type": "object"
+    },
+    "Test": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "nodeid": {
+          "title": "Nodeid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "nodeid"
+      ],
+      "title": "Test",
+      "type": "object"
+    },
+    "TrustCondition": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "required_evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Required Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "required_evidence"
+      ],
+      "title": "TrustCondition",
+      "type": "object"
+    },
+    "TrustRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "statement": {
+          "title": "Statement",
+          "type": "string"
+        },
+        "rationale": {
+          "title": "Rationale",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "trustor": {
+          "title": "Trustor",
+          "type": "string"
+        },
+        "trustee": {
+          "title": "Trustee",
+          "type": "string"
+        },
+        "scope": {
+          "title": "Scope",
+          "type": "string"
+        },
+        "condition": {
+          "title": "Condition",
+          "type": "string"
+        },
+        "dimension": {
+          "title": "Dimension",
+          "type": "string"
+        },
+        "iso_mapping": {
+          "default": "UNVERIFIED: authoritative characteristic definitions pending",
+          "title": "Iso Mapping",
+          "type": "string"
+        },
+        "fit_criterion": {
+          "title": "Fit Criterion",
+          "type": "string"
+        },
+        "priority": {
+          "enum": [
+            "must",
+            "should"
+          ],
+          "title": "Priority",
+          "type": "string"
+        },
+        "decisions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Decisions",
+          "type": "array"
+        },
+        "components": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "tests": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Tests",
+          "type": "array"
+        },
+        "conflicts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Conflicts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "statement",
+        "rationale",
+        "source",
+        "trustor",
+        "trustee",
+        "scope",
+        "condition",
+        "dimension",
+        "fit_criterion",
+        "priority",
+        "decisions",
+        "components",
+        "tests"
+      ],
+      "title": "TrustRequirement",
+      "type": "object"
+    },
+    "TrustScope": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "action": {
+          "title": "Action",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "action"
+      ],
+      "title": "TrustScope",
+      "type": "object"
+    },
+    "Trustee": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "stakeholder_id": {
+          "title": "Stakeholder Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "stakeholder_id"
+      ],
+      "title": "Trustee",
+      "type": "object"
+    },
+    "Trustor": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "stakeholder_id": {
+          "title": "Stakeholder Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "stakeholder_id"
+      ],
+      "title": "Trustor",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "stakeholders": {
+      "items": {
+        "$ref": "#/$defs/Stakeholder"
+      },
+      "title": "Stakeholders",
+      "type": "array"
+    },
+    "trustors": {
+      "items": {
+        "$ref": "#/$defs/Trustor"
+      },
+      "title": "Trustors",
+      "type": "array"
+    },
+    "trustees": {
+      "items": {
+        "$ref": "#/$defs/Trustee"
+      },
+      "title": "Trustees",
+      "type": "array"
+    },
+    "scopes": {
+      "items": {
+        "$ref": "#/$defs/TrustScope"
+      },
+      "title": "Scopes",
+      "type": "array"
+    },
+    "conditions": {
+      "items": {
+        "$ref": "#/$defs/TrustCondition"
+      },
+      "title": "Conditions",
+      "type": "array"
+    },
+    "risks": {
+      "items": {
+        "$ref": "#/$defs/Risk"
+      },
+      "title": "Risks",
+      "type": "array"
+    },
+    "regulatory_sources": {
+      "items": {
+        "$ref": "#/$defs/RegulatorySource"
+      },
+      "title": "Regulatory Sources",
+      "type": "array"
+    },
+    "concerns": {
+      "items": {
+        "$ref": "#/$defs/Concern"
+      },
+      "title": "Concerns",
+      "type": "array"
+    },
+    "requirements": {
+      "items": {
+        "$ref": "#/$defs/TrustRequirement"
+      },
+      "title": "Requirements",
+      "type": "array"
+    },
+    "scenarios": {
+      "items": {
+        "$ref": "#/$defs/QualityAttributeScenario"
+      },
+      "title": "Scenarios",
+      "type": "array"
+    },
+    "conflicts": {
+      "items": {
+        "$ref": "#/$defs/Conflict"
+      },
+      "title": "Conflicts",
+      "type": "array"
+    },
+    "decisions": {
+      "items": {
+        "$ref": "#/$defs/ArchitecturalDecision"
+      },
+      "title": "Decisions",
+      "type": "array"
+    },
+    "tactics": {
+      "items": {
+        "$ref": "#/$defs/Tactic"
+      },
+      "title": "Tactics",
+      "type": "array"
+    },
+    "components": {
+      "items": {
+        "$ref": "#/$defs/Component"
+      },
+      "title": "Components",
+      "type": "array"
+    },
+    "tests": {
+      "items": {
+        "$ref": "#/$defs/Test"
+      },
+      "title": "Tests",
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    }
+  },
+  "required": [
+    "stakeholders",
+    "trustors",
+    "trustees",
+    "scopes",
+    "conditions",
+    "concerns",
+    "requirements",
+    "scenarios",
+    "conflicts",
+    "decisions",
+    "components",
+    "tests"
+  ],
+  "title": "CaseModel",
+  "type": "object"
+}
