@@ -1,0 +1,151 @@
+{
+  "status": "engineering-verification-only",
+  "total_requirements": 20,
+  "must_denominator": 16,
+  "must_coverage": 1.0,
+  "errors": [],
+  "orphans": [],
+  "rows": [
+    {
+      "id": "TR-001",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Carrier payloads exclude confidential prices."
+    },
+    {
+      "id": "TR-002",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Unknown data recipient roles are denied."
+    },
+    {
+      "id": "TR-003",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Low confidence suggestions enter a pending review queue."
+    },
+    {
+      "id": "TR-004",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Compliance suggestions always require human review."
+    },
+    {
+      "id": "TR-005",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Review context must match the item tenant."
+    },
+    {
+      "id": "TR-006",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "A decision requires a nonempty reviewer identity."
+    },
+    {
+      "id": "TR-007",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "A rejected suggestion retains a decision event."
+    },
+    {
+      "id": "TR-008",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Final decisions cannot be silently overwritten."
+    },
+    {
+      "id": "TR-009",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Suggestion citations resolve to retrieved passage identifiers."
+    },
+    {
+      "id": "TR-010",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "The mock gateway abstains without supporting passages."
+    },
+    {
+      "id": "TR-011",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Retrieval only uses passages belonging to the selected tenant."
+    },
+    {
+      "id": "TR-012",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Audit verification detects modified event content."
+    },
+    {
+      "id": "TR-013",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Audit verification detects truncation against a saved count and head."
+    },
+    {
+      "id": "TR-014",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Events are copied before appending to the audit chain."
+    },
+    {
+      "id": "TR-015",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Cross-document checks flag inconsistent or missing shipment fields."
+    },
+    {
+      "id": "TR-016",
+      "priority": "must",
+      "covered": true,
+      "source_provenance": "synthetic",
+      "statement": "Explanation cards disclose mock provenance and confidence limits."
+    },
+    {
+      "id": "TR-017",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Explain tariff classification against verified sources."
+    },
+    {
+      "id": "TR-018",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Retrieve operative EU regulatory passages with versioned citations."
+    },
+    {
+      "id": "TR-019",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Gate provider replacement on a documented evaluation."
+    },
+    {
+      "id": "TR-020",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Persist review and audit state across restarts."
+    }
+  ],
+  "gate_pass": true
+}
