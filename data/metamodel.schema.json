@@ -14,6 +14,7 @@
           "type": "string"
         },
         "document": {
+          "minLength": 1,
           "title": "Document",
           "type": "string"
         }
@@ -68,6 +69,14 @@
           ],
           "title": "Provenance",
           "type": "string"
+        },
+        "documentary_sources": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Documentary Sources",
+          "type": "array"
         }
       },
       "required": [
@@ -93,6 +102,7 @@
         },
         "requirements": {
           "items": {
+            "minLength": 1,
             "type": "string"
           },
           "title": "Requirements",
@@ -101,6 +111,7 @@
         "resolution_decision": {
           "anyOf": [
             {
+              "minLength": 1,
               "type": "string"
             },
             {
@@ -143,6 +154,7 @@
           "type": "string"
         },
         "path": {
+          "minLength": 1,
           "title": "Path",
           "type": "string"
         }
@@ -170,30 +182,37 @@
           "type": "string"
         },
         "requirement": {
+          "minLength": 1,
           "title": "Requirement",
           "type": "string"
         },
         "source": {
+          "minLength": 1,
           "title": "Source",
           "type": "string"
         },
         "stimulus": {
+          "minLength": 1,
           "title": "Stimulus",
           "type": "string"
         },
         "artefact": {
+          "minLength": 1,
           "title": "Artefact",
           "type": "string"
         },
         "environment": {
+          "minLength": 1,
           "title": "Environment",
           "type": "string"
         },
         "response": {
+          "minLength": 1,
           "title": "Response",
           "type": "string"
         },
         "response_measure": {
+          "minLength": 1,
           "title": "Response Measure",
           "type": "string"
         }
@@ -226,6 +245,7 @@
           "type": "string"
         },
         "url": {
+          "minLength": 1,
           "title": "Url",
           "type": "string"
         },
@@ -237,13 +257,25 @@
           ],
           "title": "Status",
           "type": "string"
+        },
+        "locator": {
+          "minLength": 1,
+          "title": "Locator",
+          "type": "string"
+        },
+        "checked_date": {
+          "minLength": 1,
+          "title": "Checked Date",
+          "type": "string"
         }
       },
       "required": [
         "id",
         "description",
         "url",
-        "status"
+        "status",
+        "locator",
+        "checked_date"
       ],
       "title": "RegulatorySource",
       "type": "object"
@@ -262,8 +294,17 @@
           "type": "string"
         },
         "consequence": {
+          "minLength": 1,
           "title": "Consequence",
           "type": "string"
+        },
+        "affected_stakeholders": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Affected Stakeholders",
+          "type": "array"
         }
       },
       "required": [
@@ -319,6 +360,7 @@
           "type": "string"
         },
         "component": {
+          "minLength": 1,
           "title": "Component",
           "type": "string"
         }
@@ -345,6 +387,7 @@
           "type": "string"
         },
         "nodeid": {
+          "minLength": 1,
           "title": "Nodeid",
           "type": "string"
         }
@@ -372,6 +415,7 @@
         },
         "required_evidence": {
           "items": {
+            "minLength": 1,
             "type": "string"
           },
           "title": "Required Evidence",
@@ -400,43 +444,53 @@
           "type": "string"
         },
         "statement": {
+          "minLength": 1,
           "title": "Statement",
           "type": "string"
         },
         "rationale": {
+          "minLength": 1,
           "title": "Rationale",
           "type": "string"
         },
         "source": {
+          "minLength": 1,
           "title": "Source",
           "type": "string"
         },
         "trustor": {
+          "minLength": 1,
           "title": "Trustor",
           "type": "string"
         },
         "trustee": {
+          "minLength": 1,
           "title": "Trustee",
           "type": "string"
         },
         "scope": {
+          "minLength": 1,
           "title": "Scope",
           "type": "string"
         },
         "condition": {
+          "minLength": 1,
           "title": "Condition",
           "type": "string"
         },
         "dimension": {
+          "minLength": 1,
           "title": "Dimension",
           "type": "string"
         },
         "iso_mapping": {
           "default": "UNVERIFIED: authoritative characteristic definitions pending",
+          "minLength": 1,
           "title": "Iso Mapping",
           "type": "string"
         },
         "fit_criterion": {
+          "minLength": 1,
           "title": "Fit Criterion",
           "type": "string"
         },
@@ -450,6 +504,7 @@
         },
         "decisions": {
           "items": {
+            "minLength": 1,
             "type": "string"
           },
           "title": "Decisions",
@@ -457,6 +512,7 @@
         },
         "components": {
           "items": {
+            "minLength": 1,
             "type": "string"
           },
           "title": "Components",
@@ -464,6 +520,7 @@
         },
         "tests": {
           "items": {
+            "minLength": 1,
             "type": "string"
           },
           "title": "Tests",
@@ -471,9 +528,26 @@
         },
         "conflicts": {
           "items": {
+            "minLength": 1,
             "type": "string"
           },
           "title": "Conflicts",
+          "type": "array"
+        },
+        "risks": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Risks",
+          "type": "array"
+        },
+        "tactics": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Tactics",
           "type": "array"
         }
       },
@@ -511,6 +585,7 @@
           "type": "string"
         },
         "action": {
+          "minLength": 1,
           "title": "Action",
           "type": "string"
         }
@@ -537,6 +612,7 @@
           "type": "string"
         },
         "stakeholder_id": {
+          "minLength": 1,
           "title": "Stakeholder Id",
           "type": "string"
         }
@@ -563,6 +639,7 @@
           "type": "string"
         },
         "stakeholder_id": {
+          "minLength": 1,
           "title": "Stakeholder Id",
           "type": "string"
         }

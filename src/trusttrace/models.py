@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class Entity(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True, str_min_length=1)
     id: str = Field(min_length=1)
     description: str = Field(min_length=1)
 
@@ -33,15 +33,19 @@ class TrustCondition(Entity):
 
 class Risk(Entity):
     consequence: str
+    affected_stakeholders: list[str] = Field(default_factory=list)
 
 
 class RegulatorySource(Entity):
     url: str
     status: Literal["verified", "pending", "blocked"]
+    locator: str
+    checked_date: str
 
 
 class Concern(Entity):
     provenance: Literal["synthetic", "document", "human-interview"]
+    documentary_sources: list[str] = Field(default_factory=list)
 
 
 class TrustRequirement(Entity):
@@ -60,6 +64,8 @@ class TrustRequirement(Entity):
     components: list[str]
     tests: list[str]
     conflicts: list[str] = Field(default_factory=list)
+    risks: list[str] = Field(default_factory=list)
+    tactics: list[str] = Field(default_factory=list)
 
 
 class QualityAttributeScenario(Entity):

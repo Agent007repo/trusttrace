@@ -5,18 +5,89 @@ stakeholders:
 - id: platform
   description: Synthetic service operator
   kind: organisation
+- id: carrier
+  kind: organisation
+  description: Synthetic carrier
+- id: broker
+  kind: organisation
+  description: Synthetic customs broker
+- id: consignee
+  kind: organisation
+  description: Synthetic consignee
+- id: authority
+  kind: organisation
+  description: Synthetic competent authority role; no real authority consulted
+- id: reviewer
+  kind: human
+  description: Synthetic document reviewer
+- id: provider
+  kind: organisation
+  description: Synthetic model supplier
 trustors:
 - id: shipper-trustor
   description: Shipper entrusts selected document processing
   stakeholder_id: shipper
+- id: carrier-trustor
+  description: Synthetic carrier entrusts a bounded action
+  stakeholder_id: carrier
+- id: broker-trustor
+  description: Synthetic customs broker entrusts a bounded action
+  stakeholder_id: broker
+- id: consignee-trustor
+  description: Synthetic consignee entrusts a bounded action
+  stakeholder_id: consignee
+- id: authority-trustor
+  description: Synthetic competent authority role; no real authority consulted entrusts
+    a bounded action
+  stakeholder_id: authority
+- id: reviewer-trustor
+  description: Synthetic document reviewer entrusts a bounded action
+  stakeholder_id: reviewer
+- id: provider-trustor
+  description: Synthetic model supplier entrusts a bounded action
+  stakeholder_id: provider
+- id: platform-trustor
+  description: Operator entrusts model version compatibility
+  stakeholder_id: platform
 trustees:
 - id: platform-trustee
   description: Platform receives bounded authority
   stakeholder_id: platform
+- id: carrier-trustee
+  description: Synthetic carrier receives bounded authority
+  stakeholder_id: carrier
+- id: broker-trustee
+  description: Synthetic customs broker receives bounded authority
+  stakeholder_id: broker
+- id: consignee-trustee
+  description: Synthetic consignee receives bounded authority
+  stakeholder_id: consignee
+- id: authority-trustee
+  description: Synthetic competent authority role; no real authority consulted receives
+    bounded authority
+  stakeholder_id: authority
+- id: reviewer-trustee
+  description: Synthetic document reviewer receives bounded authority
+  stakeholder_id: reviewer
+- id: provider-trustee
+  description: Synthetic model supplier receives bounded authority
+  stakeholder_id: provider
+- id: shipper-trustee
+  description: Shipper receives bounded field-disclosure responsibility
+  stakeholder_id: shipper
 scopes:
 - id: scope-documents
   description: Check synthetic logistics documents
   action: assist-and-review
+- id: scope-sharing
+  description: Disclose a purpose-bounded field subset
+  action: share-selected-fields
+- id: scope-review
+  description: Human adjudication of a document suggestion
+  action: review-with-evidence
+- id: scope-governance
+  description: Maintain provenance and version decisions
+  action: govern-versioned-service
 conditions:
 - id: condition-evidence
   description: Evidence-bearing answer and human decision
@@ -97,15 +168,95 @@ concerns:
 - id: synthetic-concern-020
   description: 'Authored future concern: Persist review and audit state across restarts.'
   provenance: synthetic
+- id: synthetic-concern-021
+  description: 'Authored multi-party design concern: Carrier access shall expose only
+    the approved shipment fields.'
+  provenance: synthetic
+- id: synthetic-concern-022
+  description: 'Authored multi-party design concern: Consignee access shall exclude
+    other consignees shipment documents.'
+  provenance: synthetic
+- id: synthetic-concern-023
+  description: 'Authored multi-party design concern: Broker delegation shall name
+    its shipment purpose and expiry.'
+  provenance: synthetic
+- id: synthetic-concern-024
+  description: 'Authored multi-party design concern: A shipper shall be able to revoke
+    an active carrier delegation.'
+  provenance: synthetic
+- id: synthetic-concern-025
+  description: 'Authored multi-party design concern: A broker shall see source version
+    and passage location beside a suggestion.'
+  provenance: synthetic
+- id: synthetic-concern-026
+  description: 'Authored multi-party design concern: A reviewer shall receive both
+    conflicting shipment values before deciding.'
+  provenance: synthetic
+- id: synthetic-concern-027
+  description: 'Authored multi-party design concern: An authority-role request shall
+    be limited to its documented legal purpose.'
+  provenance: synthetic
+- id: synthetic-concern-028
+  description: 'Authored multi-party design concern: Retention expiry shall remove
+    active document content while preserving lawful minimal audit metadata.'
+  provenance: synthetic
+- id: synthetic-concern-029
+  description: 'Authored multi-party design concern: A consignee shall have a recorded
+    route to contest an erroneous document suggestion.'
+  provenance: synthetic
+- id: synthetic-concern-030
+  description: 'Authored multi-party design concern: The reviewer shall see a clear
+    boundary between source text and generated interpretation.'
+  provenance: synthetic
+- id: synthetic-concern-031
+  description: 'Authored multi-party design concern: Provider substitution shall preserve
+    the validated output contract.'
+  provenance: synthetic
+- id: synthetic-concern-032
+  description: 'Authored multi-party design concern: A model version change shall
+    require a recorded compatibility decision.'
+  provenance: synthetic
+- id: synthetic-concern-033
+  description: 'Authored multi-party design concern: A deployment shall preserve an
+    independently retained audit anchor.'
+  provenance: synthetic
+- id: synthetic-concern-034
+  description: 'Authored multi-party design concern: Retrieved instructions shall
+    not grant tools or modify reviewer authority.'
+  provenance: synthetic
+- id: synthetic-concern-035
+  description: 'Authored multi-party design concern: Citation membership shall be
+    distinguished from evidential support.'
+  provenance: synthetic
+- id: synthetic-concern-036
+  description: 'Authored multi-party design concern: A raw document shall not be sent
+    to an unapproved external provider.'
+  provenance: synthetic
+- id: synthetic-concern-037
+  description: 'Authored multi-party design concern: A reviewer override shall preserve
+    the original suggestion and stated rationale.'
+  provenance: synthetic
+- id: synthetic-concern-038
+  description: 'Authored multi-party design concern: Payload consistency checks shall
+    preserve units and distinguish absent values from zero.'
+  provenance: synthetic
+- id: synthetic-concern-039
+  description: 'Authored multi-party design concern: A policy update shall never retroactively
+    change a recorded review context.'
+  provenance: synthetic
+- id: synthetic-concern-040
+  description: 'Authored multi-party design concern: Participants shall receive a
+    record of the fields disclosed on their behalf.'
+  provenance: synthetic
 requirements:
 - id: TR-001
   description: Carrier payloads exclude confidential prices.
   statement: Carrier payloads exclude confidential prices.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-001
-  trustor: shipper-trustor
+  trustor: carrier-trustor
   trustee: platform-trustee
-  scope: scope-documents
+  scope: scope-sharing
   condition: condition-evidence
   dimension: Privacy and data governance
   fit_criterion: No price key in carrier payload.
@@ -118,6 +269,10 @@ requirements:
   - TEST-001
   conflicts:
   - CONFLICT-01
+  risks:
+  - risk-disclosure
+  tactics:
+  - tactic-deny-default
 - id: TR-002
   description: Unknown data recipient roles are denied.
   statement: Unknown data recipient roles are denied.
@@ -137,14 +292,18 @@ requirements:
   tests:
   - TEST-002
   conflicts: []
+  risks:
+  - risk-disclosure
+  tactics:
+  - tactic-deny-default
 - id: TR-003
   description: Low confidence suggestions enter a pending review queue.
   statement: Low confidence suggestions enter a pending review queue.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-003
-  trustor: shipper-trustor
+  trustor: broker-trustor
   trustee: platform-trustee
-  scope: scope-documents
+  scope: scope-review
   condition: condition-evidence
   dimension: Human agency and oversight
   fit_criterion: Pending status and low-confidence reason.
@@ -157,14 +316,18 @@ requirements:
   - TEST-003
   conflicts:
   - CONFLICT-02
+  risks:
+  - risk-decision
+  tactics:
+  - tactic-human-gate
 - id: TR-004
   description: Compliance suggestions always require human review.
   statement: Compliance suggestions always require human review.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-004
-  trustor: shipper-trustor
+  trustor: broker-trustor
   trustee: platform-trustee
-  scope: scope-documents
+  scope: scope-review
   condition: condition-evidence
   dimension: Human agency and oversight
   fit_criterion: High confidence cannot set approved status.
@@ -177,6 +340,10 @@ requirements:
   - TEST-004
   conflicts:
   - CONFLICT-02
+  risks:
+  - risk-decision
+  tactics:
+  - tactic-human-gate
 - id: TR-005
   description: Review context must match the item tenant.
   statement: Review context must match the item tenant.
@@ -196,14 +363,18 @@ requirements:
   tests:
   - TEST-005
   conflicts: []
+  risks:
+  - risk-disclosure
+  tactics:
+  - tactic-human-gate
 - id: TR-006
   description: A decision requires a nonempty reviewer identity.
   statement: A decision requires a nonempty reviewer identity.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-006
   trustor: shipper-trustor
-  trustee: platform-trustee
-  scope: scope-documents
+  trustee: reviewer-trustee
+  scope: scope-review
   condition: condition-evidence
   dimension: Accountability
   fit_criterion: Blank reviewer denied.
@@ -215,14 +386,18 @@ requirements:
   tests:
   - TEST-006
   conflicts: []
+  risks:
+  - risk-decision
+  tactics:
+  - tactic-human-gate
 - id: TR-007
   description: A rejected suggestion retains a decision event.
   statement: A rejected suggestion retains a decision event.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-007
   trustor: shipper-trustor
-  trustee: platform-trustee
-  scope: scope-documents
+  trustee: reviewer-trustee
+  scope: scope-review
   condition: condition-evidence
   dimension: Accountability
   fit_criterion: Reject status and audit event agree.
@@ -234,14 +409,18 @@ requirements:
   tests:
   - TEST-007
   conflicts: []
+  risks:
+  - risk-decision
+  tactics:
+  - tactic-human-gate
 - id: TR-008
   description: Final decisions cannot be silently overwritten.
   statement: Final decisions cannot be silently overwritten.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-008
   trustor: shipper-trustor
-  trustee: platform-trustee
-  scope: scope-documents
+  trustee: reviewer-trustee
+  scope: scope-review
   condition: condition-evidence
   dimension: Accountability
   fit_criterion: Second decision raises error.
@@ -253,14 +432,18 @@ requirements:
   tests:
   - TEST-008
   conflicts: []
+  risks:
+  - risk-decision
+  tactics:
+  - tactic-human-gate
 - id: TR-009
   description: Suggestion citations resolve to retrieved passage identifiers.
   statement: Suggestion citations resolve to retrieved passage identifiers.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-009
-  trustor: shipper-trustor
+  trustor: broker-trustor
   trustee: platform-trustee
-  scope: scope-documents
+  scope: scope-review
   condition: condition-evidence
   dimension: Transparency
   fit_criterion: Unknown citation rejected.
@@ -273,6 +456,10 @@ requirements:
   - TEST-009
   conflicts:
   - CONFLICT-01
+  risks:
+  - risk-decision
+  tactics:
+  - tactic-citation-membership
 - id: TR-010
   description: The mock gateway abstains without supporting passages.
   statement: The mock gateway abstains without supporting passages.
@@ -292,6 +479,9 @@ requirements:
   tests:
   - TEST-010
   conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
 - id: TR-011
   description: Retrieval only uses passages belonging to the selected tenant.
   statement: Retrieval only uses passages belonging to the selected tenant.
@@ -311,6 +501,9 @@ requirements:
   tests:
   - TEST-011
   conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
 - id: TR-012
   description: Audit verification detects modified event content.
   statement: Audit verification detects modified event content.
@@ -318,7 +511,7 @@ requirements:
   source: synthetic-concern-012
   trustor: shipper-trustor
   trustee: platform-trustee
-  scope: scope-documents
+  scope: scope-governance
   condition: condition-evidence
   dimension: Accountability
   fit_criterion: Digest verification fails after event mutation.
@@ -330,6 +523,9 @@ requirements:
   tests:
   - TEST-012
   conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
 - id: TR-013
   description: Audit verification detects truncation against a saved count and head.
   statement: Audit verification detects truncation against a saved count and head.
@@ -337,7 +533,7 @@ requirements:
   source: synthetic-concern-013
   trustor: shipper-trustor
   trustee: platform-trustee
-  scope: scope-documents
+  scope: scope-governance
   condition: condition-evidence
   dimension: Accountability
   fit_criterion: Removed tail fails against independently retained anchor.
@@ -349,6 +545,9 @@ requirements:
   tests:
   - TEST-013
   conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
 - id: TR-014
   description: Events are copied before appending to the audit chain.
   statement: Events are copied before appending to the audit chain.
@@ -356,7 +555,7 @@ requirements:
   source: synthetic-concern-014
   trustor: shipper-trustor
   trustee: platform-trustee
-  scope: scope-documents
+  scope: scope-governance
   condition: condition-evidence
   dimension: Accountability
   fit_criterion: Caller mutation leaves verification valid.
@@ -368,6 +567,9 @@ requirements:
   tests:
   - TEST-014
   conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
 - id: TR-015
   description: Cross-document checks flag inconsistent or missing shipment fields.
   statement: Cross-document checks flag inconsistent or missing shipment fields.
@@ -387,6 +589,9 @@ requirements:
   tests:
   - TEST-015
   conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
 - id: TR-016
   description: Explanation cards disclose mock provenance and confidence limits.
   statement: Explanation cards disclose mock provenance and confidence limits.
@@ -406,6 +611,9 @@ requirements:
   tests:
   - TEST-016
   conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
 - id: TR-017
   description: Explain tariff classification against verified sources.
   statement: Explain tariff classification against verified sources.
@@ -422,6 +630,9 @@ requirements:
   components: []
   tests: []
   conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
 - id: TR-018
   description: Retrieve operative EU regulatory passages with versioned citations.
   statement: Retrieve operative EU regulatory passages with versioned citations.
@@ -438,6 +649,9 @@ requirements:
   components: []
   tests: []
   conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
 - id: TR-019
   description: Gate provider replacement on a documented evaluation.
   statement: Gate provider replacement on a documented evaluation.
@@ -454,6 +668,9 @@ requirements:
   components: []
   tests: []
   conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
 - id: TR-020
   description: Persist review and audit state across restarts.
   statement: Persist review and audit state across restarts.
@@ -470,6 +687,448 @@ requirements:
   components: []
   tests: []
   conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
+- id: TR-021
+  description: Planned multi-party requirement; not implemented
+  statement: Carrier access shall expose only the approved shipment fields.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-021
+  trustor: carrier-trustor
+  trustee: shipper-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: privacy
+  fit_criterion: A policy table enumerates every carrier-visible field; a contract
+    test rejects any extra field.
+  priority: should
+  decisions: []
+  components:
+  - policy
+  tests: []
+  conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
+- id: TR-022
+  description: Planned multi-party requirement; not implemented
+  statement: Consignee access shall exclude other consignees shipment documents.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-022
+  trustor: consignee-trustor
+  trustee: platform-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: privacy
+  fit_criterion: A two-consignee fixture returns zero foreign shipment records.
+  priority: should
+  decisions: []
+  components:
+  - policy
+  tests: []
+  conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
+- id: TR-023
+  description: Planned multi-party requirement; not implemented
+  statement: Broker delegation shall name its shipment purpose and expiry.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-023
+  trustor: shipper-trustor
+  trustee: broker-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: accountability
+  fit_criterion: Expired or purpose-mismatched delegated requests are denied and recorded.
+  priority: should
+  decisions: []
+  components:
+  - policy
+  tests: []
+  conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
+- id: TR-024
+  description: Planned multi-party requirement; not implemented
+  statement: A shipper shall be able to revoke an active carrier delegation.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-024
+  trustor: shipper-trustor
+  trustee: carrier-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: human-agency
+  fit_criterion: A revoked grant is rejected on the next request without deleting
+    prior audit records.
+  priority: should
+  decisions: []
+  components:
+  - policy
+  tests: []
+  conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
+- id: TR-025
+  description: Planned multi-party requirement; not implemented
+  statement: A broker shall see source version and passage location beside a suggestion.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-025
+  trustor: broker-trustor
+  trustee: platform-trustee
+  scope: scope-review
+  condition: condition-evidence
+  dimension: transparency
+  fit_criterion: Every review card exposes a resolvable source version and locator.
+  priority: should
+  decisions: []
+  components:
+  - retrieval
+  tests: []
+  conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
+- id: TR-026
+  description: Planned multi-party requirement; not implemented
+  statement: A reviewer shall receive both conflicting shipment values before deciding.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-026
+  trustor: reviewer-trustor
+  trustee: platform-trustee
+  scope: scope-review
+  condition: condition-evidence
+  dimension: human-agency
+  fit_criterion: The review card displays both source values without silently preferring
+    either.
+  priority: should
+  decisions: []
+  components:
+  - consistency
+  tests: []
+  conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
+- id: TR-027
+  description: Planned multi-party requirement; not implemented
+  statement: An authority-role request shall be limited to its documented legal purpose.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-027
+  trustor: authority-trustor
+  trustee: platform-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: accountability
+  fit_criterion: An authored purpose matrix denies an out-of-purpose request; legal
+    applicability remains pending.
+  priority: should
+  decisions: []
+  components:
+  - policy
+  tests: []
+  conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
+- id: TR-028
+  description: Planned multi-party requirement; not implemented
+  statement: Retention expiry shall remove active document content while preserving
+    lawful minimal audit metadata.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-028
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: privacy
+  fit_criterion: A retention fixture removes payload fields and documents the separate
+    metadata schedule.
+  priority: should
+  decisions: []
+  components:
+  - audit
+  tests: []
+  conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
+- id: TR-029
+  description: Planned multi-party requirement; not implemented
+  statement: A consignee shall have a recorded route to contest an erroneous document
+    suggestion.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-029
+  trustor: consignee-trustor
+  trustee: platform-trustee
+  scope: scope-review
+  condition: condition-evidence
+  dimension: contestability
+  fit_criterion: A contested item has an actor, reason, timestamp and unresolved status
+    until human review.
+  priority: should
+  decisions: []
+  components:
+  - review
+  tests: []
+  conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
+- id: TR-030
+  description: Planned multi-party requirement; not implemented
+  statement: The reviewer shall see a clear boundary between source text and generated
+    interpretation.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-030
+  trustor: reviewer-trustor
+  trustee: platform-trustee
+  scope: scope-review
+  condition: condition-evidence
+  dimension: transparency
+  fit_criterion: Cards label source passages and generated interpretation separately.
+  priority: should
+  decisions: []
+  components:
+  - retrieval
+  tests: []
+  conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
+- id: TR-031
+  description: Planned multi-party requirement; not implemented
+  statement: Provider substitution shall preserve the validated output contract.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-031
+  trustor: broker-trustor
+  trustee: provider-trustee
+  scope: scope-governance
+  condition: condition-evidence
+  dimension: robustness
+  fit_criterion: An adapter contract test rejects missing fields and unsupported citation
+    shapes.
+  priority: should
+  decisions: []
+  components:
+  - retrieval
+  tests: []
+  conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
+- id: TR-032
+  description: Planned multi-party requirement; not implemented
+  statement: A model version change shall require a recorded compatibility decision.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-032
+  trustor: platform-trustor
+  trustee: provider-trustee
+  scope: scope-governance
+  condition: condition-evidence
+  dimension: accountability
+  fit_criterion: No version change proceeds without a diff, regression record and
+    decision identifier.
+  priority: should
+  decisions: []
+  components:
+  - review
+  tests: []
+  conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
+- id: TR-033
+  description: Planned multi-party requirement; not implemented
+  statement: A deployment shall preserve an independently retained audit anchor.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-033
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-governance
+  condition: condition-evidence
+  dimension: accountability
+  fit_criterion: A tampered or truncated persistent log fails verification against
+    an external anchor.
+  priority: should
+  decisions: []
+  components:
+  - audit
+  tests: []
+  conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
+- id: TR-034
+  description: Planned multi-party requirement; not implemented
+  statement: Retrieved instructions shall not grant tools or modify reviewer authority.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-034
+  trustor: reviewer-trustor
+  trustee: platform-trustee
+  scope: scope-review
+  condition: condition-evidence
+  dimension: robustness
+  fit_criterion: An adversarial passage cannot authorize submission or grant a role.
+  priority: should
+  decisions: []
+  components:
+  - retrieval
+  tests: []
+  conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
+- id: TR-035
+  description: Planned multi-party requirement; not implemented
+  statement: Citation membership shall be distinguished from evidential support.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-035
+  trustor: broker-trustor
+  trustee: platform-trustee
+  scope: scope-review
+  condition: condition-evidence
+  dimension: transparency
+  fit_criterion: The review card explains that membership does not prove semantic
+    entailment.
+  priority: should
+  decisions: []
+  components:
+  - retrieval
+  tests: []
+  conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
+- id: TR-036
+  description: Planned multi-party requirement; not implemented
+  statement: A raw document shall not be sent to an unapproved external provider.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-036
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: privacy
+  fit_criterion: Outbound policy denies the request before a network adapter is invoked.
+  priority: should
+  decisions: []
+  components:
+  - policy
+  tests: []
+  conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
+- id: TR-037
+  description: Planned multi-party requirement; not implemented
+  statement: A reviewer override shall preserve the original suggestion and stated
+    rationale.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-037
+  trustor: reviewer-trustor
+  trustee: platform-trustee
+  scope: scope-review
+  condition: condition-evidence
+  dimension: human-agency
+  fit_criterion: The stored override links the original suggestion without overwriting
+    it.
+  priority: should
+  decisions: []
+  components:
+  - review
+  tests: []
+  conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
+- id: TR-038
+  description: Planned multi-party requirement; not implemented
+  statement: Payload consistency checks shall preserve units and distinguish absent
+    values from zero.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-038
+  trustor: carrier-trustor
+  trustee: platform-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: robustness
+  fit_criterion: A unit-mismatch fixture and a missing-versus-zero fixture are flagged
+    separately.
+  priority: should
+  decisions: []
+  components:
+  - consistency
+  tests: []
+  conflicts: []
+  risks:
+  - risk-decision
+  tactics: []
+- id: TR-039
+  description: Planned multi-party requirement; not implemented
+  statement: A policy update shall never retroactively change a recorded review context.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-039
+  trustor: broker-trustor
+  trustee: platform-trustee
+  scope: scope-review
+  condition: condition-evidence
+  dimension: robustness
+  fit_criterion: Historical reviews retain the original policy identifier after update.
+  priority: should
+  decisions: []
+  components:
+  - review
+  tests: []
+  conflicts: []
+  risks:
+  - risk-lineage
+  tactics: []
+- id: TR-040
+  description: Planned multi-party requirement; not implemented
+  statement: Participants shall receive a record of the fields disclosed on their
+    behalf.
+  rationale: Authored boundary for the synthetic logistics workflow; requires human
+    review and implementation.
+  source: synthetic-concern-040
+  trustor: consignee-trustor
+  trustee: platform-trustee
+  scope: scope-sharing
+  condition: condition-evidence
+  dimension: transparency
+  fit_criterion: An export identifies actor, recipient, purpose, field names and time
+    without duplicating secret content.
+  priority: should
+  decisions: []
+  components:
+  - audit
+  tests: []
+  conflicts: []
+  risks:
+  - risk-disclosure
+  tactics: []
 scenarios:
 - id: SC-001
   description: Carrier payloads exclude confidential prices.
@@ -615,6 +1274,208 @@ scenarios:
   environment: Local deterministic mock; no remote system
   response: Explanation cards disclose mock provenance and confidence limits.
   response_measure: Mock identifier and uncalibrated warning visible.
+- id: QAS-021
+  description: Planned scenario; no executed evidence
+  requirement: TR-021
+  source: carrier
+  stimulus: A participant invokes the bounded action described by TR-021
+  artefact: policy
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Carrier access shall expose only the approved shipment fields.
+  response_measure: A policy table enumerates every carrier-visible field; a contract
+    test rejects any extra field.
+- id: QAS-022
+  description: Planned scenario; no executed evidence
+  requirement: TR-022
+  source: consignee
+  stimulus: A participant invokes the bounded action described by TR-022
+  artefact: policy
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Consignee access shall exclude other consignees shipment documents.
+  response_measure: A two-consignee fixture returns zero foreign shipment records.
+- id: QAS-023
+  description: Planned scenario; no executed evidence
+  requirement: TR-023
+  source: shipper
+  stimulus: A participant invokes the bounded action described by TR-023
+  artefact: policy
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Broker delegation shall name its shipment purpose and expiry.
+  response_measure: Expired or purpose-mismatched delegated requests are denied and
+    recorded.
+- id: QAS-024
+  description: Planned scenario; no executed evidence
+  requirement: TR-024
+  source: shipper
+  stimulus: A participant invokes the bounded action described by TR-024
+  artefact: policy
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A shipper shall be able to revoke an active carrier delegation.
+  response_measure: A revoked grant is rejected on the next request without deleting
+    prior audit records.
+- id: QAS-025
+  description: Planned scenario; no executed evidence
+  requirement: TR-025
+  source: broker
+  stimulus: A participant invokes the bounded action described by TR-025
+  artefact: retrieval
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A broker shall see source version and passage location beside a suggestion.
+  response_measure: Every review card exposes a resolvable source version and locator.
+- id: QAS-026
+  description: Planned scenario; no executed evidence
+  requirement: TR-026
+  source: reviewer
+  stimulus: A participant invokes the bounded action described by TR-026
+  artefact: consistency
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A reviewer shall receive both conflicting shipment values before deciding.
+  response_measure: The review card displays both source values without silently preferring
+    either.
+- id: QAS-027
+  description: Planned scenario; no executed evidence
+  requirement: TR-027
+  source: authority
+  stimulus: A participant invokes the bounded action described by TR-027
+  artefact: policy
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: An authority-role request shall be limited to its documented legal purpose.
+  response_measure: An authored purpose matrix denies an out-of-purpose request; legal
+    applicability remains pending.
+- id: QAS-028
+  description: Planned scenario; no executed evidence
+  requirement: TR-028
+  source: shipper
+  stimulus: A participant invokes the bounded action described by TR-028
+  artefact: audit
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Retention expiry shall remove active document content while preserving
+    lawful minimal audit metadata.
+  response_measure: A retention fixture removes payload fields and documents the separate
+    metadata schedule.
+- id: QAS-029
+  description: Planned scenario; no executed evidence
+  requirement: TR-029
+  source: consignee
+  stimulus: A participant invokes the bounded action described by TR-029
+  artefact: review
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A consignee shall have a recorded route to contest an erroneous document
+    suggestion.
+  response_measure: A contested item has an actor, reason, timestamp and unresolved
+    status until human review.
+- id: QAS-030
+  description: Planned scenario; no executed evidence
+  requirement: TR-030
+  source: reviewer
+  stimulus: A participant invokes the bounded action described by TR-030
+  artefact: retrieval
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: The reviewer shall see a clear boundary between source text and generated
+    interpretation.
+  response_measure: Cards label source passages and generated interpretation separately.
+- id: QAS-031
+  description: Planned scenario; no executed evidence
+  requirement: TR-031
+  source: broker
+  stimulus: A participant invokes the bounded action described by TR-031
+  artefact: retrieval
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Provider substitution shall preserve the validated output contract.
+  response_measure: An adapter contract test rejects missing fields and unsupported
+    citation shapes.
+- id: QAS-032
+  description: Planned scenario; no executed evidence
+  requirement: TR-032
+  source: platform
+  stimulus: A participant invokes the bounded action described by TR-032
+  artefact: review
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A model version change shall require a recorded compatibility decision.
+  response_measure: No version change proceeds without a diff, regression record and
+    decision identifier.
+- id: QAS-033
+  description: Planned scenario; no executed evidence
+  requirement: TR-033
+  source: shipper
+  stimulus: A participant invokes the bounded action described by TR-033
+  artefact: audit
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A deployment shall preserve an independently retained audit anchor.
+  response_measure: A tampered or truncated persistent log fails verification against
+    an external anchor.
+- id: QAS-034
+  description: Planned scenario; no executed evidence
+  requirement: TR-034
+  source: reviewer
+  stimulus: A participant invokes the bounded action described by TR-034
+  artefact: retrieval
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Retrieved instructions shall not grant tools or modify reviewer authority.
+  response_measure: An adversarial passage cannot authorize submission or grant a
+    role.
+- id: QAS-035
+  description: Planned scenario; no executed evidence
+  requirement: TR-035
+  source: broker
+  stimulus: A participant invokes the bounded action described by TR-035
+  artefact: retrieval
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Citation membership shall be distinguished from evidential support.
+  response_measure: The review card explains that membership does not prove semantic
+    entailment.
+- id: QAS-036
+  description: Planned scenario; no executed evidence
+  requirement: TR-036
+  source: shipper
+  stimulus: A participant invokes the bounded action described by TR-036
+  artefact: policy
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A raw document shall not be sent to an unapproved external provider.
+  response_measure: Outbound policy denies the request before a network adapter is
+    invoked.
+- id: QAS-037
+  description: Planned scenario; no executed evidence
+  requirement: TR-037
+  source: reviewer
+  stimulus: A participant invokes the bounded action described by TR-037
+  artefact: review
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A reviewer override shall preserve the original suggestion and stated
+    rationale.
+  response_measure: The stored override links the original suggestion without overwriting
+    it.
+- id: QAS-038
+  description: Planned scenario; no executed evidence
+  requirement: TR-038
+  source: carrier
+  stimulus: A participant invokes the bounded action described by TR-038
+  artefact: consistency
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Payload consistency checks shall preserve units and distinguish absent
+    values from zero.
+  response_measure: A unit-mismatch fixture and a missing-versus-zero fixture are
+    flagged separately.
+- id: QAS-039
+  description: Planned scenario; no executed evidence
+  requirement: TR-039
+  source: broker
+  stimulus: A participant invokes the bounded action described by TR-039
+  artefact: review
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: A policy update shall never retroactively change a recorded review context.
+  response_measure: Historical reviews retain the original policy identifier after
+    update.
+- id: QAS-040
+  description: Planned scenario; no executed evidence
+  requirement: TR-040
+  source: consignee
+  stimulus: A participant invokes the bounded action described by TR-040
+  artefact: audit
+  environment: Synthetic multi-party sandbox; no real shipment or authority
+  response: Participants shall receive a record of the fields disclosed on their behalf.
+  response_measure: An export identifies actor, recipient, purpose, field names and
+    time without duplicating secret content.
 conflicts:
 - id: CONFLICT-01
   description: Source transparency versus confidential field exposure
@@ -704,3 +1565,40 @@ tests:
 - id: TEST-016
   description: Mock identifier and uncalibrated warning visible.
   nodeid: tests/scenarios/test_boundaries.py::test_explanation_discloses_mock
+evidence:
+- id: passing-scenario
+  description: Executed software-test report, not research or human evidence
+  provenance: synthetic
+  path: results/raw/software-checks/junit.xml
+risks:
+- id: risk-disclosure
+  description: Synthetic confidentiality risk
+  consequence: Commercial or personal data reaches an unintended participant
+  affected_stakeholders:
+  - shipper
+  - carrier
+  - consignee
+- id: risk-decision
+  description: Synthetic unsupported-decision risk
+  consequence: Unreviewed or unsupported advice changes a shipment decision
+  affected_stakeholders:
+  - broker
+  - reviewer
+  - authority
+- id: risk-lineage
+  description: Synthetic provenance risk
+  consequence: Version or actor attribution cannot be reconstructed
+  affected_stakeholders:
+  - platform
+  - provider
+  - shipper
+tactics:
+- id: tactic-deny-default
+  description: Deny roles outside the allowlist
+  component: policy
+- id: tactic-human-gate
+  description: Keep all mock suggestions pending until a recorded human decision
+  component: review
+- id: tactic-citation-membership
+  description: Validate retrieved citation membership; not entailment
+  component: retrieval
