@@ -1,0 +1,19 @@
+{
+  "status": "proposed-before-observation",
+  "temperature": 0.2,
+  "top_p": 0.95,
+  "max_new_tokens": 1024,
+  "context_budget_tokens": 4096,
+  "seeds": [
+    20261013,
+    20261014,
+    20261015,
+    20261016,
+    20261017
+  ],
+  "backend": null,
+  "quantization": null,
+  "paid_calls_enabled": false,
+  "combined_portfolio_cap_eur": 25,
+  "notes": "Same settings in all arms. Backend, tokenizer, weight and quantization hashes pending Mac preflight. No runtime or reproducibility claim."
+}

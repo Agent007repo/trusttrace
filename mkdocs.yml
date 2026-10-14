@@ -7,6 +7,10 @@ nav:
   - Method: method.md
   - Results: results.md
   - Architecture: architecture.md
+  - Multi-party case: case/2026-10-14-multi-party.md
+  - B10 preparation: protocols/2026-10-14-b10-execution-appendix.md
+  - Model candidates: protocols/2026-10-14-model-shortlist.md
+  - Source verification: protocols/2026-10-14-source-verification.md
   - Reproduce: reproduce.md
   - Limitations: limitations.md
   - Related work: related-work.md

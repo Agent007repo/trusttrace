@@ -1,6 +1,6 @@
 {
   "status": "engineering-verification-only",
-  "total_requirements": 20,
+  "total_requirements": 40,
   "must_denominator": 16,
   "must_coverage": 1.0,
   "errors": [],
@@ -145,6 +145,146 @@
       "covered": false,
       "source_provenance": "synthetic",
       "statement": "Persist review and audit state across restarts."
+    },
+    {
+      "id": "TR-021",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Carrier access shall expose only the approved shipment fields."
+    },
+    {
+      "id": "TR-022",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Consignee access shall exclude other consignees shipment documents."
+    },
+    {
+      "id": "TR-023",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Broker delegation shall name its shipment purpose and expiry."
+    },
+    {
+      "id": "TR-024",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A shipper shall be able to revoke an active carrier delegation."
+    },
+    {
+      "id": "TR-025",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A broker shall see source version and passage location beside a suggestion."
+    },
+    {
+      "id": "TR-026",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A reviewer shall receive both conflicting shipment values before deciding."
+    },
+    {
+      "id": "TR-027",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "An authority-role request shall be limited to its documented legal purpose."
+    },
+    {
+      "id": "TR-028",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Retention expiry shall remove active document content while preserving lawful minimal audit metadata."
+    },
+    {
+      "id": "TR-029",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A consignee shall have a recorded route to contest an erroneous document suggestion."
+    },
+    {
+      "id": "TR-030",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "The reviewer shall see a clear boundary between source text and generated interpretation."
+    },
+    {
+      "id": "TR-031",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Provider substitution shall preserve the validated output contract."
+    },
+    {
+      "id": "TR-032",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A model version change shall require a recorded compatibility decision."
+    },
+    {
+      "id": "TR-033",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A deployment shall preserve an independently retained audit anchor."
+    },
+    {
+      "id": "TR-034",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Retrieved instructions shall not grant tools or modify reviewer authority."
+    },
+    {
+      "id": "TR-035",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Citation membership shall be distinguished from evidential support."
+    },
+    {
+      "id": "TR-036",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A raw document shall not be sent to an unapproved external provider."
+    },
+    {
+      "id": "TR-037",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A reviewer override shall preserve the original suggestion and stated rationale."
+    },
+    {
+      "id": "TR-038",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Payload consistency checks shall preserve units and distinguish absent values from zero."
+    },
+    {
+      "id": "TR-039",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "A policy update shall never retroactively change a recorded review context."
+    },
+    {
+      "id": "TR-040",
+      "priority": "should",
+      "covered": false,
+      "source_provenance": "synthetic",
+      "statement": "Participants shall receive a record of the fields disclosed on their behalf."
     }
   ],
   "gate_pass": true

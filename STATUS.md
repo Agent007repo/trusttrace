@@ -1,25 +1,24 @@
-# Milestone 1 status
+# Milestone 2 preparation status, 14 October 2026
 
-State: local foundation, not public-ready. Both vacancy pages and relevant supervisor abstracts were opened on 13 October 2026. No research experiment, paid API call, human annotation or Mac benchmark has occurred.
+State: private engineering and method preparation, not public-ready. No model experiment, paid API call, human annotation, practitioner interview or Mac measurement has occurred. Samarth's review remains pending. Report PDFs remain one-page skeletons.
 
-Local verification records are under `results/raw/software-checks/`. They report the exact software-test scope and retain raw JUnit, coverage, quality-gate and gitleaks output. CLI and HTTP app are excluded from the library coverage denominator; the HTTP demo has a separate integration test. Hosted CI, Docker and clean-clone macOS execution remain unverified. Report PDFs are one-page skeletons.
+The foundation's hosted verification and full-history secret scan passed on 13 October at `cabf9e29d14d9ae25735a1324a68bc24aaa4dc9c`, workflow run [38439408235](https://github.com/Agent007repo/trusttrace/actions/runs/38439408235). That success applies to the foundation commit. New milestone checks must be assessed separately. Main remains the bootstrap README and PR #1 remains open. Default-main changes require explicit approval; this work targets a milestone branch only.
 
-Private GitHub repositories were created on 13 October 2026 after browser sign-in and explicit authorisation. The GitHub connection imports the prepared milestone and preserves its original local history in `history/original-local.bundle`. A milestone pull request records the import. Hosted CI results are checked separately; no Pages site or release is claimed.
+## Completed preparation
 
-## Pending shared release requirements
+The typed metamodel checks evidence paths, condition evidence links, risk participants, requirement risk/tactic links and verified documentary provenance. Blank entity strings fail validation. The authored synthetic case contains eight stakeholder roles and 40 requirements: the original 16 must remain the executed coverage denominator, and 24 should requirements remain unimplemented. Five ADRs and a searchable coverage table are preserved. Neither coverage nor catalogue size establishes ecosystem trustworthiness.
 
-- Full related-work synthesis with at least 25 verified references per report and a DOI/arXiv-resolution checker.
-- Completed 8 to 12 page research reports with data-generated results, discussion, limitations and application assets.
-- Verified material licences and source-backed regulatory mappings; specific ISO characteristics remain unverified.
-- Human design/voice review, hardware and annotation tasks as appropriate.
-- Clean-clone macOS check, hosted CI, private milestone PR, explicit publication approval, Pages and release v0.1.0.
+B10 has a dated draft execution appendix, two pinned model-family candidates, proposed prompts/decoding, a common output contract, an offline prerequisite report, source-checksum-bound human annotation tooling and metadata-blinded packet preparation. The packet tool does not perform human matching. Collection remains disabled. The original protocol checksum remains `83385462bec1bd8ee67c153683c77da8bc8ab6ed9129748fd811377c22f117d1`.
 
-## Current slice and remaining B artefacts
+The operative 2026 AI Omnibus amendment was opened and recorded separately. Current eFTI consolidation, GDPR text and full EUR-Lex reuse verification remain blocked. No legal excerpts were imported. Mistral's licence declaration was opened but complete licence-term verification remains pending. Specific ISO characteristics remain UNVERIFIED.
 
-The initial catalogue contains 20 original synthetic requirements: 16 must and four unimplemented should concerns. The must slice links to five architecture decision records and executed tests. The HTML report is a searchable table, not the final graph.
+## Human and implementation next steps
 
-Expand the catalogue to 40 to 60 justified requirements, decisions to 12 to 15, and pattern catalogue to 8 to 12. Complete the multi-party case, goal model and conflict matrix. The current library covers sharing, review, citation membership, retrieval scoping, hash-chain verification and consistency checks; provider abstraction, persistent storage, review override and model-update gates remain pending.
+- Review the eight-role case, planned fit criteria, source claims, prompt drafts and the dated appendix.
+- Complete read-only Mac preflight and select a verified local backend, quantization and artifact hashes. No hardware capability has been inferred from this environment.
+- Verify and freeze 12 eligible legal inputs alongside the 12 synthetic inputs, then provide human atomic annotations and exact evidence spans. Keep optional peer labels separate.
+- Finish independent retrieval selection, terminal adjudication ledger capture and analysis tooling. Freeze complete checksums and human review records in a new dated appendix before any outputs are collected.
+- Expand the remaining architecture/pattern/graph work and write full 8 to 12 page reports with actual evidence. There are no research findings to report today.
+- Complete clean-clone macOS and Docker checks, final prose/design review and explicitly approved publication steps before the 21 October public-ready target. The 24 October application deadline remains the planning priority.
 
-The synthetic half of B10 inputs and terminal annotation tooling are prepared. Verified regulatory inputs, two exact model revisions/licences, model-output collection, blinded matching/adjudication and final clustered analysis remain pending. No human gold labels or model outcomes exist. The future practitioner protocol is a draft, not a complete ethics-ready submission.
-
-The testclient emits one dependency deprecation warning about its httpx backend. Tests pass; changing the backend is a later compatibility task.
+Raw software checks are under `results/raw/software-checks/`; derived traceability and B10 readiness are regenerated by `make analyze`. CLI and HTTP app remain outside the library coverage denominator; HTTP behaviour has a separate integration test. The existing testclient backend deprecation warning remains. Local frozen sync may need uncached build dependencies; existing-environment checks do not establish a clean install.

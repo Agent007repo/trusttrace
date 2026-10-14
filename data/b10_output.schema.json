@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "requirements"
+  ],
+  "properties": {
+    "requirements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AtomicRequirement"
+      }
+    }
+  },
+  "$defs": {
+    "AtomicRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "statement": {
+          "minLength": 1,
+          "title": "Statement",
+          "type": "string"
+        },
+        "trustor": {
+          "minLength": 1,
+          "title": "Trustor",
+          "type": "string"
+        },
+        "trustee": {
+          "minLength": 1,
+          "title": "Trustee",
+          "type": "string"
+        },
+        "scope": {
+          "minLength": 1,
+          "title": "Scope",
+          "type": "string"
+        },
+        "condition": {
+          "minLength": 1,
+          "title": "Condition",
+          "type": "string"
+        },
+        "fit_criterion": {
+          "minLength": 1,
+          "title": "Fit Criterion",
+          "type": "string"
+        },
+        "evidence_span": {
+          "minLength": 1,
+          "title": "Evidence Span",
+          "type": "string"
+        }
+      },
+      "required": [
+        "statement",
+        "trustor",
+        "trustee",
+        "scope",
+        "condition",
+        "fit_criterion",
+        "evidence_span"
+      ],
+      "title": "AtomicRequirement",
+      "type": "object"
+    }
+  }
+}

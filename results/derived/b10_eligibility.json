@@ -1,0 +1,20 @@
+{
+  "status": "preparation-only",
+  "prerequisites_complete": false,
+  "collection_enabled": false,
+  "source_count": 12,
+  "planned_calls_if_complete": 720,
+  "errors": [
+    "Need exactly 12 synthetic and 12 verified legal inputs",
+    "Qwen/Qwen2.5-1.5B-Instruct: runtime_verified missing or unverified",
+    "mistralai/Mistral-7B-Instruct-v0.3: licence_verified missing or unverified",
+    "mistralai/Mistral-7B-Instruct-v0.3: runtime_verified missing or unverified",
+    "Human gold is missing",
+    "Primary human gold must cover exactly the complete source set",
+    "Human source/model/protocol review record missing",
+    "human_review_record: hashed record required",
+    "retrieval_corpus_path: hashed record required",
+    "retrieval_independence_review_record: hashed record required",
+    "runtime_manifest_path: hashed record required"
+  ]
+}
