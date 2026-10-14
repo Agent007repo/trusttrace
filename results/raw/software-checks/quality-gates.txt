@@ -1,0 +1,84 @@
+uv sync --frozen
+Checked 68 packages in 0.90ms
+uv run ruff check .
+All checks passed!
+uv run ruff format --check .
+39 files already formatted
+uv run mypy src
+Success: no issues found in 6 source files
+uv run pytest --cov=trusttrace --cov-report=term-missing --cov-report=xml --junitxml=results/raw/software-checks/junit.xml
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0
+rootdir: /workspace/scratch/f4a08880f5c0/research-portfolio/trusttrace
+configfile: pyproject.toml
+testpaths: tests
+plugins: cov-7.1.0, anyio-4.15.1, platformdirs-4.13.0
+collected 29 items
+
+tests/scenarios/test_boundaries.py .......................               [ 79%]
+tests/test_app.py .                                                      [ 82%]
+tests/test_trace.py .....                                                [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /workspace/scratch/f4a08880f5c0/research-portfolio/trusttrace/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /workspace/scratch/f4a08880f5c0/research-portfolio/trusttrace/results/raw/software-checks/junit.xml -
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.14-final-0 _______________
+
+Name                         Stmts   Miss Branch BrPart  Cover   Missing
+------------------------------------------------------------------------
+src/trusttrace/__init__.py       0      0      0      0   100%
+src/trusttrace/models.py        79      0      0      0   100%
+src/trusttrace/runtime.py       98      0     22      0   100%
+src/trusttrace/trace.py         78      1     38      1    98%   62
+------------------------------------------------------------------------
+TOTAL                          255      1     60      1    99%
+Coverage XML written to file coverage.xml
+Required test coverage of 85.0% reached. Total coverage: 99.37%
+======================== 29 passed, 1 warning in 1.66s =========================
+uv run python scripts/integrity.py
+Integrity checks passed; this is not a substitute for gitleaks.
+uv run python scripts/analyze.py
+uv run trusttrace trace
+{
+  "status": "engineering-verification-only",
+  "total_requirements": 20,
+  "must_denominator": 16,
+  "must_coverage": 1.0,
+  "errors": [],
+  "orphans": [],
+  "gate_pass": true
+}
+uv run mkdocs build --strict
+
+[31m │  ⚠  Warning from the Material for MkDocs team[0m
+[31m │[0m
+[31m │[0m  MkDocs 2.0, the underlying framework of Material for MkDocs,
+[31m │[0m  will introduce backward-incompatible changes, including:
+[31m │[0m
+[31m │  × [0mAll plugins will stop working – the plugin system has been removed
+[31m │  × [0mAll theme overrides will break – the theming system has been rewritten
+[31m │  × [0mNo migration path exists – existing projects cannot be upgraded
+[31m │  × [0mClosed contribution model – community members can't report bugs
+[31m │  × [0mCurrently unlicensed – unsuitable for production use
+[31m │[0m
+[31m │[0m  Our full analysis:
+[31m │[0m
+[31m │[0m  [4mhttps://squidfunk.github.io/mkdocs-material/blog/2026/02/18/mkdocs-2.0/[0m
+[0m
+INFO    -  Cleaning site directory
+INFO    -  Building documentation to directory: /workspace/scratch/f4a08880f5c0/research-portfolio/trusttrace/site
+INFO    -  The following pages exist in the docs directory, but are not included in the "nav" configuration:
+  - RUNBOOK_annotation.md
+  - adr/adr-001.md
+  - adr/adr-002.md
+  - adr/adr-003.md
+  - adr/adr-004.md
+  - adr/adr-005.md
+  - application/README.md
+  - study-protocol/README.md
+INFO    -  Documentation built in 0.24 seconds

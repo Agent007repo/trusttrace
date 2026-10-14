@@ -1,0 +1,706 @@
+stakeholders:
+- id: shipper
+  description: Synthetic SME shipper
+  kind: organisation
+- id: platform
+  description: Synthetic service operator
+  kind: organisation
+trustors:
+- id: shipper-trustor
+  description: Shipper entrusts selected document processing
+  stakeholder_id: shipper
+trustees:
+- id: platform-trustee
+  description: Platform receives bounded authority
+  stakeholder_id: platform
+scopes:
+- id: scope-documents
+  description: Check synthetic logistics documents
+  action: assist-and-review
+conditions:
+- id: condition-evidence
+  description: Evidence-bearing answer and human decision
+  required_evidence:
+  - passing-scenario
+concerns:
+- id: synthetic-concern-001
+  description: 'Authored design concern: Carrier payloads exclude confidential prices.'
+  provenance: synthetic
+- id: synthetic-concern-002
+  description: 'Authored design concern: Unknown data recipient roles are denied.'
+  provenance: synthetic
+- id: synthetic-concern-003
+  description: 'Authored design concern: Low confidence suggestions enter a pending
+    review queue.'
+  provenance: synthetic
+- id: synthetic-concern-004
+  description: 'Authored design concern: Compliance suggestions always require human
+    review.'
+  provenance: synthetic
+- id: synthetic-concern-005
+  description: 'Authored design concern: Review context must match the item tenant.'
+  provenance: synthetic
+- id: synthetic-concern-006
+  description: 'Authored design concern: A decision requires a nonempty reviewer identity.'
+  provenance: synthetic
+- id: synthetic-concern-007
+  description: 'Authored design concern: A rejected suggestion retains a decision
+    event.'
+  provenance: synthetic
+- id: synthetic-concern-008
+  description: 'Authored design concern: Final decisions cannot be silently overwritten.'
+  provenance: synthetic
+- id: synthetic-concern-009
+  description: 'Authored design concern: Suggestion citations resolve to retrieved
+    passage identifiers.'
+  provenance: synthetic
+- id: synthetic-concern-010
+  description: 'Authored design concern: The mock gateway abstains without supporting
+    passages.'
+  provenance: synthetic
+- id: synthetic-concern-011
+  description: 'Authored design concern: Retrieval only uses passages belonging to
+    the selected tenant.'
+  provenance: synthetic
+- id: synthetic-concern-012
+  description: 'Authored design concern: Audit verification detects modified event
+    content.'
+  provenance: synthetic
+- id: synthetic-concern-013
+  description: 'Authored design concern: Audit verification detects truncation against
+    a saved count and head.'
+  provenance: synthetic
+- id: synthetic-concern-014
+  description: 'Authored design concern: Events are copied before appending to the
+    audit chain.'
+  provenance: synthetic
+- id: synthetic-concern-015
+  description: 'Authored design concern: Cross-document checks flag inconsistent or
+    missing shipment fields.'
+  provenance: synthetic
+- id: synthetic-concern-016
+  description: 'Authored design concern: Explanation cards disclose mock provenance
+    and confidence limits.'
+  provenance: synthetic
+- id: synthetic-concern-017
+  description: 'Authored future concern: Explain tariff classification against verified
+    sources.'
+  provenance: synthetic
+- id: synthetic-concern-018
+  description: 'Authored future concern: Retrieve operative EU regulatory passages
+    with versioned citations.'
+  provenance: synthetic
+- id: synthetic-concern-019
+  description: 'Authored future concern: Gate provider replacement on a documented
+    evaluation.'
+  provenance: synthetic
+- id: synthetic-concern-020
+  description: 'Authored future concern: Persist review and audit state across restarts.'
+  provenance: synthetic
+requirements:
+- id: TR-001
+  description: Carrier payloads exclude confidential prices.
+  statement: Carrier payloads exclude confidential prices.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-001
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Privacy and data governance
+  fit_criterion: No price key in carrier payload.
+  priority: must
+  decisions:
+  - ADR-001
+  components:
+  - policy
+  tests:
+  - TEST-001
+  conflicts:
+  - CONFLICT-01
+- id: TR-002
+  description: Unknown data recipient roles are denied.
+  statement: Unknown data recipient roles are denied.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-002
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Privacy and data governance
+  fit_criterion: PermissionError before any payload.
+  priority: must
+  decisions:
+  - ADR-001
+  components:
+  - policy
+  tests:
+  - TEST-002
+  conflicts: []
+- id: TR-003
+  description: Low confidence suggestions enter a pending review queue.
+  statement: Low confidence suggestions enter a pending review queue.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-003
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Human agency and oversight
+  fit_criterion: Pending status and low-confidence reason.
+  priority: must
+  decisions:
+  - ADR-002
+  components:
+  - review
+  tests:
+  - TEST-003
+  conflicts:
+  - CONFLICT-02
+- id: TR-004
+  description: Compliance suggestions always require human review.
+  statement: Compliance suggestions always require human review.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-004
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Human agency and oversight
+  fit_criterion: High confidence cannot set approved status.
+  priority: must
+  decisions:
+  - ADR-002
+  components:
+  - review
+  tests:
+  - TEST-004
+  conflicts:
+  - CONFLICT-02
+- id: TR-005
+  description: Review context must match the item tenant.
+  statement: Review context must match the item tenant.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-005
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Privacy and data governance
+  fit_criterion: Foreign context denied; pending item unchanged.
+  priority: must
+  decisions:
+  - ADR-002
+  components:
+  - review
+  tests:
+  - TEST-005
+  conflicts: []
+- id: TR-006
+  description: A decision requires a nonempty reviewer identity.
+  statement: A decision requires a nonempty reviewer identity.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-006
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Blank reviewer denied.
+  priority: must
+  decisions:
+  - ADR-002
+  components:
+  - review
+  tests:
+  - TEST-006
+  conflicts: []
+- id: TR-007
+  description: A rejected suggestion retains a decision event.
+  statement: A rejected suggestion retains a decision event.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-007
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Reject status and audit event agree.
+  priority: must
+  decisions:
+  - ADR-002
+  components:
+  - review
+  tests:
+  - TEST-007
+  conflicts: []
+- id: TR-008
+  description: Final decisions cannot be silently overwritten.
+  statement: Final decisions cannot be silently overwritten.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-008
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Second decision raises error.
+  priority: must
+  decisions:
+  - ADR-002
+  components:
+  - review
+  tests:
+  - TEST-008
+  conflicts: []
+- id: TR-009
+  description: Suggestion citations resolve to retrieved passage identifiers.
+  statement: Suggestion citations resolve to retrieved passage identifiers.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-009
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Transparency
+  fit_criterion: Unknown citation rejected.
+  priority: must
+  decisions:
+  - ADR-003
+  components:
+  - retrieval
+  tests:
+  - TEST-009
+  conflicts:
+  - CONFLICT-01
+- id: TR-010
+  description: The mock gateway abstains without supporting passages.
+  statement: The mock gateway abstains without supporting passages.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-010
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Technical robustness and safety
+  fit_criterion: No support produces an error rather than an answer.
+  priority: must
+  decisions:
+  - ADR-003
+  components:
+  - retrieval
+  tests:
+  - TEST-010
+  conflicts: []
+- id: TR-011
+  description: Retrieval only uses passages belonging to the selected tenant.
+  statement: Retrieval only uses passages belonging to the selected tenant.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-011
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Privacy and data governance
+  fit_criterion: Foreign tenant obtains no matching passage.
+  priority: must
+  decisions:
+  - ADR-003
+  components:
+  - retrieval
+  tests:
+  - TEST-011
+  conflicts: []
+- id: TR-012
+  description: Audit verification detects modified event content.
+  statement: Audit verification detects modified event content.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-012
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Digest verification fails after event mutation.
+  priority: must
+  decisions:
+  - ADR-004
+  components:
+  - audit
+  tests:
+  - TEST-012
+  conflicts: []
+- id: TR-013
+  description: Audit verification detects truncation against a saved count and head.
+  statement: Audit verification detects truncation against a saved count and head.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-013
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Removed tail fails against independently retained anchor.
+  priority: must
+  decisions:
+  - ADR-004
+  components:
+  - audit
+  tests:
+  - TEST-013
+  conflicts: []
+- id: TR-014
+  description: Events are copied before appending to the audit chain.
+  statement: Events are copied before appending to the audit chain.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-014
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Caller mutation leaves verification valid.
+  priority: must
+  decisions:
+  - ADR-004
+  components:
+  - audit
+  tests:
+  - TEST-014
+  conflicts: []
+- id: TR-015
+  description: Cross-document checks flag inconsistent or missing shipment fields.
+  statement: Cross-document checks flag inconsistent or missing shipment fields.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-015
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Technical robustness and safety
+  fit_criterion: Packages, weight and shipment id checked; exact differences returned.
+  priority: must
+  decisions:
+  - ADR-005
+  components:
+  - consistency
+  tests:
+  - TEST-015
+  conflicts: []
+- id: TR-016
+  description: Explanation cards disclose mock provenance and confidence limits.
+  statement: Explanation cards disclose mock provenance and confidence limits.
+  rationale: Bounded assistance with explicit evidence in the authored case.
+  source: synthetic-concern-016
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Transparency
+  fit_criterion: Mock identifier and uncalibrated warning visible.
+  priority: must
+  decisions:
+  - ADR-002
+  components:
+  - review
+  tests:
+  - TEST-016
+  conflicts: []
+- id: TR-017
+  description: Explain tariff classification against verified sources.
+  statement: Explain tariff classification against verified sources.
+  rationale: Pending later milestone, not claimed implemented.
+  source: synthetic-concern-017
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Pending detailed fit criterion before promotion to must.
+  priority: should
+  decisions: []
+  components: []
+  tests: []
+  conflicts: []
+- id: TR-018
+  description: Retrieve operative EU regulatory passages with versioned citations.
+  statement: Retrieve operative EU regulatory passages with versioned citations.
+  rationale: Pending later milestone, not claimed implemented.
+  source: synthetic-concern-018
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Pending detailed fit criterion before promotion to must.
+  priority: should
+  decisions: []
+  components: []
+  tests: []
+  conflicts: []
+- id: TR-019
+  description: Gate provider replacement on a documented evaluation.
+  statement: Gate provider replacement on a documented evaluation.
+  rationale: Pending later milestone, not claimed implemented.
+  source: synthetic-concern-019
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Pending detailed fit criterion before promotion to must.
+  priority: should
+  decisions: []
+  components: []
+  tests: []
+  conflicts: []
+- id: TR-020
+  description: Persist review and audit state across restarts.
+  statement: Persist review and audit state across restarts.
+  rationale: Pending later milestone, not claimed implemented.
+  source: synthetic-concern-020
+  trustor: shipper-trustor
+  trustee: platform-trustee
+  scope: scope-documents
+  condition: condition-evidence
+  dimension: Accountability
+  fit_criterion: Pending detailed fit criterion before promotion to must.
+  priority: should
+  decisions: []
+  components: []
+  tests: []
+  conflicts: []
+scenarios:
+- id: SC-001
+  description: Carrier payloads exclude confidential prices.
+  requirement: TR-001
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_price_never_shared
+  artefact: policy
+  environment: Local deterministic mock; no remote system
+  response: Carrier payloads exclude confidential prices.
+  response_measure: No price key in carrier payload.
+- id: SC-002
+  description: Unknown data recipient roles are denied.
+  requirement: TR-002
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_unknown_role_denied
+  artefact: policy
+  environment: Local deterministic mock; no remote system
+  response: Unknown data recipient roles are denied.
+  response_measure: PermissionError before any payload.
+- id: SC-003
+  description: Low confidence suggestions enter a pending review queue.
+  requirement: TR-003
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_low_confidence_review
+  artefact: review
+  environment: Local deterministic mock; no remote system
+  response: Low confidence suggestions enter a pending review queue.
+  response_measure: Pending status and low-confidence reason.
+- id: SC-004
+  description: Compliance suggestions always require human review.
+  requirement: TR-004
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_high_confidence_still_reviewed
+  artefact: review
+  environment: Local deterministic mock; no remote system
+  response: Compliance suggestions always require human review.
+  response_measure: High confidence cannot set approved status.
+- id: SC-005
+  description: Review context must match the item tenant.
+  requirement: TR-005
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_foreign_tenant_review_denied
+  artefact: review
+  environment: Local deterministic mock; no remote system
+  response: Review context must match the item tenant.
+  response_measure: Foreign context denied; pending item unchanged.
+- id: SC-006
+  description: A decision requires a nonempty reviewer identity.
+  requirement: TR-006
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_reviewer_required
+  artefact: review
+  environment: Local deterministic mock; no remote system
+  response: A decision requires a nonempty reviewer identity.
+  response_measure: Blank reviewer denied.
+- id: SC-007
+  description: A rejected suggestion retains a decision event.
+  requirement: TR-007
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_rejection_recorded
+  artefact: review
+  environment: Local deterministic mock; no remote system
+  response: A rejected suggestion retains a decision event.
+  response_measure: Reject status and audit event agree.
+- id: SC-008
+  description: Final decisions cannot be silently overwritten.
+  requirement: TR-008
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_duplicate_decision_denied
+  artefact: review
+  environment: Local deterministic mock; no remote system
+  response: Final decisions cannot be silently overwritten.
+  response_measure: Second decision raises error.
+- id: SC-009
+  description: Suggestion citations resolve to retrieved passage identifiers.
+  requirement: TR-009
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_citation_resolves
+  artefact: retrieval
+  environment: Local deterministic mock; no remote system
+  response: Suggestion citations resolve to retrieved passage identifiers.
+  response_measure: Unknown citation rejected.
+- id: SC-010
+  description: The mock gateway abstains without supporting passages.
+  requirement: TR-010
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_no_support_abstains
+  artefact: retrieval
+  environment: Local deterministic mock; no remote system
+  response: The mock gateway abstains without supporting passages.
+  response_measure: No support produces an error rather than an answer.
+- id: SC-011
+  description: Retrieval only uses passages belonging to the selected tenant.
+  requirement: TR-011
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_retrieval_isolated
+  artefact: retrieval
+  environment: Local deterministic mock; no remote system
+  response: Retrieval only uses passages belonging to the selected tenant.
+  response_measure: Foreign tenant obtains no matching passage.
+- id: SC-012
+  description: Audit verification detects modified event content.
+  requirement: TR-012
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_audit_mutation_detected
+  artefact: audit
+  environment: Local deterministic mock; no remote system
+  response: Audit verification detects modified event content.
+  response_measure: Digest verification fails after event mutation.
+- id: SC-013
+  description: Audit verification detects truncation against a saved count and head.
+  requirement: TR-013
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_truncation_detected_with_anchor
+  artefact: audit
+  environment: Local deterministic mock; no remote system
+  response: Audit verification detects truncation against a saved count and head.
+  response_measure: Removed tail fails against independently retained anchor.
+- id: SC-014
+  description: Events are copied before appending to the audit chain.
+  requirement: TR-014
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_input_mutation_cannot_rewrite_log
+  artefact: audit
+  environment: Local deterministic mock; no remote system
+  response: Events are copied before appending to the audit chain.
+  response_measure: Caller mutation leaves verification valid.
+- id: SC-015
+  description: Cross-document checks flag inconsistent or missing shipment fields.
+  requirement: TR-015
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_missing_and_inconsistent_fields_flagged
+  artefact: consistency
+  environment: Local deterministic mock; no remote system
+  response: Cross-document checks flag inconsistent or missing shipment fields.
+  response_measure: Packages, weight and shipment id checked; exact differences returned.
+- id: SC-016
+  description: Explanation cards disclose mock provenance and confidence limits.
+  requirement: TR-016
+  source: Synthetic actor or failure injector
+  stimulus: Exercise scenario test_explanation_discloses_mock
+  artefact: review
+  environment: Local deterministic mock; no remote system
+  response: Explanation cards disclose mock provenance and confidence limits.
+  response_measure: Mock identifier and uncalibrated warning visible.
+conflicts:
+- id: CONFLICT-01
+  description: Source transparency versus confidential field exposure
+  requirements:
+  - TR-001
+  - TR-009
+  resolution_decision: ADR-001
+- id: CONFLICT-02
+  description: Fast automation versus human authority
+  requirements:
+  - TR-003
+  - TR-004
+  resolution_decision: ADR-002
+decisions:
+- id: ADR-001
+  description: policy design decision
+  document: docs/adr/adr-001.md
+- id: ADR-002
+  description: review design decision
+  document: docs/adr/adr-002.md
+- id: ADR-003
+  description: retrieval design decision
+  document: docs/adr/adr-003.md
+- id: ADR-004
+  description: audit design decision
+  document: docs/adr/adr-004.md
+- id: ADR-005
+  description: consistency design decision
+  document: docs/adr/adr-005.md
+components:
+- id: policy
+  description: Prototype policy component
+- id: review
+  description: Prototype review component
+- id: retrieval
+  description: Prototype retrieval component
+- id: audit
+  description: Prototype audit component
+- id: consistency
+  description: Prototype consistency component
+tests:
+- id: TEST-001
+  description: No price key in carrier payload.
+  nodeid: tests/scenarios/test_boundaries.py::test_price_never_shared
+- id: TEST-002
+  description: PermissionError before any payload.
+  nodeid: tests/scenarios/test_boundaries.py::test_unknown_role_denied
+- id: TEST-003
+  description: Pending status and low-confidence reason.
+  nodeid: tests/scenarios/test_boundaries.py::test_low_confidence_review
+- id: TEST-004
+  description: High confidence cannot set approved status.
+  nodeid: tests/scenarios/test_boundaries.py::test_high_confidence_still_reviewed
+- id: TEST-005
+  description: Foreign context denied; pending item unchanged.
+  nodeid: tests/scenarios/test_boundaries.py::test_foreign_tenant_review_denied
+- id: TEST-006
+  description: Blank reviewer denied.
+  nodeid: tests/scenarios/test_boundaries.py::test_reviewer_required
+- id: TEST-007
+  description: Reject status and audit event agree.
+  nodeid: tests/scenarios/test_boundaries.py::test_rejection_recorded
+- id: TEST-008
+  description: Second decision raises error.
+  nodeid: tests/scenarios/test_boundaries.py::test_duplicate_decision_denied
+- id: TEST-009
+  description: Unknown citation rejected.
+  nodeid: tests/scenarios/test_boundaries.py::test_citation_resolves
+- id: TEST-010
+  description: No support produces an error rather than an answer.
+  nodeid: tests/scenarios/test_boundaries.py::test_no_support_abstains
+- id: TEST-011
+  description: Foreign tenant obtains no matching passage.
+  nodeid: tests/scenarios/test_boundaries.py::test_retrieval_isolated
+- id: TEST-012
+  description: Digest verification fails after event mutation.
+  nodeid: tests/scenarios/test_boundaries.py::test_audit_mutation_detected
+- id: TEST-013
+  description: Removed tail fails against independently retained anchor.
+  nodeid: tests/scenarios/test_boundaries.py::test_truncation_detected_with_anchor
+- id: TEST-014
+  description: Caller mutation leaves verification valid.
+  nodeid: tests/scenarios/test_boundaries.py::test_input_mutation_cannot_rewrite_log
+- id: TEST-015
+  description: Packages, weight and shipment id checked; exact differences returned.
+  nodeid: tests/scenarios/test_boundaries.py::test_missing_and_inconsistent_fields_flagged
+- id: TEST-016
+  description: Mock identifier and uncalibrated warning visible.
+  nodeid: tests/scenarios/test_boundaries.py::test_explanation_discloses_mock

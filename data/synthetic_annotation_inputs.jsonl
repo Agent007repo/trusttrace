@@ -1,0 +1,12 @@
+{"id": "SYN-001", "text": "As a carrier, I need destination and weight, but I should not see the exporter pricing or private contacts.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-002", "text": "As a customs broker, I want to see the source passage for each code suggestion before I confirm it.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-003", "text": "As a shipper, I want uncertain suggestions to wait for a reviewer. Confidence alone should not submit anything.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-004", "text": "As an auditor, I need to know who rejected a recommendation and why the record was changed.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-005", "text": "As a platform operator, I want to replace a model only after we test whether the new one still meets requirements.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-006", "text": "As a driver, I should be able to flag that a document is wrong without being able to approve customs decisions.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-007", "text": "As a shipper, I need my shipment records to remain invisible to other customers.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-008", "text": "As a reviewer, I need the system to stop answering when it cannot retrieve a supporting source.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-009", "text": "As a freight forwarder, I want inconsistencies in package counts and weights to be explained before dispatch.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-010", "text": "As a data protection officer, I want data-sharing permissions to expire and unexpected recipients to be denied.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-011", "text": "As a small exporter, I want an offline option, with clear limits, if our external service is unavailable.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
+{"id": "SYN-012", "text": "As a regulator, I need evidence provenance and a recorded human decision, not a fluent explanation alone.", "provenance": "synthetic-ai-assisted", "gold_status": "unlabelled"}
