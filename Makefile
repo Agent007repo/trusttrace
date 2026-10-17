@@ -8,6 +8,7 @@ test:
 	uv run pytest --cov=trusttrace --cov-report=term-missing --cov-report=xml --junitxml=results/raw/software-checks/junit.xml
 	uv run python scripts/integrity.py
 analyze:
+	uv run python scripts/render_conflicts.py
 	uv run python scripts/analyze.py
 	uv run python scripts/prepare_b10.py
 	uv run trusttrace trace

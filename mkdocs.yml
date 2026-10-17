@@ -7,12 +7,42 @@ nav:
   - Method: method.md
   - Results: results.md
   - Architecture: architecture.md
+  - Conflicts and trade-offs: conflicts.md
+  - Pattern catalogue: patterns.md
+  - Decision records:
+      - adr/adr-001.md
+      - adr/adr-002.md
+      - adr/adr-003.md
+      - adr/adr-004.md
+      - adr/adr-005.md
+      - adr/adr-006.md
+      - adr/adr-007.md
+      - adr/adr-008.md
+      - adr/adr-009.md
+      - adr/adr-010.md
+      - adr/adr-011.md
+      - adr/adr-012.md
+      - adr/adr-013.md
+      - adr/adr-014.md
+      - adr/adr-015.md
   - Multi-party case: case/2026-10-14-multi-party.md
+  - B10 pilot protocol: protocols/2026-10-17-b10-pilot-v0.3.md
   - B10 preparation: protocols/2026-10-14-b10-execution-appendix.md
   - B10 analysis tooling: protocols/2026-10-14-b10-analysis-tooling-v0.2.md
   - Model candidates: protocols/2026-10-14-model-shortlist.md
   - Source verification: protocols/2026-10-14-source-verification.md
+  - Practitioner study protocol: study-protocol/README.md
   - Reproduce: reproduce.md
   - Limitations: limitations.md
   - Related work: related-work.md
   - How this was built: how-this-was-built.md
+markdown_extensions:
+  - tables
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+validation:
+  links:
+    not_found: info
