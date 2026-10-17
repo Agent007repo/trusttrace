@@ -110,7 +110,7 @@ def main() -> int:
             row["note"] = f"{type(exc).__name__}: {exc}"[:200]
         rows.append(row)
         print(
-            f"{row['status']:8} {row['key']:14} {row.get('registered_title', row.get('note', ''))[:90]}"
+            f"{row['status']:8} {row['reference']:14} {row.get('registered_title', row.get('note', ''))[:90]}"
         )
     out = root / "results/raw/citation-check.json"
     out.parent.mkdir(parents=True, exist_ok=True)
