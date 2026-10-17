@@ -21,3 +21,5 @@
 2026-10-17: Twenty-two of the 24 should requirements are implemented in `ecosystem.py` with requirement-tagged scenario tests. TR-017 and TR-018 stay open because they depend on verified regulatory sources.
 
 2026-10-17: The paper uses a manual bibliography so it builds with the TeX Live packages CI installs. Every DOI and arXiv identifier is checked by `scripts/check_citations.py`.
+
+2026-10-17: Gold labels imported from the locked labelling page (locked 11:57 UTC) after the seal record was committed. 10 texts, 17 obligations, every evidence span an exact substring of its source, source digests equal to those in the sealed runs. Samarth confirmed he wrote the labels himself. The page logged 4.0 minutes between first edit and last completion; he drafted before entering them, so this is entry time, not total labelling effort, and the report says so.
