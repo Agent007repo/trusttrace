@@ -176,6 +176,10 @@ summary["f1_reliable_by_preregistered_rule"] = reliable if agreement else None
 (derived / "b10_pilot_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
 # --- paper inputs ----------------------------------------------------------------
+BACKEND = {
+    "Qwen2.5-1.5B": "CPU, 2 threads, cloud container",
+    "Mistral-7B": "Metal GPU, M1 Max",
+}
 short = {
     "Qwen/Qwen2.5-1.5B-Instruct": "Qwen2.5-1.5B",
     "mistralai/Mistral-7B-Instruct-v0.3": "Mistral-7B",
@@ -229,7 +233,7 @@ body = (
     r"\textbf{Results.} "
     + f"The author labelled {summary['gold_requirements']} atomic obligations across the ten texts"
     + (
-        f"; the first and last saves were {labelling_minutes:.0f} minutes apart. "
+        f". He drafted them first and then entered them in the labelling tool; the entries span {labelling_minutes:.0f} minutes, which is entry time, not total labelling effort. "
         if labelling_minutes
         else ". "
     )
@@ -238,8 +242,8 @@ body = (
     + "; ".join(contrast_txt)
     + ". "
     + agree_txt
-    + " Median generation time for the guided arm on two CPU cores was "
-    + ", ".join(f"{k} {v}\\,s" for k, v in lat.items())
+    + " Median generation time for the guided arm was "
+    + ", ".join(f"{k} {v}\\,s ({BACKEND.get(k, 'unknown backend')})" for k, v in lat.items())
     + "."
 )
 write("b10_results.tex", "\n".join(lines) + "\n\n" + body)
