@@ -1,3 +1,37 @@
-# Application assets state
+# Application assets: TU/e, Trustworthy LLM-Enabled Ecosystems
 
-Pending. Final CV and motivation text must describe completed work and measured evidence only. No claims that Samarth has reviewed or conducted these experiments are prepared in this foundation. The report skeleton is not an approved substitute for a thesis.
+Drafts for Samarth to edit into his own words before use. The pilot sentence in the summary and the audit answers below must be updated once the blinded matcher audit is scored; until then the F1 values are provisional. The motivation paragraph opens with a claim about your BNP Paribas capstone: keep it only if it is accurate.
+
+## Project summary (120 words)
+
+TrustTrace asks how a team building an LLM-enabled system can show why a design choice answers a stakeholder's trust concern, and where that evidence stops. A typed metamodel links eight stakeholder roles in an authored logistics-compliance case to 40 requirements, 15 decision records, software components and executed tests; a verifier fails on any dangling link, and 38 requirements trace to passing scenarios. A pre-registered feasibility pilot then tested whether small local models can extract atomic obligations with exact evidence, comparing a metamodel-guided prompt with a naive one over 10 texts, two models and 120 generations, scored against labels I wrote myself. Outputs were sealed by checksum before my labels were imported, and a blinded human audit checks the automatic matcher.
+
+## Motivation paragraph (200 words)
+
+On the BNP Paribas-sponsored capstone at McGill, most of my work was turning an ambiguous request into requirements, data lineage and documented assumptions that both business and technical stakeholders could check. When LLMs enter that chain, the hard question stops being whether the model is accurate and becomes whether anyone can trace a decision back to the concern that motivated it. TrustTrace is my attempt to make that trace explicit and testable. Building it taught me where the evidence runs out: coverage of a synthetic case is not trustworthiness, and a citation that points to the right passage does not prove the passage supports the claim. The extraction pilot was usefully humbling. Writing the gold labels myself showed how much judgement "one atomic obligation" hides, and the automatic matcher needed a blinded audit before I could believe any F1 score. I would like to continue this with real practitioners and real regulatory text, studying how architects reason about conflicting stakeholder concerns when LLM components are in the loop. This vacancy's focus on trustworthy LLM-enabled ecosystems is the question I want to spend four years on. I built this with AI coding assistance, disclosed, and can defend every design choice.
+
+## Interview defence pack
+
+**Your case is synthetic. What does it prove?**
+That the method works mechanically: the metamodel catches dangling links and every must requirement reaches an executed test. It does not prove a real ecosystem is trustworthy, and no practitioner has validated it. That is the first thing a PhD would fix.
+
+**Ten texts and one annotator. Why should anyone believe the pilot?**
+They should not believe it as evidence about guidance in general, and the protocol says so in advance. It is a feasibility pilot: can the labelling scheme be applied, do small models return valid grounded output, how big might the effect be, and can matching be automated. It sizes the full 24-text study.
+
+**How do you know you did not label with the outputs in view?**
+The generations were sealed by a checksum record committed before the labels were imported, and the git history shows the order. The audit key stays out of the repository until the audit is scored.
+
+**Why trust an automatic matcher?**
+I do not by default. Its weights and threshold were fixed before any output existed, and a blinded audit of 30 pairs (15 accepted, 15 near-misses, decisions hidden) tests it against my judgement. If kappa is below 0.6 the F1 results are reported as unreliable.
+
+**Qwen ran on a cloud CPU and Mistral on a Mac GPU. Is that a confound?**
+Not for output quality: seeds and decoding settings are fixed. It does make latencies incomparable across models, which the report states. The cloud run was interrupted, and the switch is logged as a dated deviation before any new output existed.
+
+**Guided prompting helped Mistral but not Qwen. What do you conclude?**
+Nothing directional yet. The intervals are wide on 10 texts and the matcher audit decides whether the F1 values are reliable at all. A plausible reading is that structure helps a model that can follow it, which the full study can test.
+
+**What did the AI assistant do, and what did you do?**
+I set the brief, wrote every gold label, ran the Mistral generations on my Mac and do the blinded audit. The assistant proposed the protocol and wrote most of the code and drafts under my direction. Every number is generated by code, and every reference was checked against Crossref or arXiv.
+
+**What would you do first in the PhD?**
+Run the full study with verified legal excerpts and a second annotator, then put the trace artefacts in front of practitioners to see whether they actually change how architects reason about conflicting concerns.
