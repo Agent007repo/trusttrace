@@ -45,7 +45,10 @@ lines = [
 for c in case["conflicts"]:
     adr = c["resolution_decision"]
     doc = (root / f"docs/adr/adr-{adr.split('-')[1]}.md").read_text()
-    cost = doc.split("## Consequences", 1)[1].split("##", 1)[0].strip().split(". ")[0].rstrip(".") + "."
+    cost = (
+        doc.split("## Consequences", 1)[1].split("##", 1)[0].strip().split(". ")[0].rstrip(".")
+        + "."
+    )
     req_list = ", ".join(c["requirements"])
     lines.append(
         f"| {c['id']} | {c['description']} | {req_list} | [{adr}](adr/adr-{adr.split('-')[1]}.md) | {cost} |"

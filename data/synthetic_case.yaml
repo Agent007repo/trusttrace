@@ -254,7 +254,7 @@ requirements:
   statement: Carrier payloads exclude confidential prices.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-001
-  trustor: carrier-trustor
+  trustor: shipper-trustor
   trustee: platform-trustee
   scope: scope-sharing
   condition: condition-evidence

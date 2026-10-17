@@ -1,0 +1,236 @@
+[
+ {
+  "key": "mayer1995",
+  "id": "10.2307/258792",
+  "registered_title": "An Integrative Model of Organizational Trust",
+  "status": "pass"
+ },
+ {
+  "key": "lee2004",
+  "id": "10.1518/hfes.46.1.50.30392",
+  "registered_title": "Trust in Automation: Designing for Appropriate Reliance",
+  "status": "pass"
+ },
+ {
+  "key": "jacovi2021",
+  "id": "10.1145/3442188.3445923",
+  "registered_title": "Formalizing Trust in Artificial Intelligence",
+  "status": "pass"
+ },
+ {
+  "key": "toreini2020",
+  "id": "10.1145/3351095.3372834",
+  "registered_title": "The relationship between trust in AI and trustworthy machine learning technologies",
+  "status": "pass"
+ },
+ {
+  "key": "hleg2019",
+  "id": "https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai",
+  "status": "url-only"
+ },
+ {
+  "key": "ahmad2023",
+  "id": "10.1016/j.infsof.2023.107176",
+  "registered_title": "Requirements engineering for artificial intelligence systems: A systematic mapping study",
+  "status": "pass"
+ },
+ {
+  "key": "vogelsang2019",
+  "id": "10.1109/REW.2019.00050",
+  "registered_title": "Requirements Engineering for Machine Learning: Perspectives from Data Scientists",
+  "status": "pass"
+ },
+ {
+  "key": "habibullah2024",
+  "id": "10.1109/RE59067.2024.00061",
+  "registered_title": "Scoping of Non-Functional Requirements for Machine Learning Systems",
+  "status": "pass"
+ },
+ {
+  "key": "zowghi2023",
+  "id": "10.1109/MS.2023.3302934",
+  "registered_title": "What’s Missing in Requirements Engineering for Responsible AI?",
+  "status": "pass"
+ },
+ {
+  "key": "lu2024",
+  "id": "10.1145/3626234",
+  "registered_title": "Responsible AI Pattern Catalogue: A Collection of Best Practices for AI Governance and Engineering",
+  "status": "FAIL"
+ },
+ {
+  "key": "ronanki2023",
+  "id": "10.1109/SEAA60479.2023.00061",
+  "registered_title": "Investigating ChatGPT’s Potential to Assist in Requirements Elicitation Processes",
+  "status": "pass"
+ },
+ {
+  "key": "arora2024",
+  "id": "10.1007/978-3-031-55642-5_6",
+  "registered_title": "Advancing Requirements Engineering Through Generative AI: Assessing the Role of LLMs",
+  "status": "pass"
+ },
+ {
+  "key": "chung2000",
+  "id": "10.1007/978-1-4615-5269-7",
+  "registered_title": "Non-Functional Requirements in Software Engineering",
+  "status": "pass"
+ },
+ {
+  "key": "dalpiaz2016",
+  "id": "1605.07767",
+  "registered_title": "iStar 2.0 Language Guide",
+  "status": "pass"
+ },
+ {
+  "key": "tang2017",
+  "id": "10.1109/ICSA.2017.15",
+  "registered_title": "Human Aspects in Software Architecture Decision Making: A Literature Review",
+  "status": "pass"
+ },
+ {
+  "key": "razavian2019",
+  "id": "10.1016/j.jss.2018.12.003",
+  "registered_title": "Empirical research for software architecture decision making: An analysis",
+  "status": "pass"
+ },
+ {
+  "key": "razavian2016",
+  "id": "10.1002/smr.1776",
+  "registered_title": "In two minds: how reflections influence software design thinking",
+  "status": "pass"
+ },
+ {
+  "key": "alidoosti2023",
+  "id": "10.1109/ICSA-C57050.2023.00031",
+  "registered_title": "Ethics-Aware DecidArch Game: Designing a Game to Reflect on Ethical Considerations in Software Architecture Design Decision Making",
+  "status": "pass"
+ },
+ {
+  "key": "razavian2023",
+  "id": "10.1016/j.jss.2022.111560",
+  "registered_title": "The vision of on-demand architectural knowledge systems as a decision-making companion",
+  "status": "pass"
+ },
+ {
+  "key": "kazman2000",
+  "id": "10.21236/ADA382629",
+  "registered_title": "ATAM: Method for Architecture Evaluation",
+  "status": "pass"
+ },
+ {
+  "key": "ozkaya2020",
+  "id": "10.1109/MS.2020.2993662",
+  "registered_title": "What Is Really Different in Engineering AI-Enabled Systems?",
+  "status": "pass"
+ },
+ {
+  "key": "breck2017",
+  "id": "10.1109/BigData.2017.8258038",
+  "registered_title": "The ML test score: A rubric for ML production readiness and technical debt reduction",
+  "status": "pass"
+ },
+ {
+  "key": "lewis2020",
+  "id": "2005.11401",
+  "registered_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+  "status": "pass"
+ },
+ {
+  "key": "greshake2023",
+  "id": "10.1145/3605764.3623985",
+  "registered_title": "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection",
+  "status": "pass"
+ },
+ {
+  "key": "alfrink2022",
+  "id": "10.1007/s11023-022-09611-z",
+  "registered_title": "Contestable AI by Design: Towards a Framework",
+  "status": "pass"
+ },
+ {
+  "key": "rfc6962",
+  "id": "10.17487/RFC6962",
+  "registered_title": "Certificate Transparency",
+  "status": "pass"
+ },
+ {
+  "key": "rfc6749",
+  "id": "10.17487/RFC6749",
+  "registered_title": "The OAuth 2.0 Authorization Framework",
+  "status": "pass"
+ },
+ {
+  "key": "esposito2026",
+  "id": "2602.05486",
+  "registered_title": "Sovereign-by-Design A Reference Architecture for AI and Blockchain Enabled Systems",
+  "status": "pass"
+ },
+ {
+  "key": "aiact",
+  "id": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+  "status": "url-only"
+ },
+ {
+  "key": "omnibus2026",
+  "id": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202601744",
+  "status": "url-only"
+ },
+ {
+  "key": "gdpr",
+  "id": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+  "status": "url-only"
+ },
+ {
+  "key": "ucc",
+  "id": "https://eur-lex.europa.eu/eli/reg/2013/952/oj",
+  "status": "url-only"
+ },
+ {
+  "key": "efti",
+  "id": "https://eur-lex.europa.eu/eli/reg/2020/1056/oj",
+  "status": "url-only"
+ },
+ {
+  "key": "hevner2004",
+  "id": "10.2307/25148625",
+  "registered_title": "Design Science in Information Systems Research1",
+  "status": "pass"
+ },
+ {
+  "key": "wieringa2014",
+  "id": "10.1007/978-3-662-43839-8",
+  "registered_title": "Design Science Methodology for Information Systems and Software Engineering",
+  "status": "pass"
+ },
+ {
+  "key": "qwen25",
+  "id": "2412.15115",
+  "registered_title": "Qwen2.5 Technical Report",
+  "status": "pass"
+ },
+ {
+  "key": "mistral7b",
+  "id": "2310.06825",
+  "registered_title": "Mistral 7B",
+  "status": "pass"
+ },
+ {
+  "key": "bge",
+  "id": "2309.07597",
+  "registered_title": "C-Pack: Packed Resources For General Chinese Embeddings",
+  "status": "pass"
+ },
+ {
+  "key": "cohen1960",
+  "id": "10.1177/001316446002000104",
+  "registered_title": "A Coefficient of Agreement for Nominal Scales",
+  "status": "pass"
+ },
+ {
+  "key": "efron1979",
+  "id": "10.1214/aos/1176344552",
+  "registered_title": "Bootstrap Methods: Another Look at the Jackknife",
+  "status": "pass"
+ }
+]
