@@ -82,7 +82,7 @@ def main() -> int:
     tex_path = Path(sys.argv[1]) if len(sys.argv) > 1 else root / "paper/report.tex"
     rows = []
     for e in entries(tex_path.read_text()):
-        row = {"key": e["key"], "id": e["doi"] or e["arxiv"] or e["url"]}
+        row = {"reference": e["key"], "id": e["doi"] or e["arxiv"] or e["url"]}
         try:
             if e["doi"]:
                 try:
