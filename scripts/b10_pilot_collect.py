@@ -75,6 +75,12 @@ def main() -> None:
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--manifest", type=Path, required=True)
     ap.add_argument("--only-model", default=None)
+    ap.add_argument(
+        "--n-gpu-layers",
+        type=int,
+        default=0,
+        help="0 = CPU (the cloud-container runs); -1 = offload all layers (Metal on the Mac rerun)",
+    )
     args = ap.parse_args()
 
     from llama_cpp import Llama
@@ -109,11 +115,16 @@ def main() -> None:
             continue
         path = args.models_dir / spec["artifact_file"]
         file_sha = hashlib.sha256(path.read_bytes()).hexdigest()
-        manifest["models"][spec["id"]] = {"file": spec["artifact_file"], "sha256": file_sha}  # type: ignore[index]
+        manifest["models"][spec["id"]] = {  # type: ignore[index]
+            "file": spec["artifact_file"],
+            "sha256": file_sha,
+            "n_gpu_layers": args.n_gpu_layers,
+        }
         llm = Llama(
             model_path=str(path),
             n_ctx=cfg["runtime"]["n_ctx"],
             n_threads=cfg["runtime"]["n_threads"],
+            n_gpu_layers=args.n_gpu_layers,
             verbose=False,
         )
         short = spec["family"]
