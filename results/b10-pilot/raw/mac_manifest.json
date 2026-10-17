@@ -1,0 +1,16 @@
+{
+  "config_sha256": "8aabbce83fbbe2f6a30959d673adc286039751fb58924562c36d77b720cb4eb3",
+  "llama_cpp_python": "0.3.16",
+  "python": "3.12.2",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "machine": "arm64",
+  "started": "2026-10-17T16:42:24.864971+00:00",
+  "models": {
+    "mistralai/Mistral-7B-Instruct-v0.3": {
+      "file": "Mistral-7B-Instruct-v0.3-Q4_K_M.gguf",
+      "sha256": "1270d22c0fbb3d092fb725d4d96c457b7b687a5f5a715abe1e818da303e562b6",
+      "n_gpu_layers": -1
+    }
+  },
+  "finished": "2026-10-17T16:47:02.245122+00:00"
+}

@@ -1,9 +1,129 @@
 {
-  "status": "pending",
-  "missing_inputs": [
-    "gold",
-    "runs",
-    "cache",
-    "audit"
-  ]
+  "models": {
+    "Qwen/Qwen2.5-1.5B-Instruct": {
+      "arms": {
+        "guided": {
+          "runs": 30,
+          "valid_json_rate": 1.0,
+          "macro_f1": 0.7166666666666666,
+          "mean_precision": 0.9166666666666666,
+          "mean_recall": 0.6166666666666667,
+          "predictions": 32,
+          "evidence_exact_rate": 0.8125,
+          "latency_median_s": 13.466,
+          "latency_p95_s": 20.594
+        },
+        "naive": {
+          "runs": 30,
+          "valid_json_rate": 0.9333333333333333,
+          "macro_f1": 0.7266666666666667,
+          "mean_precision": 0.9222222222222223,
+          "mean_recall": 0.6333333333333333,
+          "predictions": 30,
+          "evidence_exact_rate": 0.9333333333333333,
+          "latency_median_s": 11.925,
+          "latency_p95_s": 16.483
+        }
+      },
+      "guided_minus_naive": {
+        "paired_texts": 10,
+        "mean_difference": -0.01000000000000002,
+        "ci_lower": -0.12113888888888891,
+        "ci_upper": 0.08999999999999998,
+        "texts_guided_better": 3,
+        "texts_naive_better": 3
+      },
+      "per_text_f1": {
+        "guided": {
+          "SYN-001": 0.7777777777777777,
+          "SYN-003": 0.6666666666666666,
+          "SYN-004": 0.4444444444444444,
+          "SYN-005": 1.0,
+          "SYN-006": 0.611111111111111,
+          "SYN-007": 0.6666666666666666,
+          "SYN-008": 1.0,
+          "SYN-010": 0.6666666666666666,
+          "SYN-011": 0.6666666666666666,
+          "SYN-012": 0.6666666666666666
+        },
+        "naive": {
+          "SYN-001": 0.7111111111111111,
+          "SYN-003": 0.4444444444444444,
+          "SYN-004": 0.6666666666666666,
+          "SYN-005": 1.0,
+          "SYN-006": 0.6666666666666666,
+          "SYN-007": 1.0,
+          "SYN-008": 1.0,
+          "SYN-010": 0.6666666666666666,
+          "SYN-011": 0.4444444444444444,
+          "SYN-012": 0.6666666666666666
+        }
+      }
+    },
+    "mistralai/Mistral-7B-Instruct-v0.3": {
+      "arms": {
+        "guided": {
+          "runs": 30,
+          "valid_json_rate": 1.0,
+          "macro_f1": 0.9099999999999999,
+          "mean_precision": 0.8833333333333333,
+          "mean_recall": 0.95,
+          "predictions": 57,
+          "evidence_exact_rate": 0.631578947368421,
+          "latency_median_s": 4.71,
+          "latency_p95_s": 6.75
+        },
+        "naive": {
+          "runs": 30,
+          "valid_json_rate": 0.9666666666666667,
+          "macro_f1": 0.86,
+          "mean_precision": 0.8666666666666667,
+          "mean_recall": 0.8833333333333333,
+          "predictions": 52,
+          "evidence_exact_rate": 0.9423076923076923,
+          "latency_median_s": 4.313,
+          "latency_p95_s": 6.085
+        }
+      },
+      "guided_minus_naive": {
+        "paired_texts": 10,
+        "mean_difference": 0.05,
+        "ci_lower": 0.0,
+        "ci_upper": 0.11666666666666667,
+        "texts_guided_better": 2,
+        "texts_naive_better": 0
+      },
+      "per_text_f1": {
+        "guided": {
+          "SYN-001": 0.8000000000000002,
+          "SYN-003": 1.0,
+          "SYN-004": 1.0,
+          "SYN-005": 1.0,
+          "SYN-006": 1.0,
+          "SYN-007": 1.0,
+          "SYN-008": 1.0,
+          "SYN-010": 1.0,
+          "SYN-011": 0.5,
+          "SYN-012": 0.8000000000000002
+        },
+        "naive": {
+          "SYN-001": 0.8000000000000002,
+          "SYN-003": 1.0,
+          "SYN-004": 1.0,
+          "SYN-005": 1.0,
+          "SYN-006": 0.6666666666666666,
+          "SYN-007": 1.0,
+          "SYN-008": 1.0,
+          "SYN-010": 1.0,
+          "SYN-011": 0.3333333333333333,
+          "SYN-012": 0.8000000000000002
+        }
+      }
+    }
+  },
+  "labelling_span_minutes": 3.1,
+  "gold_requirements": 17,
+  "audit": null,
+  "status": "awaiting-audit",
+  "f1_reliable_by_preregistered_rule": null
 }
