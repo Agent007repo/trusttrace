@@ -6,7 +6,18 @@
     "path": "data/b10_pilot/sources.jsonl",
     "sha256": "f9ee6f7bdb833d84dee6fbcc0ffe581355d9cbdc55a44252e1348931537bf718",
     "selection_rule": "random.Random(20261013).sample(sorted(all 12 synthetic IDs), 10)",
-    "ids": ["SYN-001", "SYN-003", "SYN-004", "SYN-005", "SYN-006", "SYN-007", "SYN-008", "SYN-010", "SYN-011", "SYN-012"]
+    "ids": [
+      "SYN-001",
+      "SYN-003",
+      "SYN-004",
+      "SYN-005",
+      "SYN-006",
+      "SYN-007",
+      "SYN-008",
+      "SYN-010",
+      "SYN-011",
+      "SYN-012"
+    ]
   },
   "models": [
     {
@@ -36,11 +47,18 @@
     "n_threads": 2,
     "chat_template": "embedded in each GGUF file"
   },
-  "conditions": ["naive", "guided"],
+  "conditions": [
+    "naive",
+    "guided"
+  ],
   "deferred_conditions": {
     "guided-retrieval": "No independent, versioned retrieval corpus exists. Deferred to the full study."
   },
-  "seeds": [20261013, 20261014, 20261015],
+  "seeds": [
+    20261013,
+    20261014,
+    20261015
+  ],
   "decoding": {
     "temperature": 0.2,
     "top_p": 0.95,
@@ -53,7 +71,8 @@
     "guided": "For each atomic required behaviour, distinguish trustor, trustee, entrusted scope, applicable condition and observable fit criterion. Preserve separate obligations. A statement about an actor is not automatically an obligation.",
     "output_contract": "Output format: a single JSON object {\"requirements\": [{\"statement\": str, \"trustor\": str, \"trustee\": str, \"scope\": str, \"condition\": str, \"fit_criterion\": str, \"evidence_span\": str}]}. Output only the JSON object.",
     "system_template": "{common}\n{arm}\n{output_contract}",
-    "user_template": "Text:\n{text}"
+    "user_template": "Text:\n{text}",
+    "message_layout": "One user message containing the system text, a blank line, then the user text. Same for both models. Reason: a pre-collection timing check on a non-pilot text (SYN-002) showed the Mistral v0.3 chat template drops the system role (29 prompt tokens), so Mistral would never see the instructions."
   },
   "parsing": {
     "rule": "Strip surrounding whitespace and Markdown code fences; parse the first balanced top-level JSON object; validate against data/b10_output.schema.json. Predictions whose evidence_span is not an exact substring of the source are kept but flagged. Any parse or schema failure makes the run invalid-output (F1 = 0)."
