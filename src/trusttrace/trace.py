@@ -146,11 +146,15 @@ def analyze(model: CaseModel, passed: dict[str, set[str]], root: Path) -> dict[s
         for entity in groups[group]
         if entity.id not in used
     )
+    should = [r for r in rows if r["priority"] == "should"]
     return {
         "status": "engineering-verification-only",
         "total_requirements": len(rows),
         "must_denominator": len(must),
         "must_coverage": coverage,
+        "should_denominator": len(should),
+        "should_covered": sum(r["covered"] for r in should),
+        "uncovered": sorted(r["id"] for r in rows if not r["covered"]),
         "errors": errors,
         "orphans": orphans,
         "rows": rows,
@@ -171,7 +175,7 @@ def save_report(report: dict[str, Any], directory: Path) -> None:
     <title>TrustTrace engineering coverage</title><style>body{{font:16px system-ui;max-width:1100px;margin:40px auto;padding:20px}}td,th{{padding:12px;text-align:left;border-bottom:1px solid #ddd}}input{{padding:10px}}</style>
     <h1>TrustTrace: engineering coverage</h1><p>Synthetic case. No practitioner validation.</p>
     <p>Must coverage: {report["must_coverage"]:.1%}. Denominator: {report["must_denominator"]}.
-    Total catalogue: {report["total_requirements"]}. Gate: {report["gate_pass"]}.</p>
+    Total catalogue: {report["total_requirements"]}. Should covered: {report["should_covered"]} of {report["should_denominator"]}. Gate: {report["gate_pass"]}.</p>
     <label>Filter requirements <input id="filter"></label><table><thead><tr><th>ID</th><th>Priority</th><th>Covered</th><th>Provenance</th><th>Requirement</th></tr></thead><tbody>{body}</tbody></table>
     <script>document.getElementById('filter').addEventListener('input',e=>{{document.querySelectorAll('tbody tr').forEach(r=>r.hidden=!r.textContent.toLowerCase().includes(e.target.value.toLowerCase()))}})</script></html>"""
     (directory / "traceability.html").write_text(page)

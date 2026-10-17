@@ -77,7 +77,8 @@ def main() -> None:
     ap.add_argument("--only-model", default=None)
     args = ap.parse_args()
 
-    from llama_cpp import Llama, __version__ as llama_version
+    from llama_cpp import Llama
+    from llama_cpp import __version__ as llama_version
 
     cfg_bytes = args.config.read_bytes()
     cfg = json.loads(cfg_bytes)
@@ -123,7 +124,9 @@ def main() -> None:
                     if run_id in done:
                         continue
                     system = prompts["system_template"].format(
-                        common=prompts["common"], arm=prompts[arm], output_contract=prompts["output_contract"]
+                        common=prompts["common"],
+                        arm=prompts[arm],
+                        output_contract=prompts["output_contract"],
                     )
                     user = prompts["user_template"].format(text=src["text"])
                     messages = [{"role": "user", "content": system + "\n\n" + user}]
@@ -155,7 +158,11 @@ def main() -> None:
                             latency = time.perf_counter() - t0
                             status, preds, err = parse_output(raw)
                             if finish == "length" and status == "valid":
-                                status, preds, err = "invalid-output", [], "truncated at max_new_tokens"
+                                status, preds, err = (
+                                    "invalid-output",
+                                    [],
+                                    "truncated at max_new_tokens",
+                                )
                             record.update(
                                 status=status,
                                 prediction=preds,
@@ -164,7 +171,14 @@ def main() -> None:
                                 latency_s=round(latency, 3),
                                 timestamp=datetime.datetime.now(datetime.UTC).isoformat(),
                             )
-                            attempts.append({"attempt": attempt, "ok": True, "usage": usage, "finish_reason": finish})
+                            attempts.append(
+                                {
+                                    "attempt": attempt,
+                                    "ok": True,
+                                    "usage": usage,
+                                    "finish_reason": finish,
+                                }
+                            )
                             break
                         except Exception as exc:  # runtime crash: retry once, keep both
                             attempts.append({"attempt": attempt, "ok": False, "error": repr(exc)})
