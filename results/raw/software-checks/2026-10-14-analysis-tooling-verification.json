@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-10-14T11:40:22.083888+00:00",
+  "scope": "software verification only; synthetic fixtures, no research collection",
+  "code_commit": "fb88f5acba7d83715ef4c6ce3037741eb83baee2",
+  "python": "Python 3.12.14",
+  "install_scope": "existing venv with UV_NO_SYNC=1; fresh frozen install must pass hosted CI",
+  "checks": [
+    {
+      "command": [
+        "make",
+        "test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "analyze"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "make",
+        "docs"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "--",
+        "results/derived"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "../tools/gitleaks",
+        "git",
+        "--redact",
+        "--no-banner",
+        "--log-opts=--all"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "test_count": 43,
+  "failures": 0,
+  "errors": 0,
+  "initial_protocol_sha256": "83385462bec1bd8ee67c153683c77da8bc8ab6ed9129748fd811377c22f117d1",
+  "evidence_sha256": {
+    "2026-10-14-analysis-tooling-quality.log": "8f12109ccd66bd9179191f166e903a5380f5af80db02e0497c0e7fbfdaeae5c8",
+    "2026-10-14-analysis-tooling-junit.xml": "fa2189b57b4e0c854c387e18fb69a0af55f76c8daf9a42004e70009e15bc23cd",
+    "2026-10-14-analysis-tooling-coverage.xml": "fbf779bb81817c04d403cb7e1b3609ce70ddb218e8f9ef828008fe3f5067abca"
+  },
+  "human_gold_created": false,
+  "model_calls": 0,
+  "mac_measurements": 0
+}

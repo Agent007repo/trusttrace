@@ -254,7 +254,7 @@ requirements:
   statement: Carrier payloads exclude confidential prices.
   rationale: Bounded assistance with explicit evidence in the authored case.
   source: synthetic-concern-001
-  trustor: carrier-trustor
+  trustor: shipper-trustor
   trustee: platform-trustee
   scope: scope-sharing
   condition: condition-evidence
@@ -655,7 +655,8 @@ requirements:
 - id: TR-019
   description: Gate provider replacement on a documented evaluation.
   statement: Gate provider replacement on a documented evaluation.
-  rationale: Pending later milestone, not claimed implemented.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-019
   trustor: shipper-trustor
   trustee: platform-trustee
@@ -664,17 +665,23 @@ requirements:
   dimension: Accountability
   fit_criterion: Pending detailed fit criterion before promotion to must.
   priority: should
-  decisions: []
-  components: []
-  tests: []
-  conflicts: []
+  decisions:
+  - ADR-010
+  components:
+  - gateway
+  tests:
+  - TEST-017
+  conflicts:
+  - CONFLICT-06
   risks:
   - risk-lineage
-  tactics: []
+  tactics:
+  - tactic-evaluation-gate
 - id: TR-020
   description: Persist review and audit state across restarts.
   statement: Persist review and audit state across restarts.
-  rationale: Pending later milestone, not claimed implemented.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-020
   trustor: shipper-trustor
   trustee: platform-trustee
@@ -683,18 +690,23 @@ requirements:
   dimension: Accountability
   fit_criterion: Pending detailed fit criterion before promotion to must.
   priority: should
-  decisions: []
-  components: []
-  tests: []
-  conflicts: []
+  decisions:
+  - ADR-015
+  components:
+  - audit
+  tests:
+  - TEST-018
+  conflicts:
+  - CONFLICT-04
   risks:
   - risk-lineage
-  tactics: []
+  tactics:
+  - tactic-external-anchor
 - id: TR-021
-  description: Planned multi-party requirement; not implemented
+  description: Carrier access shall expose only the approved shipment fields.
   statement: Carrier access shall expose only the approved shipment fields.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-021
   trustor: carrier-trustor
   trustee: shipper-trustee
@@ -704,19 +716,23 @@ requirements:
   fit_criterion: A policy table enumerates every carrier-visible field; a contract
     test rejects any extra field.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-007
   components:
-  - policy
-  tests: []
-  conflicts: []
+  - disclosure
+  tests:
+  - TEST-019
+  conflicts:
+  - CONFLICT-03
   risks:
   - risk-disclosure
-  tactics: []
+  tactics:
+  - tactic-versioned-policy
 - id: TR-022
-  description: Planned multi-party requirement; not implemented
+  description: Consignee access shall exclude other consignees shipment documents.
   statement: Consignee access shall exclude other consignees shipment documents.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-022
   trustor: consignee-trustor
   trustee: platform-trustee
@@ -725,19 +741,23 @@ requirements:
   dimension: privacy
   fit_criterion: A two-consignee fixture returns zero foreign shipment records.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-007
   components:
-  - policy
-  tests: []
-  conflicts: []
+  - disclosure
+  tests:
+  - TEST-020
+  conflicts:
+  - CONFLICT-03
   risks:
   - risk-disclosure
-  tactics: []
+  tactics:
+  - tactic-versioned-policy
 - id: TR-023
-  description: Planned multi-party requirement; not implemented
+  description: Broker delegation shall name its shipment purpose and expiry.
   statement: Broker delegation shall name its shipment purpose and expiry.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-023
   trustor: shipper-trustor
   trustee: broker-trustee
@@ -746,19 +766,23 @@ requirements:
   dimension: accountability
   fit_criterion: Expired or purpose-mismatched delegated requests are denied and recorded.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-006
   components:
-  - policy
-  tests: []
-  conflicts: []
+  - delegation
+  tests:
+  - TEST-021
+  conflicts:
+  - CONFLICT-03
   risks:
   - risk-disclosure
-  tactics: []
+  tactics:
+  - tactic-purpose-bound-delegation
 - id: TR-024
-  description: Planned multi-party requirement; not implemented
+  description: A shipper shall be able to revoke an active carrier delegation.
   statement: A shipper shall be able to revoke an active carrier delegation.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-024
   trustor: shipper-trustor
   trustee: carrier-trustee
@@ -768,19 +792,22 @@ requirements:
   fit_criterion: A revoked grant is rejected on the next request without deleting
     prior audit records.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-006
   components:
-  - policy
-  tests: []
+  - delegation
+  tests:
+  - TEST-022
   conflicts: []
   risks:
   - risk-disclosure
-  tactics: []
+  tactics:
+  - tactic-purpose-bound-delegation
 - id: TR-025
-  description: Planned multi-party requirement; not implemented
+  description: A broker shall see source version and passage location beside a suggestion.
   statement: A broker shall see source version and passage location beside a suggestion.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-025
   trustor: broker-trustor
   trustee: platform-trustee
@@ -789,19 +816,22 @@ requirements:
   dimension: transparency
   fit_criterion: Every review card exposes a resolvable source version and locator.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-013
   components:
-  - retrieval
-  tests: []
+  - explanation
+  tests:
+  - TEST-023
   conflicts: []
   risks:
   - risk-decision
-  tactics: []
+  tactics:
+  - tactic-quote-vs-interpretation
 - id: TR-026
-  description: Planned multi-party requirement; not implemented
+  description: A reviewer shall receive both conflicting shipment values before deciding.
   statement: A reviewer shall receive both conflicting shipment values before deciding.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-026
   trustor: reviewer-trustor
   trustee: platform-trustee
@@ -811,19 +841,23 @@ requirements:
   fit_criterion: The review card displays both source values without silently preferring
     either.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-014
   components:
   - consistency
-  tests: []
+  tests:
+  - TEST-024
   conflicts: []
   risks:
   - risk-decision
-  tactics: []
+  tactics:
+  - tactic-value-aware-diff
 - id: TR-027
-  description: Planned multi-party requirement; not implemented
+  description: An authority-role request shall be limited to its documented legal
+    purpose.
   statement: An authority-role request shall be limited to its documented legal purpose.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-027
   trustor: authority-trustor
   trustee: platform-trustee
@@ -833,20 +867,25 @@ requirements:
   fit_criterion: An authored purpose matrix denies an out-of-purpose request; legal
     applicability remains pending.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-006
   components:
-  - policy
-  tests: []
-  conflicts: []
+  - delegation
+  tests:
+  - TEST-025
+  conflicts:
+  - CONFLICT-03
   risks:
   - risk-disclosure
-  tactics: []
+  tactics:
+  - tactic-purpose-bound-delegation
 - id: TR-028
-  description: Planned multi-party requirement; not implemented
+  description: Retention expiry shall remove active document content while preserving
+    lawful minimal audit metadata.
   statement: Retention expiry shall remove active document content while preserving
     lawful minimal audit metadata.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-028
   trustor: shipper-trustor
   trustee: platform-trustee
@@ -856,20 +895,25 @@ requirements:
   fit_criterion: A retention fixture removes payload fields and documents the separate
     metadata schedule.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-008
   components:
-  - audit
-  tests: []
-  conflicts: []
+  - retention
+  tests:
+  - TEST-026
+  conflicts:
+  - CONFLICT-04
   risks:
   - risk-disclosure
-  tactics: []
+  tactics:
+  - tactic-purge-keep-hash
 - id: TR-029
-  description: Planned multi-party requirement; not implemented
+  description: A consignee shall have a recorded route to contest an erroneous document
+    suggestion.
   statement: A consignee shall have a recorded route to contest an erroneous document
     suggestion.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-029
   trustor: consignee-trustor
   trustee: platform-trustee
@@ -879,20 +923,25 @@ requirements:
   fit_criterion: A contested item has an actor, reason, timestamp and unresolved status
     until human review.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-009
   components:
-  - review
-  tests: []
-  conflicts: []
+  - accountability
+  tests:
+  - TEST-027
+  conflicts:
+  - CONFLICT-05
   risks:
   - risk-decision
-  tactics: []
+  tactics:
+  - tactic-contest-record
 - id: TR-030
-  description: Planned multi-party requirement; not implemented
+  description: The reviewer shall see a clear boundary between source text and generated
+    interpretation.
   statement: The reviewer shall see a clear boundary between source text and generated
     interpretation.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-030
   trustor: reviewer-trustor
   trustee: platform-trustee
@@ -901,19 +950,22 @@ requirements:
   dimension: transparency
   fit_criterion: Cards label source passages and generated interpretation separately.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-013
   components:
-  - retrieval
-  tests: []
+  - explanation
+  tests:
+  - TEST-028
   conflicts: []
   risks:
   - risk-decision
-  tactics: []
+  tactics:
+  - tactic-quote-vs-interpretation
 - id: TR-031
-  description: Planned multi-party requirement; not implemented
+  description: Provider substitution shall preserve the validated output contract.
   statement: Provider substitution shall preserve the validated output contract.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-031
   trustor: broker-trustor
   trustee: provider-trustee
@@ -923,19 +975,23 @@ requirements:
   fit_criterion: An adapter contract test rejects missing fields and unsupported citation
     shapes.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-010
   components:
-  - retrieval
-  tests: []
-  conflicts: []
+  - gateway
+  tests:
+  - TEST-029
+  conflicts:
+  - CONFLICT-06
   risks:
   - risk-lineage
-  tactics: []
+  tactics:
+  - tactic-evaluation-gate
 - id: TR-032
-  description: Planned multi-party requirement; not implemented
+  description: A model version change shall require a recorded compatibility decision.
   statement: A model version change shall require a recorded compatibility decision.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-032
   trustor: platform-trustor
   trustee: provider-trustee
@@ -945,19 +1001,23 @@ requirements:
   fit_criterion: No version change proceeds without a diff, regression record and
     decision identifier.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-010
   components:
-  - review
-  tests: []
-  conflicts: []
+  - gateway
+  tests:
+  - TEST-030
+  conflicts:
+  - CONFLICT-06
   risks:
   - risk-lineage
-  tactics: []
+  tactics:
+  - tactic-evaluation-gate
 - id: TR-033
-  description: Planned multi-party requirement; not implemented
+  description: A deployment shall preserve an independently retained audit anchor.
   statement: A deployment shall preserve an independently retained audit anchor.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-033
   trustor: shipper-trustor
   trustee: platform-trustee
@@ -967,19 +1027,22 @@ requirements:
   fit_criterion: A tampered or truncated persistent log fails verification against
     an external anchor.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-015
   components:
   - audit
-  tests: []
+  tests:
+  - TEST-031
   conflicts: []
   risks:
   - risk-lineage
-  tactics: []
+  tactics:
+  - tactic-external-anchor
 - id: TR-034
-  description: Planned multi-party requirement; not implemented
+  description: Retrieved instructions shall not grant tools or modify reviewer authority.
   statement: Retrieved instructions shall not grant tools or modify reviewer authority.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-034
   trustor: reviewer-trustor
   trustee: platform-trustee
@@ -988,19 +1051,22 @@ requirements:
   dimension: robustness
   fit_criterion: An adversarial passage cannot authorize submission or grant a role.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-012
   components:
-  - retrieval
-  tests: []
+  - gateway
+  tests:
+  - TEST-032
   conflicts: []
   risks:
   - risk-decision
-  tactics: []
+  tactics:
+  - tactic-output-as-data
 - id: TR-035
-  description: Planned multi-party requirement; not implemented
+  description: Citation membership shall be distinguished from evidential support.
   statement: Citation membership shall be distinguished from evidential support.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-035
   trustor: broker-trustor
   trustee: platform-trustee
@@ -1010,19 +1076,22 @@ requirements:
   fit_criterion: The review card explains that membership does not prove semantic
     entailment.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-013
   components:
-  - retrieval
-  tests: []
+  - explanation
+  tests:
+  - TEST-033
   conflicts: []
   risks:
   - risk-decision
-  tactics: []
+  tactics:
+  - tactic-quote-vs-interpretation
 - id: TR-036
-  description: Planned multi-party requirement; not implemented
+  description: A raw document shall not be sent to an unapproved external provider.
   statement: A raw document shall not be sent to an unapproved external provider.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-036
   trustor: shipper-trustor
   trustee: platform-trustee
@@ -1031,20 +1100,25 @@ requirements:
   dimension: privacy
   fit_criterion: Outbound policy denies the request before a network adapter is invoked.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-011
   components:
-  - policy
-  tests: []
-  conflicts: []
+  - gateway
+  tests:
+  - TEST-034
+  conflicts:
+  - CONFLICT-07
   risks:
   - risk-disclosure
-  tactics: []
+  tactics:
+  - tactic-egress-gate
 - id: TR-037
-  description: Planned multi-party requirement; not implemented
+  description: A reviewer override shall preserve the original suggestion and stated
+    rationale.
   statement: A reviewer override shall preserve the original suggestion and stated
     rationale.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-037
   trustor: reviewer-trustor
   trustee: platform-trustee
@@ -1054,20 +1128,25 @@ requirements:
   fit_criterion: The stored override links the original suggestion without overwriting
     it.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-009
   components:
-  - review
-  tests: []
-  conflicts: []
+  - accountability
+  tests:
+  - TEST-035
+  conflicts:
+  - CONFLICT-05
   risks:
   - risk-decision
-  tactics: []
+  tactics:
+  - tactic-contest-record
 - id: TR-038
-  description: Planned multi-party requirement; not implemented
+  description: Payload consistency checks shall preserve units and distinguish absent
+    values from zero.
   statement: Payload consistency checks shall preserve units and distinguish absent
     values from zero.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-038
   trustor: carrier-trustor
   trustee: platform-trustee
@@ -1077,19 +1156,23 @@ requirements:
   fit_criterion: A unit-mismatch fixture and a missing-versus-zero fixture are flagged
     separately.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-014
   components:
   - consistency
-  tests: []
+  tests:
+  - TEST-036
   conflicts: []
   risks:
   - risk-decision
-  tactics: []
+  tactics:
+  - tactic-value-aware-diff
 - id: TR-039
-  description: Planned multi-party requirement; not implemented
+  description: A policy update shall never retroactively change a recorded review
+    context.
   statement: A policy update shall never retroactively change a recorded review context.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-039
   trustor: broker-trustor
   trustee: platform-trustee
@@ -1098,20 +1181,24 @@ requirements:
   dimension: robustness
   fit_criterion: Historical reviews retain the original policy identifier after update.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-007
   components:
-  - review
-  tests: []
+  - disclosure
+  tests:
+  - TEST-037
   conflicts: []
   risks:
   - risk-lineage
-  tactics: []
+  tactics:
+  - tactic-versioned-policy
 - id: TR-040
-  description: Planned multi-party requirement; not implemented
+  description: Participants shall receive a record of the fields disclosed on their
+    behalf.
   statement: Participants shall receive a record of the fields disclosed on their
     behalf.
-  rationale: Authored boundary for the synthetic logistics workflow; requires human
-    review and implementation.
+  rationale: Implemented in the synthetic reference implementation (src/trusttrace/ecosystem.py);
+    still requires practitioner validation.
   source: synthetic-concern-040
   trustor: consignee-trustor
   trustee: platform-trustee
@@ -1121,14 +1208,18 @@ requirements:
   fit_criterion: An export identifies actor, recipient, purpose, field names and time
     without duplicating secret content.
   priority: should
-  decisions: []
+  decisions:
+  - ADR-007
   components:
-  - audit
-  tests: []
-  conflicts: []
+  - disclosure
+  tests:
+  - TEST-038
+  conflicts:
+  - CONFLICT-03
   risks:
   - risk-disclosure
-  tactics: []
+  tactics:
+  - tactic-disclosure-receipt
 scenarios:
 - id: SC-001
   description: Carrier payloads exclude confidential prices.
@@ -1476,6 +1567,234 @@ scenarios:
   response: Participants shall receive a record of the fields disclosed on their behalf.
   response_measure: An export identifies actor, recipient, purpose, field names and
     time without duplicating secret content.
+- id: SC-101
+  requirement: TR-019
+  description: Gate provider replacement on a documented evaluation.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_provider_replacement_needs_documented_evaluation
+  artefact: gateway
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Gate provider replacement on a documented evaluation.
+  response_measure: Pending detailed fit criterion before promotion to must.
+- id: SC-102
+  requirement: TR-020
+  description: Persist review and audit state across restarts.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_review_and_audit_state_survive_restart
+  artefact: audit
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Persist review and audit state across restarts.
+  response_measure: Pending detailed fit criterion before promotion to must.
+- id: SC-103
+  requirement: TR-021
+  description: Carrier access shall expose only the approved shipment fields.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_carrier_payload_matches_approved_table
+  artefact: disclosure
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Carrier access shall expose only the approved shipment fields.
+  response_measure: A policy table enumerates every carrier-visible field; a contract
+    test rejects any extra field.
+- id: SC-104
+  requirement: TR-022
+  description: Consignee access shall exclude other consignees shipment documents.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_consignee_cannot_read_other_consignee_documents
+  artefact: disclosure
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Consignee access shall exclude other consignees shipment documents.
+  response_measure: A two-consignee fixture returns zero foreign shipment records.
+- id: SC-105
+  requirement: TR-023
+  description: Broker delegation shall name its shipment purpose and expiry.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_delegation_requires_purpose_and_expires
+  artefact: delegation
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Broker delegation shall name its shipment purpose and expiry.
+  response_measure: Expired or purpose-mismatched delegated requests are denied and
+    recorded.
+- id: SC-106
+  requirement: TR-024
+  description: A shipper shall be able to revoke an active carrier delegation.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_shipper_revokes_active_carrier_delegation
+  artefact: delegation
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A shipper shall be able to revoke an active carrier delegation.
+  response_measure: A revoked grant is rejected on the next request without deleting
+    prior audit records.
+- id: SC-107
+  requirement: TR-025
+  description: A broker shall see source version and passage location beside a suggestion.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_card_shows_source_version_and_location
+  artefact: explanation
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A broker shall see source version and passage location beside a suggestion.
+  response_measure: Every review card exposes a resolvable source version and locator.
+- id: SC-108
+  requirement: TR-026
+  description: A reviewer shall receive both conflicting shipment values before deciding.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_reviewer_sees_both_conflicting_values
+  artefact: consistency
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A reviewer shall receive both conflicting shipment values before deciding.
+  response_measure: The review card displays both source values without silently preferring
+    either.
+- id: SC-109
+  requirement: TR-027
+  description: An authority-role request shall be limited to its documented legal
+    purpose.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_authority_access_limited_to_documented_purpose
+  artefact: delegation
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: An authority-role request shall be limited to its documented legal purpose.
+  response_measure: An authored purpose matrix denies an out-of-purpose request; legal
+    applicability remains pending.
+- id: SC-110
+  requirement: TR-028
+  description: Retention expiry shall remove active document content while preserving
+    lawful minimal audit metadata.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_retention_purges_content_but_keeps_minimal_metadata
+  artefact: retention
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Retention expiry shall remove active document content while preserving
+    lawful minimal audit metadata.
+  response_measure: A retention fixture removes payload fields and documents the separate
+    metadata schedule.
+- id: SC-111
+  requirement: TR-029
+  description: A consignee shall have a recorded route to contest an erroneous document
+    suggestion.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_consignee_can_contest_a_suggestion
+  artefact: accountability
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A consignee shall have a recorded route to contest an erroneous document
+    suggestion.
+  response_measure: A contested item has an actor, reason, timestamp and unresolved
+    status until human review.
+- id: SC-112
+  requirement: TR-030
+  description: The reviewer shall see a clear boundary between source text and generated
+    interpretation.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_card_separates_source_text_from_interpretation
+  artefact: explanation
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: The reviewer shall see a clear boundary between source text and generated
+    interpretation.
+  response_measure: Cards label source passages and generated interpretation separately.
+- id: SC-113
+  requirement: TR-031
+  description: Provider substitution shall preserve the validated output contract.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_substitute_output_must_satisfy_contract
+  artefact: gateway
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Provider substitution shall preserve the validated output contract.
+  response_measure: An adapter contract test rejects missing fields and unsupported
+    citation shapes.
+- id: SC-114
+  requirement: TR-032
+  description: A model version change shall require a recorded compatibility decision.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_model_version_change_requires_compatibility_decision
+  artefact: gateway
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A model version change shall require a recorded compatibility decision.
+  response_measure: No version change proceeds without a diff, regression record and
+    decision identifier.
+- id: SC-115
+  requirement: TR-033
+  description: A deployment shall preserve an independently retained audit anchor.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_independent_anchor_detects_rewritten_log
+  artefact: audit
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A deployment shall preserve an independently retained audit anchor.
+  response_measure: A tampered or truncated persistent log fails verification against
+    an external anchor.
+- id: SC-116
+  requirement: TR-034
+  description: Retrieved instructions shall not grant tools or modify reviewer authority.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_retrieved_instructions_cannot_grant_tools_or_approve
+  artefact: gateway
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Retrieved instructions shall not grant tools or modify reviewer authority.
+  response_measure: An adversarial passage cannot authorize submission or grant a
+    role.
+- id: SC-117
+  requirement: TR-035
+  description: Citation membership shall be distinguished from evidential support.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_card_states_membership_is_not_support
+  artefact: explanation
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Citation membership shall be distinguished from evidential support.
+  response_measure: The review card explains that membership does not prove semantic
+    entailment.
+- id: SC-118
+  requirement: TR-036
+  description: A raw document shall not be sent to an unapproved external provider.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_raw_document_blocked_for_unapproved_provider
+  artefact: gateway
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A raw document shall not be sent to an unapproved external provider.
+  response_measure: Outbound policy denies the request before a network adapter is
+    invoked.
+- id: SC-119
+  requirement: TR-037
+  description: A reviewer override shall preserve the original suggestion and stated
+    rationale.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_override_preserves_original_and_rationale
+  artefact: accountability
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A reviewer override shall preserve the original suggestion and stated
+    rationale.
+  response_measure: The stored override links the original suggestion without overwriting
+    it.
+- id: SC-120
+  requirement: TR-038
+  description: Payload consistency checks shall preserve units and distinguish absent
+    values from zero.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_units_preserved_and_absent_distinct_from_zero
+  artefact: consistency
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Payload consistency checks shall preserve units and distinguish absent
+    values from zero.
+  response_measure: A unit-mismatch fixture and a missing-versus-zero fixture are
+    flagged separately.
+- id: SC-121
+  requirement: TR-039
+  description: A policy update shall never retroactively change a recorded review
+    context.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_policy_update_does_not_change_recorded_context
+  artefact: disclosure
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: A policy update shall never retroactively change a recorded review context.
+  response_measure: Historical reviews retain the original policy identifier after
+    update.
+- id: SC-122
+  requirement: TR-040
+  description: Participants shall receive a record of the fields disclosed on their
+    behalf.
+  source: Synthetic actor, failure injector or scheduled clock
+  stimulus: Exercise scenario test_disclosure_receipt_lists_shared_and_withheld_fields
+  artefact: disclosure
+  environment: Local deterministic in-process prototype; no network, no real tenants
+  response: Participants shall receive a record of the fields disclosed on their behalf.
+  response_measure: An export identifies actor, recipient, purpose, field names and
+    time without duplicating secret content.
 conflicts:
 - id: CONFLICT-01
   description: Source transparency versus confidential field exposure
@@ -1489,6 +1808,41 @@ conflicts:
   - TR-003
   - TR-004
   resolution_decision: ADR-002
+- id: CONFLICT-03
+  description: Information sharing for coordination versus confidentiality of commercial
+    data
+  requirements:
+  - TR-021
+  - TR-022
+  - TR-023
+  - TR-027
+  - TR-040
+  resolution_decision: ADR-006
+- id: CONFLICT-04
+  description: Auditability and durable evidence versus data minimisation and retention
+    limits
+  requirements:
+  - TR-028
+  - TR-020
+  resolution_decision: ADR-008
+- id: CONFLICT-05
+  description: Accountability and contestability versus processing throughput
+  requirements:
+  - TR-029
+  - TR-037
+  resolution_decision: ADR-009
+- id: CONFLICT-06
+  description: Provider replaceability (sovereignty) versus stable validated behaviour
+  requirements:
+  - TR-019
+  - TR-031
+  - TR-032
+  resolution_decision: ADR-010
+- id: CONFLICT-07
+  description: Model capability of external providers versus data sovereignty
+  requirements:
+  - TR-036
+  resolution_decision: ADR-011
 decisions:
 - id: ADR-001
   description: policy design decision
@@ -1505,6 +1859,36 @@ decisions:
 - id: ADR-005
   description: consistency design decision
   document: docs/adr/adr-005.md
+- id: ADR-006
+  description: design decision
+  document: docs/adr/adr-006.md
+- id: ADR-007
+  description: design decision
+  document: docs/adr/adr-007.md
+- id: ADR-008
+  description: design decision
+  document: docs/adr/adr-008.md
+- id: ADR-009
+  description: design decision
+  document: docs/adr/adr-009.md
+- id: ADR-010
+  description: design decision
+  document: docs/adr/adr-010.md
+- id: ADR-011
+  description: design decision
+  document: docs/adr/adr-011.md
+- id: ADR-012
+  description: design decision
+  document: docs/adr/adr-012.md
+- id: ADR-013
+  description: design decision
+  document: docs/adr/adr-013.md
+- id: ADR-014
+  description: design decision
+  document: docs/adr/adr-014.md
+- id: ADR-015
+  description: design decision
+  document: docs/adr/adr-015.md
 components:
 - id: policy
   description: Prototype policy component
@@ -1516,6 +1900,18 @@ components:
   description: Prototype audit component
 - id: consistency
   description: Prototype consistency component
+- id: disclosure
+  description: Versioned sharing policy and disclosure receipts
+- id: delegation
+  description: Purpose-bound, expiring, revocable delegation registry
+- id: retention
+  description: Retention store that purges content and keeps hashed metadata
+- id: accountability
+  description: Contest and override records
+- id: gateway
+  description: 'Model gateway: egress gate, output contract, evaluation-gated replacement'
+- id: explanation
+  description: Source-aware explanation cards
 tests:
 - id: TEST-001
   description: No price key in carrier payload.
@@ -1565,6 +1961,80 @@ tests:
 - id: TEST-016
   description: Mock identifier and uncalibrated warning visible.
   nodeid: tests/scenarios/test_boundaries.py::test_explanation_discloses_mock
+- id: TEST-017
+  description: Gate provider replacement on a documented evaluation.
+  nodeid: tests/scenarios/test_ecosystem.py::test_provider_replacement_needs_documented_evaluation
+- id: TEST-018
+  description: Persist review and audit state across restarts.
+  nodeid: tests/scenarios/test_ecosystem.py::test_review_and_audit_state_survive_restart
+- id: TEST-019
+  description: Carrier access shall expose only the approved shipment fields.
+  nodeid: tests/scenarios/test_ecosystem.py::test_carrier_payload_matches_approved_table
+- id: TEST-020
+  description: Consignee access shall exclude other consignees shipment documents.
+  nodeid: tests/scenarios/test_ecosystem.py::test_consignee_cannot_read_other_consignee_documents
+- id: TEST-021
+  description: Broker delegation shall name its shipment purpose and expiry.
+  nodeid: tests/scenarios/test_ecosystem.py::test_delegation_requires_purpose_and_expires
+- id: TEST-022
+  description: A shipper shall be able to revoke an active carrier delegation.
+  nodeid: tests/scenarios/test_ecosystem.py::test_shipper_revokes_active_carrier_delegation
+- id: TEST-023
+  description: A broker shall see source version and passage location beside a suggestion.
+  nodeid: tests/scenarios/test_ecosystem.py::test_card_shows_source_version_and_location
+- id: TEST-024
+  description: A reviewer shall receive both conflicting shipment values before deciding.
+  nodeid: tests/scenarios/test_ecosystem.py::test_reviewer_sees_both_conflicting_values
+- id: TEST-025
+  description: An authority-role request shall be limited to its documented legal
+    purpose.
+  nodeid: tests/scenarios/test_ecosystem.py::test_authority_access_limited_to_documented_purpose
+- id: TEST-026
+  description: Retention expiry shall remove active document content while preserving
+    lawful minimal audit metadata.
+  nodeid: tests/scenarios/test_ecosystem.py::test_retention_purges_content_but_keeps_minimal_metadata
+- id: TEST-027
+  description: A consignee shall have a recorded route to contest an erroneous document
+    suggestion.
+  nodeid: tests/scenarios/test_ecosystem.py::test_consignee_can_contest_a_suggestion
+- id: TEST-028
+  description: The reviewer shall see a clear boundary between source text and generated
+    interpretation.
+  nodeid: tests/scenarios/test_ecosystem.py::test_card_separates_source_text_from_interpretation
+- id: TEST-029
+  description: Provider substitution shall preserve the validated output contract.
+  nodeid: tests/scenarios/test_ecosystem.py::test_substitute_output_must_satisfy_contract
+- id: TEST-030
+  description: A model version change shall require a recorded compatibility decision.
+  nodeid: tests/scenarios/test_ecosystem.py::test_model_version_change_requires_compatibility_decision
+- id: TEST-031
+  description: A deployment shall preserve an independently retained audit anchor.
+  nodeid: tests/scenarios/test_ecosystem.py::test_independent_anchor_detects_rewritten_log
+- id: TEST-032
+  description: Retrieved instructions shall not grant tools or modify reviewer authority.
+  nodeid: tests/scenarios/test_ecosystem.py::test_retrieved_instructions_cannot_grant_tools_or_approve
+- id: TEST-033
+  description: Citation membership shall be distinguished from evidential support.
+  nodeid: tests/scenarios/test_ecosystem.py::test_card_states_membership_is_not_support
+- id: TEST-034
+  description: A raw document shall not be sent to an unapproved external provider.
+  nodeid: tests/scenarios/test_ecosystem.py::test_raw_document_blocked_for_unapproved_provider
+- id: TEST-035
+  description: A reviewer override shall preserve the original suggestion and stated
+    rationale.
+  nodeid: tests/scenarios/test_ecosystem.py::test_override_preserves_original_and_rationale
+- id: TEST-036
+  description: Payload consistency checks shall preserve units and distinguish absent
+    values from zero.
+  nodeid: tests/scenarios/test_ecosystem.py::test_units_preserved_and_absent_distinct_from_zero
+- id: TEST-037
+  description: A policy update shall never retroactively change a recorded review
+    context.
+  nodeid: tests/scenarios/test_ecosystem.py::test_policy_update_does_not_change_recorded_context
+- id: TEST-038
+  description: Participants shall receive a record of the fields disclosed on their
+    behalf.
+  nodeid: tests/scenarios/test_ecosystem.py::test_disclosure_receipt_lists_shared_and_withheld_fields
 evidence:
 - id: passing-scenario
   description: Executed software-test report, not research or human evidence
@@ -1602,3 +2072,40 @@ tactics:
 - id: tactic-citation-membership
   description: Validate retrieved citation membership; not entailment
   component: retrieval
+- id: tactic-versioned-policy
+  description: Policy changes create a new version; decisions keep the version they
+    used
+  component: disclosure
+- id: tactic-disclosure-receipt
+  description: Give data owners a receipt of shared and withheld fields
+  component: disclosure
+- id: tactic-purpose-bound-delegation
+  description: Grant access per shipment and purpose with expiry and grantor-only
+    revocation
+  component: delegation
+- id: tactic-purge-keep-hash
+  description: Delete content at expiry; keep only a hash and lifecycle metadata
+  component: retention
+- id: tactic-contest-record
+  description: Record contests and overrides as first-class audited events
+  component: accountability
+- id: tactic-evaluation-gate
+  description: Refuse provider or version changes without a passing evaluation and
+    a recorded decision
+  component: gateway
+- id: tactic-egress-gate
+  description: Block raw documents to providers not approved for them
+  component: gateway
+- id: tactic-output-as-data
+  description: Accept only the output contract; never execute model or retrieved text
+  component: gateway
+- id: tactic-quote-vs-interpretation
+  description: Show verbatim source passages apart from generated text; label citation
+    checks honestly
+  component: explanation
+- id: tactic-value-aware-diff
+  description: Compare quantities with units and keep absent distinct from zero
+  component: consistency
+- id: tactic-external-anchor
+  description: Checkpoint log count and head to a separate store; persist state atomically
+  component: audit

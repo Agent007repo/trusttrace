@@ -1,0 +1,278 @@
+[
+ {
+  "reference": "gotel1994",
+  "id": "10.1109/ICRE.1994.292398",
+  "registered_title": "An analysis of the requirements traceability problem",
+  "status": "pass"
+ },
+ {
+  "reference": "cleland2014",
+  "id": "10.1145/2593882.2593891",
+  "registered_title": "Software traceability: trends and future directions",
+  "status": "pass"
+ },
+ {
+  "reference": "breaux2008",
+  "id": "10.1109/TSE.2007.70746",
+  "registered_title": "Analyzing Regulatory Rules for Privacy and Security Requirements",
+  "status": "pass"
+ },
+ {
+  "reference": "sleimi2018",
+  "id": "10.1109/RE.2018.00022",
+  "registered_title": "Automated Extraction of Semantic Legal Metadata using Natural Language Processing",
+  "status": "pass"
+ },
+ {
+  "reference": "hawkins2021",
+  "id": "2102.01564",
+  "registered_title": "Guidance on the Assurance of Machine Learning in Autonomous Systems (AMLAS)",
+  "status": "pass"
+ },
+ {
+  "reference": "zhang2020",
+  "id": "1904.09675",
+  "registered_title": "BERTScore: Evaluating Text Generation with BERT",
+  "status": "pass"
+ },
+ {
+  "reference": "lu2023ra",
+  "id": "2311.13148",
+  "registered_title": "Towards Responsible Generative AI: A Reference Architecture for Designing Foundation Model based Agents",
+  "status": "pass"
+ },
+ {
+  "reference": "mayer1995",
+  "id": "10.2307/258792",
+  "registered_title": "An Integrative Model of Organizational Trust",
+  "status": "pass"
+ },
+ {
+  "reference": "lee2004",
+  "id": "10.1518/hfes.46.1.50.30392",
+  "registered_title": "Trust in Automation: Designing for Appropriate Reliance",
+  "status": "pass"
+ },
+ {
+  "reference": "jacovi2021",
+  "id": "10.1145/3442188.3445923",
+  "registered_title": "Formalizing Trust in Artificial Intelligence",
+  "status": "pass"
+ },
+ {
+  "reference": "toreini2020",
+  "id": "10.1145/3351095.3372834",
+  "registered_title": "The relationship between trust in AI and trustworthy machine learning technologies",
+  "status": "pass"
+ },
+ {
+  "reference": "hleg2019",
+  "id": "https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai",
+  "status": "url-only"
+ },
+ {
+  "reference": "ahmad2023",
+  "id": "10.1016/j.infsof.2023.107176",
+  "registered_title": "Requirements engineering for artificial intelligence systems: A systematic mapping study",
+  "status": "pass"
+ },
+ {
+  "reference": "vogelsang2019",
+  "id": "10.1109/REW.2019.00050",
+  "registered_title": "Requirements Engineering for Machine Learning: Perspectives from Data Scientists",
+  "status": "pass"
+ },
+ {
+  "reference": "habibullah2024",
+  "id": "10.1109/RE59067.2024.00061",
+  "registered_title": "Scoping of Non-Functional Requirements for Machine Learning Systems",
+  "status": "pass"
+ },
+ {
+  "reference": "zowghi2023",
+  "id": "10.1109/MS.2023.3302934",
+  "registered_title": "What’s Missing in Requirements Engineering for Responsible AI?",
+  "status": "pass"
+ },
+ {
+  "reference": "lu2024",
+  "id": "10.1145/3626234",
+  "registered_title": "Responsible AI Pattern Catalogue: A Collection of Best Practices for AI Governance and Engineering",
+  "status": "pass"
+ },
+ {
+  "reference": "ronanki2023",
+  "id": "10.1109/SEAA60479.2023.00061",
+  "registered_title": "Investigating ChatGPT’s Potential to Assist in Requirements Elicitation Processes",
+  "status": "pass"
+ },
+ {
+  "reference": "arora2024",
+  "id": "10.1007/978-3-031-55642-5_6",
+  "registered_title": "Advancing Requirements Engineering Through Generative AI: Assessing the Role of LLMs",
+  "status": "pass"
+ },
+ {
+  "reference": "chung2000",
+  "id": "10.1007/978-1-4615-5269-7",
+  "registered_title": "Non-Functional Requirements in Software Engineering",
+  "status": "pass"
+ },
+ {
+  "reference": "dalpiaz2016",
+  "id": "1605.07767",
+  "registered_title": "iStar 2.0 Language Guide",
+  "status": "pass"
+ },
+ {
+  "reference": "tang2017",
+  "id": "10.1109/ICSA.2017.15",
+  "registered_title": "Human Aspects in Software Architecture Decision Making: A Literature Review",
+  "status": "pass"
+ },
+ {
+  "reference": "razavian2019",
+  "id": "10.1016/j.jss.2018.12.003",
+  "registered_title": "Empirical research for software architecture decision making: An analysis",
+  "status": "pass"
+ },
+ {
+  "reference": "razavian2016",
+  "id": "10.1002/smr.1776",
+  "registered_title": "In two minds: how reflections influence software design thinking",
+  "status": "pass"
+ },
+ {
+  "reference": "alidoosti2023",
+  "id": "10.1109/ICSA-C57050.2023.00031",
+  "registered_title": "Ethics-Aware DecidArch Game: Designing a Game to Reflect on Ethical Considerations in Software Architecture Design Decision Making",
+  "status": "pass"
+ },
+ {
+  "reference": "razavian2023",
+  "id": "10.1016/j.jss.2022.111560",
+  "registered_title": "The vision of on-demand architectural knowledge systems as a decision-making companion",
+  "status": "pass"
+ },
+ {
+  "reference": "kazman2000",
+  "id": "10.21236/ADA382629",
+  "registered_title": "ATAM: Method for Architecture Evaluation",
+  "status": "pass"
+ },
+ {
+  "reference": "ozkaya2020",
+  "id": "10.1109/MS.2020.2993662",
+  "registered_title": "What Is Really Different in Engineering AI-Enabled Systems?",
+  "status": "pass"
+ },
+ {
+  "reference": "breck2017",
+  "id": "10.1109/BigData.2017.8258038",
+  "registered_title": "The ML test score: A rubric for ML production readiness and technical debt reduction",
+  "status": "pass"
+ },
+ {
+  "reference": "lewis2020",
+  "id": "2005.11401",
+  "registered_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+  "status": "pass"
+ },
+ {
+  "reference": "greshake2023",
+  "id": "10.1145/3605764.3623985",
+  "registered_title": "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection",
+  "status": "pass"
+ },
+ {
+  "reference": "alfrink2022",
+  "id": "10.1007/s11023-022-09611-z",
+  "registered_title": "Contestable AI by Design: Towards a Framework",
+  "status": "pass"
+ },
+ {
+  "reference": "rfc6962",
+  "id": "10.17487/RFC6962",
+  "registered_title": "Certificate Transparency",
+  "status": "pass"
+ },
+ {
+  "reference": "rfc6749",
+  "id": "10.17487/RFC6749",
+  "registered_title": "The OAuth 2.0 Authorization Framework",
+  "status": "pass"
+ },
+ {
+  "reference": "esposito2026",
+  "id": "2602.05486",
+  "registered_title": "Sovereign-by-Design A Reference Architecture for AI and Blockchain Enabled Systems",
+  "status": "pass"
+ },
+ {
+  "reference": "aiact",
+  "id": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+  "status": "url-only"
+ },
+ {
+  "reference": "omnibus2026",
+  "id": "https://eur-lex.europa.eu/eli/reg/2026/1744/oj",
+  "status": "url-only"
+ },
+ {
+  "reference": "gdpr",
+  "id": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+  "status": "url-only"
+ },
+ {
+  "reference": "ucc",
+  "id": "https://eur-lex.europa.eu/eli/reg/2013/952/oj",
+  "status": "url-only"
+ },
+ {
+  "reference": "efti",
+  "id": "https://eur-lex.europa.eu/eli/reg/2020/1056/oj",
+  "status": "url-only"
+ },
+ {
+  "reference": "hevner2004",
+  "id": "10.2307/25148625",
+  "registered_title": "Design Science in Information Systems Research1",
+  "status": "pass"
+ },
+ {
+  "reference": "wieringa2014",
+  "id": "10.1007/978-3-662-43839-8",
+  "registered_title": "Design Science Methodology for Information Systems and Software Engineering",
+  "status": "pass"
+ },
+ {
+  "reference": "qwen25",
+  "id": "2412.15115",
+  "registered_title": "Qwen2.5 Technical Report",
+  "status": "pass"
+ },
+ {
+  "reference": "mistral7b",
+  "id": "2310.06825",
+  "registered_title": "Mistral 7B",
+  "status": "pass"
+ },
+ {
+  "reference": "bge",
+  "id": "2309.07597",
+  "registered_title": "C-Pack: Packed Resources For General Chinese Embeddings",
+  "status": "pass"
+ },
+ {
+  "reference": "cohen1960",
+  "id": "10.1177/001316446002000104",
+  "registered_title": "A Coefficient of Agreement for Nominal Scales",
+  "status": "pass"
+ },
+ {
+  "reference": "efron1979",
+  "id": "10.1214/aos/1176344552",
+  "registered_title": "Bootstrap Methods: Another Look at the Jackknife",
+  "status": "pass"
+ }
+]

@@ -1,0 +1,90 @@
+llama_context: n_ctx_per_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+ggml_metal_init: skipping kernel_get_rows_bf16                     (not supported)
+ggml_metal_init: skipping kernel_set_rows_bf16                     (not supported)
+ggml_metal_init: skipping kernel_mul_mv_bf16_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mv_bf16_f32_c4                (not supported)
+ggml_metal_init: skipping kernel_mul_mv_bf16_f32_1row              (not supported)
+ggml_metal_init: skipping kernel_mul_mv_bf16_f32_l4                (not supported)
+ggml_metal_init: skipping kernel_mul_mv_bf16_bf16                  (not supported)
+ggml_metal_init: skipping kernel_mul_mv_id_bf16_f32                (not supported)
+ggml_metal_init: skipping kernel_mul_mm_bf16_f32                   (not supported)
+ggml_metal_init: skipping kernel_mul_mm_id_bf16_f16                (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_h64           (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_h80           (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_h96           (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_h112          (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_h128          (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_h192          (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_hk192_hv128   (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_h256          (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_bf16_hk576_hv512   (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_vec_bf16_h64       (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_vec_bf16_h96       (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_vec_bf16_h128      (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_vec_bf16_h192      (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_vec_bf16_hk192_hv128 (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_vec_bf16_h256      (not supported)
+ggml_metal_init: skipping kernel_flash_attn_ext_vec_bf16_hk576_hv512 (not supported)
+ggml_metal_init: skipping kernel_cpy_f32_bf16                      (not supported)
+ggml_metal_init: skipping kernel_cpy_bf16_f32                      (not supported)
+ggml_metal_init: skipping kernel_cpy_bf16_bf16                     (not supported)
+mistral-SYN-001-naive-20261013 valid 6.403
+mistral-SYN-001-guided-20261013 valid 6.795
+mistral-SYN-003-naive-20261013 valid 4.406
+mistral-SYN-003-guided-20261013 valid 5.057
+mistral-SYN-004-naive-20261013 valid 5.099
+mistral-SYN-004-guided-20261013 valid 5.419
+mistral-SYN-005-naive-20261013 valid 2.406
+mistral-SYN-005-guided-20261013 valid 2.564
+mistral-SYN-006-naive-20261013 valid 2.803
+mistral-SYN-006-guided-20261013 valid 5.323
+mistral-SYN-007-naive-20261013 valid 1.977
+mistral-SYN-007-guided-20261013 valid 2.894
+mistral-SYN-008-naive-20261013 valid 2.211
+mistral-SYN-008-guided-20261013 valid 3.016
+mistral-SYN-010-naive-20261013 valid 4.369
+mistral-SYN-010-guided-20261013 valid 4.59
+mistral-SYN-011-naive-20261013 valid 4.35
+mistral-SYN-011-guided-20261013 valid 4.778
+mistral-SYN-012-naive-20261013 valid 6.012
+mistral-SYN-012-guided-20261013 valid 5.779
+mistral-SYN-001-naive-20261014 valid 6.051
+mistral-SYN-001-guided-20261014 valid 6.75
+mistral-SYN-003-naive-20261014 valid 4.561
+mistral-SYN-003-guided-20261014 valid 4.564
+mistral-SYN-004-naive-20261014 valid 4.011
+mistral-SYN-004-guided-20261014 valid 5.432
+mistral-SYN-005-naive-20261014 valid 2.635
+mistral-SYN-005-guided-20261014 valid 2.587
+mistral-SYN-006-naive-20261014 valid 2.773
+mistral-SYN-006-guided-20261014 valid 5.205
+mistral-SYN-007-naive-20261014 valid 1.96
+mistral-SYN-007-guided-20261014 valid 2.769
+mistral-SYN-008-naive-20261014 valid 2.193
+mistral-SYN-008-guided-20261014 valid 2.944
+mistral-SYN-010-naive-20261014 valid 4.313
+mistral-SYN-010-guided-20261014 valid 4.676
+mistral-SYN-011-naive-20261014 invalid-output 4.279
+mistral-SYN-011-guided-20261014 valid 4.71
+mistral-SYN-012-naive-20261014 valid 5.968
+mistral-SYN-012-guided-20261014 valid 5.762
+mistral-SYN-001-naive-20261015 valid 6.036
+mistral-SYN-001-guided-20261015 valid 6.412
+mistral-SYN-003-naive-20261015 valid 4.437
+mistral-SYN-003-guided-20261015 valid 4.549
+mistral-SYN-004-naive-20261015 valid 4.103
+mistral-SYN-004-guided-20261015 valid 5.565
+mistral-SYN-005-naive-20261015 valid 2.59
+mistral-SYN-005-guided-20261015 valid 2.581
+mistral-SYN-006-naive-20261015 valid 2.649
+mistral-SYN-006-guided-20261015 valid 5.148
+mistral-SYN-007-naive-20261015 valid 2.581
+mistral-SYN-007-guided-20261015 valid 2.935
+mistral-SYN-008-naive-20261015 valid 2.199
+mistral-SYN-008-guided-20261015 valid 3.003
+mistral-SYN-010-naive-20261015 valid 4.359
+mistral-SYN-010-guided-20261015 valid 4.549
+mistral-SYN-011-naive-20261015 valid 4.339
+mistral-SYN-011-guided-20261015 valid 4.618
+mistral-SYN-012-naive-20261015 valid 6.085
+mistral-SYN-012-guided-20261015 valid 5.751

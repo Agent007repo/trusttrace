@@ -1,33 +1,177 @@
 \documentclass[10pt,twocolumn]{article}
-\usepackage[margin=0.75in]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage{hyperref}
-\title{TrustTrace: Independent Research Foundation}
-\author{Samarth Annigeri}
-\date{13 October 2026}
+\usepackage[margin=0.72in]{geometry}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parskip}{0.25em}
+\newcommand{\req}[1]{\texttt{#1}}
+\title{\textbf{TrustTrace: Tracing Stakeholder Trust to Architecture Decisions in an LLM-Enabled Logistics Compliance Ecosystem}}
+\author{Samarth Annigeri\\Independent research portfolio, Montreal, Canada}
+\date{Technical report, \input{generated/report_date.tex}}
+\input{generated/case_counts.tex}
 \begin{document}
 \maketitle
+
 \begin{abstract}
-This document is a report skeleton, prepared before research observations exist. It records the intended argument and evidence requirements. It is not a completed study, an MSc thesis, or a substitute approved by an admissions committee.
+Large language models (LLMs) are entering systems in which several organisations share data and delegate work to AI services. Trustworthy-AI frameworks name the qualities such systems should have, but give architects little help turning the trust expectations of different stakeholders into requirements, decisions and evidence, especially when those expectations conflict. We present TrustTrace, a design-science artefact set for this translation. It comprises (i) a typed trust metamodel that records who trusts whom, to do what, under which condition and with which evidence; (ii) a step-wise elicitation and analysis method; (iii) a synthetic but realistic multi-party logistics compliance case with \NReq{} trust requirements, \NConflicts{} explicit conflicts, \NDecisions{} architecture decision records with structured reflection and \NPatterns{} reusable patterns; (iv) an executable reference implementation whose traceability tool joins each requirement to its decision, component and passing scenario test; and (v) a feasibility pilot, with its protocol frozen in git before collection, of LLM-assisted trust-requirement extraction. \input{generated/abstract_results.tex} The work is a first design cycle. Its validation is analytical and test-based. A practitioner study is designed but not yet run.
 \end{abstract}
+
 \section{Introduction}
-We investigate how organisations can make generative-AI deployment choices auditable. The project-specific research questions are recorded in the repository protocol.
+Logistics is a natural setting for LLM assistance. A single cross-border shipment involves a shipper, a freight forwarder, a carrier, a customs broker, a customs authority and, increasingly, platform and model providers. LLMs can suggest tariff classifications, flag inconsistencies between an invoice and a packing list, and answer regulatory questions. Each of these tasks changes who relies on whom. A broker who accepts a suggested classification relies on the assistant, on the passages it retrieved and on the platform operator that configured it. A shipper relies on the platform not to pass its prices to the carrier. An auditor relies on records that nobody could have silently changed.
+
+Trust in this sense is relational and conditional. Organisational research defines it as a willingness to be vulnerable to another party based on expectations about that party \cite{mayer1995}. Work on automation stresses that the goal is appropriate reliance, not maximal trust \cite{lee2004}. Jacovi et al.\ formalise trust in AI as a trustor's belief that a model will uphold an anticipated contract \cite{jacovi2021}. These views share a structure that architects can use: a trustor, a trustee, an entrusted scope, and conditions under which reliance is warranted.
+
+Existing guidance mostly lists qualities. The European Commission's High-Level Expert Group names seven requirements for trustworthy AI, including human agency and oversight, transparency, privacy and data governance, and accountability \cite{hleg2019}. Requirements engineering for AI is an active field \cite{ahmad2023,vogelsang2019,habibullah2024}, and recent work points out what is still missing for responsible AI \cite{zowghi2023}. Pattern catalogues collect good practice \cite{lu2024}. What remains hard is the step from \emph{these qualities matter} to \emph{this requirement, decided this way, verified by this test}, in an ecosystem where qualities conflict. More transparency can expose confidential data. More automation can reduce human control. Easier provider replacement, which supports sovereignty, can break validated behaviour.
+
+This report asks two research questions, stated in the repository's preregistration:
+\begin{itemize}\setlength\itemsep{0pt}
+\item \textbf{RQ1.} Can a typed trust chain expose missing source, decision, component and passing-scenario evidence in an authored logistics case?
+\item \textbf{RQ2.} Does metamodel-guided prompting improve LLM extraction of atomic trust requirements over a naive prompt?
+\end{itemize}
+
+\textbf{Contributions.} (1) A trust metamodel and analysis method (Section~\ref{sec:method}). (2) A multi-party logistics case with \NReq{} requirements, \NConflicts{} conflicts, \NDecisions{} decision records and \NPatterns{} patterns (Section~\ref{sec:case}). (3) An executable reference implementation and traceability gate (Section~\ref{sec:impl}). (4) A feasibility pilot of LLM-assisted extraction, with an automatic matcher checked against a blinded human audit (Section~\ref{sec:b10}). (5) A protocol for the practitioner study that the artefacts still need (Section~\ref{sec:future}).
+
 \section{Background and related work}
-The primary-source register distinguishes abstract-level reading from full-text review. The final report requires at least 25 verified references. That review is unfinished; no filler citations are included here.
-\section{Method}
-We separate design assumptions, synthetic software fixtures, measured observations and estimates. A protocol must be frozen before research runs. Human annotations must be authored by a human and retained separately from generated artefacts.
-\section{Implementation}
-The repository contains an initial executable vertical slice and quality-gate configuration. Passing software checks establishes behaviour within tested conditions, not stakeholder acceptance or model quality.
-\section{Results}
-Pending. There are no inference, elicitation or practitioner-study results. Any research table must be generated from recorded raw data.
+\textbf{Trust and reliance.} Mayer et al.\ separate trust from the trustworthiness factors that justify it \cite{mayer1995}. Lee and See argue that designs should support calibrated reliance \cite{lee2004}. Jacovi et al.\ distinguish warranted from unwarranted trust in AI \cite{jacovi2021}, and Toreini et al.\ relate trust qualities to concrete machine-learning techniques \cite{toreini2020}. We borrow the trustor, trustee and condition structure from this line of work and make it a data model.
+
+\textbf{Traceability and assurance.} Requirements traceability has long been framed as the ability to follow a requirement forwards and backwards through its life \cite{gotel1994,cleland2014}. Assurance cases argue explicitly why a system meets a claim, and AMLAS adapts that argument to machine-learning components \cite{hawkins2021}. TrustTrace is lighter than a full assurance case: it checks that links exist and that the linked test passed, not that the argument is sound. Reference architectures for foundation-model agents \cite{lu2023ra} describe the components our decisions place trust boundaries around.
+
+\textbf{Requirements engineering for AI and LLMs.} Mapping studies show that requirements work for AI concentrates on data and model qualities, with less attention to multi-stakeholder concerns \cite{ahmad2023}. Practitioners report difficulty specifying ML quality \cite{vogelsang2019}, and the scope of non-functional requirements for ML is still being worked out \cite{habibullah2024}. LLMs are now studied as assistants for requirements work itself \cite{ronanki2023,arora2024}. Extracting obligations from regulatory text has a longer history, from manual rule analysis \cite{breaux2008} to NLP pipelines for legal metadata \cite{sleimi2018}; our pilot is a narrow, reproducible test of whether small local LLMs can do part of this on short stakeholder statements, scored with an embedding-based matcher in the spirit of BERTScore \cite{zhang2020}. Goal-oriented approaches such as the NFR framework \cite{chung2000} and iStar 2.0 \cite{dalpiaz2016} model how design choices help or hurt softgoals. We use a lightweight softgoal graph in that spirit.
+
+\textbf{Architecture decisions and their human side.} Architecture decisions are made by people under uncertainty and bias \cite{tang2017}. Studying them needs social-science methods as well as engineering ones \cite{razavian2019}. Reflection influences how designers reason \cite{razavian2016}, and serious games such as the Ethics-Aware DecidArch game prompt teams to consider stakeholder values \cite{alidoosti2023}. Razavian et al.\ envision architectural knowledge systems that act as on-demand decision companions \cite{razavian2023}. Our decision records add a reflection section motivated by this work. Quality attribute scenarios and ATAM-style analysis \cite{kazman2000} supply the six-part scenario form we use for tests.
+
+\textbf{Engineering AI-enabled systems.} AI components behave differently from conventional ones \cite{ozkaya2020}. Test-gated readiness for ML \cite{breck2017}, retrieval-augmented generation \cite{lewis2020}, indirect prompt injection \cite{greshake2023}, contestability \cite{alfrink2022}, transparency logs \cite{rfc6962}, scoped authorisation \cite{rfc6749} and sovereignty as an architectural objective \cite{esposito2026} each inform one of our patterns.
+
+\textbf{Regulatory context.} The case touches the AI Act \cite{aiact}, as amended in 2026 \cite{omnibus2026}, the GDPR \cite{gdpr}, the Union Customs Code \cite{ucc} and the electronic freight transport information (eFTI) regulation \cite{efti}. We cite these at the level of the act. Article-level text has not yet been verified for this case, and the case makes no legal classification.
+
+\section{Method}\label{sec:method}
+We follow design science research \cite{hevner2004,wieringa2014}: problem investigation, treatment design and treatment validation. This report covers one cycle.
+
+\textbf{Metamodel.} The metamodel is a typed Pydantic schema with \NEntityTypes{} entity types. A \emph{concern} records provenance (synthetic, documentary or interview). A \emph{trust requirement} names its source concern, trustor, trustee, entrusted scope, condition, fit criterion, priority, and its links to risks, conflicts, tactics, decisions, components and tests. A \emph{quality attribute scenario} gives the six SEI parts: source, stimulus, artefact, environment, response and response measure. \emph{Conflicts} name the requirements in tension and the decision that resolves them. \emph{Evidence} records its provenance (synthetic, measured, assumed, pending). Every link is checked: a dangling identifier, an unresolved conflict or a missing decision document fails validation.
+
+\textbf{Analysis method.} An architect (1) maps stakeholders and trust relationships; (2) elicits concerns from documents, interviews or workshops, keeping provenance; (3) refines each concern into requirements whose fit criterion can fail; (4) identifies conflicts between requirements; (5) writes six-part scenarios; (6) records decisions with considered options, consequences and a reflection on assumptions, dissenting stakeholders and possible bias; and (7) traces each requirement to an executed test. A requirement counts as covered only when a decision, a component, a scenario and a \emph{passing} requirement-tagged test all exist. Coverage is computed from the JUnit report of an actual test run, never from a declared flag.
+
+\section{The logistics compliance case}\label{sec:case}
+The case has \NRolesWord{} authored stakeholder roles: \RoleList{}. Three LLM-assisted tasks anchor it: tariff classification suggestions for a broker to confirm, cross-document consistency checks, and regulatory question answering with citations. All concerns are \emph{synthetic}: we wrote them from public descriptions of the domain. None comes from interviews.
+
+The \NReq{} requirements comprise a must-priority slice of \NMust{} and \NShould{} should requirements. Table~\ref{tab:conflicts} lists the \NConflictsWord{} conflicts. Each is resolved by a decision record whose consequences section names the residual cost. \NDecisions{} decision records cover the design. Each follows the MADR structure and adds a reflection: the key assumption, which stakeholder would object and why, a plausible bias, and how we checked it. For example, ADR-011 gates raw-document egress by an explicit provider approval flag. Its reflection notes the risk of equating EU location with sovereignty, which is why location and approval are separate attributes.
+
+\input{generated/conflicts_table.tex}
+
+From the decisions we distil \NPatternsWord{} patterns (Table~\ref{tab:patterns}). Each has context, problem, forces, solution and consequences, plus a pointer to its code and tests in the repository.
+
+\begin{table}[t]
+\centering\small
+\caption{Trust patterns and the requirements whose tests exercise them (summarised by hand from \texttt{docs/patterns.md}).}\label{tab:patterns}
+\begin{tabularx}{\columnwidth}{@{}lXl@{}}
+\toprule
+ & Pattern & Requirements\\
+\midrule
+P1 & Field allowlist at the trust boundary & TR-001, 002, 021\\
+P2 & Mandatory human review gate & TR-003, 004, 006\\
+P3 & Provenance-carrying answers & TR-009, 010, 025, 030, 035\\
+P4 & Anchored tamper-evident log & TR-012, 013, 033\\
+P5 & Purpose-bound, expiring delegation & TR-023, 024, 027\\
+P6 & Disclosure receipt & TR-039, 040\\
+P7 & Contest and override channel & TR-029, 037\\
+P8 & Evaluation-gated provider replacement & TR-019, 031, 032\\
+P9 & Sovereignty-aware egress gate & TR-036\\
+P10 & Output-as-data contract & TR-034\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Reference implementation and traceability}\label{sec:impl}
+The implementation is a Python library with a small FastAPI demo. Components are a versioned sharing policy with disclosure receipts, a purpose-bound delegation registry, retrieval with citation checking, a model gateway (egress gate, strict output contract, evaluation-gated replacement), a review queue, contest and override records, explanation cards that separate verbatim quotes from generated interpretation, unit-aware consistency checks, a retention store, and a hash-chained audit log checkpointed to a separate anchor store. Everything is in-process and synthetic. There is no authentication, no real tenant and no customs submission.
+
+Each requirement links to one or more scenario tests marked with its identifier. For example, the test for \req{TR-034} retrieves a passage that instructs the system to approve an item and checks that the item stays pending and that an output carrying a tool call is rejected. The test for \req{TR-033} rewrites the whole audit log and checks that verification fails against the stored anchor.
+
+\textbf{RQ1 result.} \input{generated/trace_results.tex}
+
+The answer to RQ1 is a qualified yes, and it is a demonstration of mechanism rather than an evaluation. The gate checks links that the same authors wrote, so its value is that a missing link fails loudly: it lists the two requirements that still need verified legal sources, and during development it flagged every should requirement before its test existed. A seeded-defect study, in which links are removed or broken at random and detection is measured, would turn this into an evaluation. It cannot tell whether a requirement is the right one, whether a scenario is realistic, or whether a stakeholder would accept the trade-off. Those questions need people.
+
+\section{B10 pilot: LLM-assisted trust requirement extraction}\label{sec:b10}
+\textbf{Design.} The full study, specified in a preregistration committed to the repository on 13 October 2026, plans 24 texts, two model families, five seeds, three prompt conditions and blinded human matching of every prediction. Two of its inputs (verified legal excerpts and an independent retrieval corpus) were not ready, so we ran a reduced feasibility pilot under a dated appendix frozen before any output existed. Ten of the twelve synthetic stakeholder texts were drawn with a fixed seed. Each is a one- or two-sentence user story of 14 to 21 words, written by the same project that wrote the guided prompt. The author labelled every atomic obligation in them, with trustor, trustee, scope, condition, fit criterion and an exact evidence span, using a labelling tool that never showed model output. Two local open-weight models, Qwen2.5-1.5B-Instruct \cite{qwen25} and Mistral-7B-Instruct-v0.3 \cite{mistral7b}, both 4-bit quantised, ran under two conditions (Qwen on a 2-thread cloud CPU; Mistral on an Apple M1 Max GPU after the cloud run was interrupted, a dated deviation): a naive instruction and a metamodel-guided one. Each text, model and condition was sampled with three seeds, giving 120 generations. A pre-collection check showed that the Mistral chat template silently drops a separate system message, so both models received the instructions inside the user turn.
+
+\textbf{Matching.} Predictions were matched to gold labels automatically by a rule fixed before collection: pair score $=0.6\cdot\cos(\mathrm{statements}) + 0.4\cdot F_1(\mathrm{evidence\ tokens})$, with BGE-small embeddings \cite{bge}, a 0.6 threshold and a maximum-weight one-to-one assignment. To test whether the rule agrees with human judgement, \input{generated/audit_method.tex} We report Cohen's $\kappa$ \cite{cohen1960} and treat F1 as unreliable if $\kappa<0.6$. The guided minus naive difference is paired by text and summarised with a 2000-resample percentile bootstrap over texts \cite{efron1979}.
+
+\input{generated/b10_results.tex}
+
 \section{Discussion}
-The design is intended to support later empirical work. Claims of benefit require comparison baselines, uncertainty estimates and evidence of generalisation.
+\textbf{What the artefacts make possible.} The chain turns a vague claim, such as ``the platform protects shippers'', into a set of checkable statements: which field may reach which role (P1), for which purpose and until when (P5), with what receipt (P6), and what an affected party can do when it goes wrong (P7). The conflict matrix makes the price of each choice explicit. The reflection sections in the decision records are meant to make it harder to treat a decision as obvious; whether they do is a question for the practitioner study. For a research programme that studies how stakeholders reason about openness, automation, oversight and accountability, these artefacts are instruments: something to put in front of practitioners and observe how they use, contest or ignore them.
+
+\textbf{What the pilot suggests.} The pilot was designed to answer feasibility questions, and it answers most of them. The labelling scheme could be applied to all ten texts; the tool recorded only a few minutes of entry time, and drafting time was not measured. Small local models produce schema-valid output at the rates in Table~\ref{tab:b10}. \input{generated/audit_discussion.tex}The guided versus naive contrasts are small and rest on very few texts: most texts tie, because each has only one or two obligations, so per-run F1 takes few distinct values. The Mistral difference sits at the size the full study's hypothesis treats as meaningful, which is exactly why it needs more texts, not a claim now. Guidance also lowered exact-evidence rates, a grounding cost the full study should measure directly.
+
 \section{Threats to validity}
-Construct validity: synthetic cases may miss real stakeholder concerns. Internal validity: software verification cannot establish model quality. External validity: one candidate's hardware and authored scenarios cannot represent European organisations. Conclusion validity: no empirical comparison can be made before data collection.
-\section{Future work}
-We will refine the case with practitioners, validate instruments, compare alternatives and test transfer across organisations. This is a proposed research agenda, not evidence of execution.
-\section{Reproducibility statement}
-Use the exact commit and lockfile. Research results are absent. The repository documents which remaining steps require annotation, hardware access or source verification.
-\section{AI-assistance statement}
-AI coding assistants produced this foundation from Samarth's brief. His annotations, benchmark runs and final review are pending. The project has no institutional endorsement.
+\textbf{Construct.} All concerns are authored. They may encode the author's view of logistics rather than practitioners'. The metamodel's slots may not capture how people actually talk about trust. Requirement F1 measures agreement with one person's labels, not correctness. The source texts and the guided prompt were written by the same project, which may favour the guided arm.
+
+\textbf{Internal.} Scenario tests verify behaviour of an in-process prototype under the tested conditions only. The matcher's weights and threshold were assumed. The two models ran on different backends. \input{generated/backend_check.tex} Blinding of the audit is procedural: the matcher's decisions are recomputable from the repository. The Mistral model file is a third-party conversion whose source revision we did not verify. Both conditions share the output contract, so the contrast isolates the guidance text only.
+
+\textbf{External.} One synthetic case in one domain. Ten one- or two-sentence user stories. Two small, quantised local models. Legal text is absent from the pilot, and legal provisions were cited only at the level of the act.
+
+\textbf{Conclusion.} Ten text clusters give wide intervals. We make no significance claims and do not test H1 confirmatorily. There is a single annotator and no inter-annotator agreement.
+
+\section{Future work}\label{sec:future}
+The next design cycle is empirical. A practitioner study is fully specified in the repository: semi-structured interviews with broker, forwarder, compliance and architecture roles; a workshop in which participants use conflict cards derived from Table~\ref{tab:conflicts} to make and justify decisions, inspired by serious-game work on architectural decisions \cite{alidoosti2023}; consent and data-management templates; and a thematic analysis plan. Its questions follow directly from this report. Do practitioners recognise the trustor and trustee slots in their own reasoning? Which conflicts do they see that we missed? Does the reflection section change their decisions or only their documentation? Do disclosure receipts and contest channels matter to SMEs, or only to auditors?
+
+The full B10 study adds verified legal excerpts, a retrieval arm, a second annotator and five seeds, sized from the pilot's observed variance. A four-year agenda would move from this synthetic case to observed architectural decision-making in an LLM-for-logistics consortium, toward a reference architecture whose patterns have been tried, contested and revised with the people who must rely on them.
+
+\section*{Reproducibility}
+Code, data, configuration, raw model outputs, labels and analysis scripts are in the repository, and the audit decisions are added once the audit is complete. \texttt{make test} runs the quality gates and scenario tests. \texttt{make analyze} regenerates the pilot and trace results, the case counts and the conflict table from the committed files; the pattern table is a hand summary of \texttt{docs/patterns.md}. The pilot protocol, deviations and model checksums are committed, and the pilot protocol was committed before collection.
+
+\section*{AI-assistance statement}
+This project was built with AI coding assistants under the author's direction. The author set the research direction and scope, chose the vacancy focus, and personally produced \input{generated/audit_ai.tex}. He ran the Mistral generations on his own computer. AI assistants wrote most of the code, documentation and this report's first draft, and ran the Qwen generations in a cloud container. The author's final review of the wording is the last step before release. No institution has reviewed or endorsed this work, and it is not affiliated with TU/e, TNO or the LLM4LM project.
+
+\begin{thebibliography}{99}\small
+\bibitem{gotel1994} O.~Gotel, A.~Finkelstein. An analysis of the requirements traceability problem. In \emph{ICRE}, 1994. doi:10.1109/ICRE.1994.292398
+\bibitem{cleland2014} J.~Cleland-Huang, O.~Gotel, J.~Huffman Hayes, P.~M\"ader, A.~Zisman. Software traceability: Trends and future directions. In \emph{FOSE}, 2014. doi:10.1145/2593882.2593891
+\bibitem{breaux2008} T.~D. Breaux, A.~I. Ant\'on. Analyzing regulatory rules for privacy and security requirements. \emph{IEEE Trans.\ Software Engineering} 34(1), 2008. doi:10.1109/TSE.2007.70746
+\bibitem{sleimi2018} A.~Sleimi, N.~Sannier, M.~Sabetzadeh, L.~Briand, J.~Dann. Automated extraction of semantic legal metadata using natural language processing. In \emph{RE}, 2018. doi:10.1109/RE.2018.00022
+\bibitem{hawkins2021} R.~Hawkins, C.~Paterson, C.~Picardi, Y.~Jia, R.~Calinescu, I.~Habli. Guidance on the assurance of machine learning in autonomous systems (AMLAS). arXiv:2102.01564, 2021.
+\bibitem{zhang2020} T.~Zhang, V.~Kishore, F.~Wu, K.~Q. Weinberger, Y.~Artzi. BERTScore: Evaluating text generation with BERT. arXiv:1904.09675, 2019.
+\bibitem{lu2023ra} Q.~Lu, L.~Zhu, X.~Xu, Z.~Xing, S.~Harrer, J.~Whittle. Towards responsible generative AI: A reference architecture for designing foundation model based agents. arXiv:2311.13148, 2023.
+\bibitem{mayer1995} R.~C. Mayer, J.~H. Davis, F.~D. Schoorman. An integrative model of organizational trust. \emph{Academy of Management Review}, 20(3), 1995. doi:10.2307/258792
+\bibitem{lee2004} J.~D. Lee, K.~A. See. Trust in automation: Designing for appropriate reliance. \emph{Human Factors}, 46(1), 2004. doi:10.1518/hfes.46.1.50.30392
+\bibitem{jacovi2021} A.~Jacovi, A.~Marasovi\'c, T.~Miller, Y.~Goldberg. Formalizing trust in artificial intelligence. In \emph{FAccT}, 2021. doi:10.1145/3442188.3445923
+\bibitem{toreini2020} E.~Toreini et al. The relationship between trust in AI and trustworthy machine learning technologies. In \emph{FAT*}, 2020. doi:10.1145/3351095.3372834
+\bibitem{hleg2019} High-Level Expert Group on AI. \emph{Ethics Guidelines for Trustworthy AI}. European Commission, 2019. \url{https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai}
+\bibitem{ahmad2023} K.~Ahmad, M.~Abdelrazek, C.~Arora, M.~Bano, J.~Grundy. Requirements engineering for artificial intelligence systems: A systematic mapping study. \emph{Information and Software Technology}, 2023. doi:10.1016/j.infsof.2023.107176
+\bibitem{vogelsang2019} A.~Vogelsang, M.~Borg. Requirements engineering for machine learning: Perspectives from data scientists. In \emph{REW}, 2019. doi:10.1109/REW.2019.00050
+\bibitem{habibullah2024} K.~M. Habibullah, J.~Diaz, G.~Gay, J.~Horkoff. Scoping of non-functional requirements for machine learning systems. In \emph{RE}, 2024. doi:10.1109/RE59067.2024.00061
+\bibitem{zowghi2023} D.~Zowghi, M.~Bano. What's missing in requirements engineering for responsible AI? \emph{IEEE Software}, 2023. doi:10.1109/MS.2023.3302934
+\bibitem{lu2024} Q.~Lu, L.~Zhu, X.~Xu, J.~Whittle et al. Responsible AI pattern catalogue: A collection of best practices for AI governance and engineering. \emph{ACM Computing Surveys}, 2024. doi:10.1145/3626234
+\bibitem{ronanki2023} K.~Ronanki, C.~Berger, J.~Horkoff. Investigating ChatGPT's potential to assist in requirements elicitation processes. In \emph{SEAA}, 2023. doi:10.1109/SEAA60479.2023.00061
+\bibitem{arora2024} C.~Arora, J.~Grundy, M.~Abdelrazek. Advancing requirements engineering through generative AI: Assessing the role of LLMs. In \emph{Generative AI for Effective Software Development}, Springer, 2024. doi:10.1007/978-3-031-55642-5\_6
+\bibitem{chung2000} L.~Chung, B.~A. Nixon, E.~Yu, J.~Mylopoulos. \emph{Non-Functional Requirements in Software Engineering}. Springer, 2000. doi:10.1007/978-1-4615-5269-7
+\bibitem{dalpiaz2016} F.~Dalpiaz, X.~Franch, J.~Horkoff. iStar 2.0 language guide. arXiv:1605.07767, 2016.
+\bibitem{tang2017} A.~Tang, M.~Razavian, B.~Paech, T.-M. Hesse. Human aspects in software architecture decision making: A literature review. In \emph{ICSA}, 2017. doi:10.1109/ICSA.2017.15
+\bibitem{razavian2019} M.~Razavian, B.~Paech, A.~Tang. Empirical research for software architecture decision making: An analysis. \emph{Journal of Systems and Software}, 2019. doi:10.1016/j.jss.2018.12.003
+\bibitem{razavian2016} M.~Razavian, A.~Tang, R.~Capilla, P.~Lago. In two minds: How reflections influence software design thinking. \emph{Journal of Software: Evolution and Process}, 2016. doi:10.1002/smr.1776
+\bibitem{alidoosti2023} R.~Alidoosti, P.~Lago, E.~Poort, M.~Razavian. Ethics-aware DecidArch game: Designing a game to reflect on ethical considerations in software architecture design decision making. In \emph{ICSA-C}, 2023. doi:10.1109/ICSA-C57050.2023.00031
+\bibitem{razavian2023} M.~Razavian, B.~Paech, A.~Tang. The vision of on-demand architectural knowledge systems as a decision-making companion. \emph{Journal of Systems and Software}, 2023. doi:10.1016/j.jss.2022.111560
+\bibitem{kazman2000} R.~Kazman, M.~Klein, P.~Clements. ATAM: Method for architecture evaluation. Technical report CMU/SEI-2000-TR-004, 2000. doi:10.21236/ADA382629
+\bibitem{ozkaya2020} I.~Ozkaya. What is really different in engineering AI-enabled systems? \emph{IEEE Software}, 2020. doi:10.1109/MS.2020.2993662
+\bibitem{breck2017} E.~Breck, S.~Cai, E.~Nielsen, M.~Salib, D.~Sculley. The ML test score: A rubric for ML production readiness and technical debt reduction. In \emph{IEEE Big Data}, 2017. doi:10.1109/BigData.2017.8258038
+\bibitem{lewis2020} P.~Lewis et al. Retrieval-augmented generation for knowledge-intensive NLP tasks. In \emph{NeurIPS}, 2020. arXiv:2005.11401
+\bibitem{greshake2023} K.~Greshake et al. Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection. In \emph{AISec}, 2023. doi:10.1145/3605764.3623985
+\bibitem{alfrink2022} K.~Alfrink, I.~Keller, G.~Kortuem, N.~Doorn. Contestable AI by design: Towards a framework. \emph{Minds and Machines}, 2022. doi:10.1007/s11023-022-09611-z
+\bibitem{rfc6962} B.~Laurie, A.~Langley, E.~Kasper. Certificate Transparency. RFC 6962, 2013. doi:10.17487/RFC6962
+\bibitem{rfc6749} D.~Hardt (ed.). The OAuth 2.0 authorization framework. RFC 6749, 2012. doi:10.17487/RFC6749
+\bibitem{esposito2026} M.~Esposito, L.~Marchesi et al. Sovereign-by-design: A reference architecture for AI and blockchain enabled systems. arXiv:2602.05486, 2026.
+\bibitem{aiact} Regulation (EU) 2024/1689 (Artificial Intelligence Act). \emph{Official Journal of the European Union}, 2024. \url{https://eur-lex.europa.eu/eli/reg/2024/1689/oj}
+\bibitem{omnibus2026} Regulation (EU) 2026/1744 amending Regulation (EU) 2024/1689. \emph{Official Journal of the European Union}, 2026. \url{https://eur-lex.europa.eu/eli/reg/2026/1744/oj}
+\bibitem{gdpr} Regulation (EU) 2016/679 (General Data Protection Regulation). \emph{Official Journal of the European Union}, 2016. \url{https://eur-lex.europa.eu/eli/reg/2016/679/oj}
+\bibitem{ucc} Regulation (EU) No 952/2013 laying down the Union Customs Code. \emph{Official Journal of the European Union}, 2013. \url{https://eur-lex.europa.eu/eli/reg/2013/952/oj}
+\bibitem{efti} Regulation (EU) 2020/1056 on electronic freight transport information. \emph{Official Journal of the European Union}, 2020. \url{https://eur-lex.europa.eu/eli/reg/2020/1056/oj}
+\bibitem{hevner2004} A.~R. Hevner, S.~T. March, J.~Park, S.~Ram. Design science in information systems research. \emph{MIS Quarterly}, 28(1), 2004. doi:10.2307/25148625
+\bibitem{wieringa2014} R.~J. Wieringa. \emph{Design Science Methodology for Information Systems and Software Engineering}. Springer, 2014. doi:10.1007/978-3-662-43839-8
+\bibitem{qwen25} Qwen Team. Qwen2.5 technical report. arXiv:2412.15115, 2024.
+\bibitem{mistral7b} A.~Q. Jiang et al. Mistral 7B. arXiv:2310.06825, 2023.
+\bibitem{bge} S.~Xiao, Z.~Liu, P.~Zhang et al. C-Pack: Packed resources for general Chinese embeddings. arXiv:2309.07597, 2023.
+\bibitem{cohen1960} J.~Cohen. A coefficient of agreement for nominal scales. \emph{Educational and Psychological Measurement}, 20(1), 1960. doi:10.1177/001316446002000104
+\bibitem{efron1979} B.~Efron. Bootstrap methods: Another look at the jackknife. \emph{Annals of Statistics}, 7(1), 1979. doi:10.1214/aos/1176344552
+\end{thebibliography}
 \end{document}
