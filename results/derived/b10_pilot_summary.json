@@ -129,7 +129,22 @@
   },
   "labelling_span_minutes": 3.1,
   "gold_requirements": 17,
-  "audit": null,
-  "status": "awaiting-audit",
-  "f1_reliable_by_preregistered_rule": null
+  "audit": {
+    "n": 30,
+    "percent_agreement": 0.8666666666666667,
+    "cohen_kappa": 0.7333333333333334,
+    "matcher_precision_on_accepted": 1.0,
+    "missed_matches_among_rejected": 0.26666666666666666,
+    "matcher_precision_on_accepted_wilson95": [
+      0.7961166964035129,
+      1.0
+    ],
+    "missed_matches_among_rejected_wilson95": [
+      0.1089745324961737,
+      0.5195043425155202
+    ],
+    "note": "Stratified 15 accepted / 15 near-miss sample; agreement figures describe this sample and do not estimate matcher accuracy over all pairs."
+  },
+  "status": "complete",
+  "f1_reliable_by_preregistered_rule": true
 }

@@ -23,6 +23,3 @@ results/local/
 !results/b10-pilot/raw/cloud_collect.log
 !results/b10-pilot/raw/mac_collect.log
 
-# Withheld until the blinded matcher audit is recorded (they reveal the matcher's decisions)
-results/b10-pilot/audit/sample_key.jsonl
-results/derived/b10_pilot_rows.jsonl

@@ -345,6 +345,29 @@ write(
     if agreement
     else "The author judges 30 pairs (15 the rule accepted, 15 near-misses it rejected), blinded to model, condition and the rule's decision; this audit is pending in this build.",
 )
+if agreement:
+    conservative = (
+        agreement["matcher_precision_on_accepted"] == 1.0
+        and agreement["missed_matches_among_rejected"] > 0
+    )
+    audit_disc = (
+        f"The matcher audit gave $\\kappa={agreement['cohen_kappa']:.2f}$, "
+        + ("above" if reliable else "below")
+        + " the 0.6 set in advance, so "
+        + (
+            "automatic matching looks usable for most of the full study's adjudication, with human checks on a sample. "
+            if reliable
+            else "the full study cannot rely on this matcher without recalibration. "
+        )
+        + (
+            "Its errors ran one way: it never accepted a pair the author judged different, but it rejected some near-misses he judged the same obligation, so the F1 values above probably understate recall. "
+            if conservative
+            else ""
+        )
+    )
+else:
+    audit_disc = "Whether automatic matching can replace most adjudication in the full study depends on the matcher audit, which is pending in this build. "
+write("audit_discussion.tex", audit_disc)
 bc = summary.get("backend_check")
 write(
     "backend_check.tex",
@@ -395,13 +418,20 @@ if agreement:
             if reliable
             else "By the rule fixed before collection (kappa below 0.6) the F1 values are unreliable, and no directional claim about guidance is made."
         )
+        + (
+            f" Every pair the matcher accepted was judged the same obligation, but so were {agreement['missed_matches_among_rejected'] * 100:.0f}% of the near-misses it rejected, so the matcher is conservative and F1 probably understates recall."
+            if agreement["matcher_precision_on_accepted"] == 1.0
+            and agreement["missed_matches_among_rejected"] > 0
+            else ""
+        )
+        + " The 15/15 stratified sample describes these pairs, not matcher accuracy overall."
     )
 else:
     md.append(
         "**Status: provisional.** The blinded 30-pair matcher audit is not finished, so these F1 values may change in meaning and no claim is made from them yet."
     )
 md.append(
-    f"\n{summary['gold_requirements']} gold obligations were labelled by the author across 10 synthetic texts; "
+    f"\n{summary['gold_requirements']} gold obligations were labelled by the author across 10 synthetic one- or two-sentence user stories; "
     "each model and arm ran 3 seeds per text (120 generations). F1 is per run, averaged over seeds within a text, then over texts."
 )
 md.append("<!-- results:end -->")

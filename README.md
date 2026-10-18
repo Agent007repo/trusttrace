@@ -31,9 +31,9 @@ Two local models (Qwen2.5-1.5B and Mistral-7B, both 4-bit), two prompt arms, 10 
 - **Qwen2.5-1.5B**, guided minus naive macro F1: -0.010 (95% bootstrap CI -0.121 to +0.090); guided better on 3 of 10 texts, naive better on 3.
 - **Mistral-7B**, guided minus naive macro F1: +0.050 (95% bootstrap CI +0.000 to +0.117); guided better on 2 of 10 texts, naive better on 0.
 
-**Status: provisional.** The blinded 30-pair matcher audit is not finished, so these F1 values may change in meaning and no claim is made from them yet.
+**Matcher audit.** On 30 blinded pairs the automatic matcher agreed with the author on 87% of items (Cohen's kappa 0.73). By the rule fixed before collection (kappa at least 0.6) the F1 values are treated as reliable for this pilot. Every pair the matcher accepted was judged the same obligation, but so were 27% of the near-misses it rejected, so the matcher is conservative and F1 probably understates recall. The 15/15 stratified sample describes these pairs, not matcher accuracy overall.
 
-17 gold obligations were labelled by the author across 10 synthetic texts; each model and arm ran 3 seeds per text (120 generations). F1 is per run, averaged over seeds within a text, then over texts.
+17 gold obligations were labelled by the author across 10 synthetic one- or two-sentence user stories; each model and arm ran 3 seeds per text (120 generations). F1 is per run, averaged over seeds within a text, then over texts.
 <!-- results:end -->
 
 ### Engineering trace
@@ -73,7 +73,7 @@ The demo retrieves original synthetic passages and queues mock suggestions for h
 | Protocol and matching rule frozen before any output | [Pilot protocol v0.3](docs/protocols/2026-10-17-b10-pilot-v0.3.md), [`configs/b10_pilot.json`](configs/b10_pilot.json) |
 | Order of events: Qwen outputs kept out of the repository and away from the annotator, then checksummed before the labels were imported; Mistral outputs generated only after the labels were locked. Non-exposure before the lock is declared, not provable | [`seal_manifest.json`](results/b10-pilot/sealed/seal_manifest.json), [`scripts/verify_seal.py`](scripts/verify_seal.py), [decisions log](DECISIONS_LOG.md) |
 | Gold labels: 17 obligations across 10 texts, written by the author | [`data/b10_pilot/gold.jsonl`](data/b10_pilot/gold.jsonl), [decisions log](DECISIONS_LOG.md) |
-| Blinded audit of the automatic matcher, 30 pairs | [audit packet](results/b10-pilot/audit/packet.jsonl) |
+| Blinded audit of the automatic matcher, 30 pairs | [audit packet](results/b10-pilot/audit/packet.jsonl), [decisions](results/b10-pilot/audit/decisions.jsonl), [key](results/b10-pilot/audit/sample_key.jsonl) |
 | Every change to the plan, dated | [`DEVIATIONS.md`](DEVIATIONS.md) |
 
 The 13 October [preregistration](PREREGISTRATION.md) for the full B10 study (24 texts including legal excerpts, retrieval arm, full human adjudication) is unchanged; this pilot sizes it.
@@ -83,7 +83,7 @@ The 13 October [preregistration](PREREGISTRATION.md) for the full B10 study (24 
 - **Ten one- or two-sentence user stories**, written by the same project that wrote the guided prompt, are not a population. The pilot says nothing about legal text or a retrieval arm.
 - **One annotator**, so there is no inter-annotator agreement. The audit checks the matcher against that annotator, not against a panel.
 - **Different backends.** Qwen ran on a 2-thread cloud CPU and Mistral on the Mac's GPU after the cloud run was interrupted ([deviation](DEVIATIONS.md)). Backend changes sampled output: of 20 Mistral runs generated on both, 18 differ in raw output and 1 of 16 scorable runs changed F1 (`backend_check` in the [summary](results/derived/b10_pilot_summary.json)). Latencies are not comparable across models.
-- **Matcher weights and threshold are assumptions**, not tuned values; the audit is what tests them.
+- **Matcher weights and threshold are assumptions**, not tuned values. The audit supports them (kappa 0.73) but shows the matcher is conservative, so F1 probably understates recall.
 - The engineering case is authored, not elicited from practitioners, and specific ISO characteristic mappings remain unverified.
 
 More in [`docs/limitations.md`](docs/limitations.md).

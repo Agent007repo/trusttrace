@@ -1,6 +1,6 @@
 # Independent review, 18 October 2026
 
-Before release, a separate AI agent that had not seen the work being produced reviewed this repository as a sceptical supervisor would: claims against data, method against protocol, disclosure, style and reproducibility. It worked on a copy and spot-checked more than 20 numbers against the regenerated outputs; all matched, `make test`, `make analyze` and `make report` passed, and it reconstructed the seal checksums exactly. Its findings and what was done about them are below. The B10 matcher audit was still pending at review time.
+Before release, a separate AI agent that had not seen the work being produced reviewed this repository as a sceptical supervisor would: claims against data, method against protocol, disclosure, style and reproducibility. It worked on a copy and spot-checked more than 20 numbers against the regenerated outputs; all matched, `make test`, `make analyze` and `make report` passed, and it reconstructed the seal checksums exactly. Its findings and what was done about them are below. The B10 matcher audit was still pending at review time; it was completed and committed later the same day (kappa 0.73), and the generated text updated itself accordingly.
 
 ## Blocking findings and responses
 

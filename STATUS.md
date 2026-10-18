@@ -1,8 +1,10 @@
-# Status, 17 October 2026
+# Status, 18 October 2026
 
-**State:** B10 pilot collected and scored; blinded matcher audit in progress; report drafted; release pending Samarth's approval.
+**State:** B10 pilot collected, scored and audited (matcher kappa 0.73, above the 0.6 set in advance); report drafted; release pending Samarth's approval.
 
 Done:
+
+- Samarth's 30-pair blinded audit of the automatic matcher, recorded on 18 October and committed before the analysis was re-run; the audit key and per-row scores are now committed.
 
 - Pilot protocol v0.3 and matching rule frozen before any output.
 - 120 generations: Qwen2.5-1.5B on a cloud CPU (checksummed before the gold labels were imported) and Mistral-7B on the Mac's GPU (generated after the labels were locked).
@@ -12,7 +14,6 @@ Done:
 
 Pending:
 
-- Samarth's 30-pair blinded audit of the automatic matcher; then the audit key and per-row scores are committed and the results stop being provisional.
 - Samarth's final wording review; fixes from the independent review (`REVIEW.md`); clean-clone check; hosted CI on the milestone branch.
 - Merge to main, public visibility, Pages and the v0.1.0 tag: only after Samarth's explicit approval.
 
