@@ -9,6 +9,7 @@ nav:
   - Architecture: architecture.md
   - Multi-party case: case/2026-10-14-multi-party.md
   - B10 preparation: protocols/2026-10-14-b10-execution-appendix.md
+  - B10 analysis tooling: protocols/2026-10-14-b10-analysis-tooling-v0.2.md
   - Model candidates: protocols/2026-10-14-model-shortlist.md
   - Source verification: protocols/2026-10-14-source-verification.md
   - Reproduce: reproduce.md

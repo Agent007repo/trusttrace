@@ -1,14 +1,14 @@
-# Milestone 2 preparation status, 14 October 2026
+# Milestone 3 tooling status, 14 October 2026
 
 State: private engineering and method preparation, not public-ready. No model experiment, paid API call, human annotation, practitioner interview or Mac measurement has occurred. Samarth's review remains pending. Report PDFs remain one-page skeletons.
 
-The foundation's hosted verification and full-history secret scan passed on 13 October at `cabf9e29d14d9ae25735a1324a68bc24aaa4dc9c`, workflow run [38439408235](https://github.com/Agent007repo/trusttrace/actions/runs/38439408235). That success applies to the foundation commit. New milestone checks must be assessed separately. Main remains the bootstrap README and PR #1 remains open. Default-main changes require explicit approval; this work targets a milestone branch only.
+The foundation's hosted verification and full-history secret scan passed on 13 October at `cabf9e29d14d9ae25735a1324a68bc24aaa4dc9c`, workflow run [38439408235](https://github.com/Agent007repo/trusttrace/actions/runs/38439408235). That success applies to the foundation commit. New milestone checks must be assessed separately. PR #1 has since merged after explicit approval. Main contains the foundation. PR #2 holds the method preparation and PR #3 the README refresh. This tooling branch is stacked on PR #3; those newer changes are preserved. No additional merge or main write is included.
 
 ## Completed preparation
 
 The typed metamodel checks evidence paths, condition evidence links, risk participants, requirement risk/tactic links and verified documentary provenance. Blank entity strings fail validation. The authored synthetic case contains eight stakeholder roles and 40 requirements: the original 16 must remain the executed coverage denominator, and 24 should requirements remain unimplemented. Five ADRs and a searchable coverage table are preserved. Neither coverage nor catalogue size establishes ecosystem trustworthiness.
 
-B10 has a dated draft execution appendix, two pinned model-family candidates, proposed prompts/decoding, a common output contract, an offline prerequisite report, source-checksum-bound human annotation tooling and metadata-blinded packet preparation. The packet tool does not perform human matching. Collection remains disabled. The original protocol checksum remains `83385462bec1bd8ee67c153683c77da8bc8ab6ed9129748fd811377c22f117d1`.
+B10 has a dated draft execution appendix, two pinned model-family candidates, proposed prompts/decoding, a common output contract, an offline prerequisite report, source-checksum-bound human annotation tooling and metadata-blinded packet preparation. The packet tool does not perform human matching. New human-only terminal capture and checksum-bound scoring tooling are prepared in the v0.2 supplement. Software tests use synthetic fixtures, not human gold or model observations. Transport failures suppress aggregate comparisons pending a frozen handling policy. Collection remains disabled. The original protocol checksum remains `83385462bec1bd8ee67c153683c77da8bc8ab6ed9129748fd811377c22f117d1`.
 
 The operative 2026 AI Omnibus amendment was opened and recorded separately. Current eFTI consolidation, GDPR text and full EUR-Lex reuse verification remain blocked. No legal excerpts were imported. Mistral's licence declaration was opened but complete licence-term verification remains pending. Specific ISO characteristics remain UNVERIFIED.
 
@@ -17,7 +17,7 @@ The operative 2026 AI Omnibus amendment was opened and recorded separately. Curr
 - Review the eight-role case, planned fit criteria, source claims, prompt drafts and the dated appendix.
 - Complete read-only Mac preflight and select a verified local backend, quantization and artifact hashes. No hardware capability has been inferred from this environment.
 - Verify and freeze 12 eligible legal inputs alongside the 12 synthetic inputs, then provide human atomic annotations and exact evidence spans. Keep optional peer labels separate.
-- Finish independent retrieval selection, terminal adjudication ledger capture and analysis tooling. Freeze complete checksums and human review records in a new dated appendix before any outputs are collected.
+- Finish independent retrieval selection and the model-output collector; review the new ledger/scoring tooling and analysis decisions. Freeze complete checksums and human review records in a new dated appendix before any outputs are collected.
 - Expand the remaining architecture/pattern/graph work and write full 8 to 12 page reports with actual evidence. There are no research findings to report today.
 - Complete clean-clone macOS and Docker checks, final prose/design review and explicitly approved publication steps before the 21 October public-ready target. The 24 October application deadline remains the planning priority.
 

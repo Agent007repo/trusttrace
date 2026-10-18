@@ -1,0 +1,123 @@
+$ make test
+uv run ruff check .
+All checks passed!
+uv run ruff format --check .
+56 files already formatted
+uv run mypy src
+Success: no issues found in 9 source files
+uv run pytest --cov=trusttrace --cov-report=term-missing --cov-report=xml --junitxml=results/raw/software-checks/junit.xml
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0
+rootdir: /workspace/scratch/f4a08880f5c0/research-portfolio/trusttrace
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.15.1, platformdirs-4.13.0, cov-7.1.0
+collected 43 items
+
+tests/scenarios/test_boundaries.py .......................               [ 53%]
+tests/test_app.py .                                                      [ 55%]
+tests/test_b10.py ....                                                   [ 65%]
+tests/test_experiment_analysis.py ........                               [ 83%]
+tests/test_metamodel_links.py ..                                         [ 88%]
+tests/test_trace.py .....                                                [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /workspace/scratch/f4a08880f5c0/research-portfolio/trusttrace/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /workspace/scratch/f4a08880f5c0/research-portfolio/trusttrace/results/raw/software-checks/junit.xml -
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.14-final-0 _______________
+
+Name                                    Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------------
+src/trusttrace/__init__.py                  0      0      0      0   100%
+src/trusttrace/adjudication.py             19      0      8      0   100%
+src/trusttrace/b10.py                     127      3     56      7    95%   100->99, 113->115, 130, 132, 152, 165->167, 172->174
+src/trusttrace/experiment_analysis.py     139      9     60      6    90%   147, 156-159, 164, 195, 197, 199
+src/trusttrace/models.py                   85      0      0      0   100%
+src/trusttrace/runtime.py                  98      0     22      0   100%
+src/trusttrace/trace.py                    95      0     58      0   100%
+-----------------------------------------------------------------------------------
+TOTAL                                     563     12    204     13    96%
+Coverage XML written to file coverage.xml
+Required test coverage of 85.0% reached. Total coverage: 96.22%
+======================== 43 passed, 1 warning in 2.41s =========================
+uv run python scripts/integrity.py
+Integrity checks passed; this is not a substitute for gitleaks.
+
+$ make analyze
+uv run python scripts/analyze.py
+uv run python scripts/prepare_b10.py
+{
+  "status": "preparation-only",
+  "prerequisites_complete": false,
+  "collection_enabled": false,
+  "source_count": 12,
+  "planned_calls_if_complete": 720,
+  "errors": [
+    "Need exactly 12 synthetic and 12 verified legal inputs",
+    "Qwen/Qwen2.5-1.5B-Instruct: runtime_verified missing or unverified",
+    "mistralai/Mistral-7B-Instruct-v0.3: licence_verified missing or unverified",
+    "mistralai/Mistral-7B-Instruct-v0.3: runtime_verified missing or unverified",
+    "Human gold is missing",
+    "Primary human gold must cover exactly the complete source set",
+    "Human source/model/protocol review record missing",
+    "human_review_record: hashed record required",
+    "retrieval_corpus_path: hashed record required",
+    "retrieval_independence_review_record: hashed record required",
+    "runtime_manifest_path: hashed record required"
+  ]
+}
+uv run trusttrace trace
+{
+  "status": "engineering-verification-only",
+  "total_requirements": 40,
+  "must_denominator": 16,
+  "must_coverage": 1.0,
+  "errors": [],
+  "orphans": [],
+  "gate_pass": true
+}
+
+$ make docs
+uv run mkdocs build --strict
+
+[31m │  ⚠  Warning from the Material for MkDocs team[0m
+[31m │[0m
+[31m │[0m  MkDocs 2.0, the underlying framework of Material for MkDocs,
+[31m │[0m  will introduce backward-incompatible changes, including:
+[31m │[0m
+[31m │  × [0mAll plugins will stop working – the plugin system has been removed
+[31m │  × [0mAll theme overrides will break – the theming system has been rewritten
+[31m │  × [0mNo migration path exists – existing projects cannot be upgraded
+[31m │  × [0mClosed contribution model – community members can't report bugs
+[31m │  × [0mCurrently unlicensed – unsuitable for production use
+[31m │[0m
+[31m │[0m  Our full analysis:
+[31m │[0m
+[31m │[0m  [4mhttps://squidfunk.github.io/mkdocs-material/blog/2026/02/18/mkdocs-2.0/[0m
+[0m
+INFO    -  Cleaning site directory
+INFO    -  Building documentation to directory: /workspace/scratch/f4a08880f5c0/research-portfolio/trusttrace/site
+INFO    -  The following pages exist in the docs directory, but are not included in the "nav" configuration:
+  - RUNBOOK_annotation.md
+  - adr/adr-001.md
+  - adr/adr-002.md
+  - adr/adr-003.md
+  - adr/adr-004.md
+  - adr/adr-005.md
+  - application/README.md
+  - study-protocol/README.md
+INFO    -  Documentation built in 0.36 seconds
+
+$ git diff --exit-code -- results/derived
+
+$ git diff --check
+
+$ ../tools/gitleaks git --redact --no-banner --log-opts=--all
+2:40PM INF 11 commits scanned.
+2:40PM INF scanned ~479644 bytes (479.64 KB) in 287ms
+2:40PM INF no leaks found
