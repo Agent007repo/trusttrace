@@ -9,6 +9,7 @@ test:
 	uv run python scripts/integrity.py
 analyze:
 	uv run python scripts/analyze.py
+	uv run python scripts/prepare_b10.py
 	uv run trusttrace trace
 docs:
 	uv run mkdocs build --strict

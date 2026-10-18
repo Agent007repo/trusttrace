@@ -128,9 +128,9 @@
   {
     "id": "ai-act-overview",
     "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
-    "claim": "Commission page reports a 2026 AI Omnibus amendment and revised high-risk dates. Final operative legal text was not retrieved; we assert no case risk classification or binding deadline.",
+    "claim": "Commission overview cross-checked against opened Regulation (EU) 2026/1744; case classification remains unassessed.",
     "status": "verified_overview_only",
-    "checked_date": "2026-10-13",
+    "checked_date": "2026-10-14",
     "access": "browser_open",
     "rights": "link-and-original-paraphrase-only; no full-text redistributed"
   },
@@ -148,17 +148,17 @@
     "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng",
     "claim": "UNVERIFIED: browser retrieval returned a challenge page. No article-level claim or excerpt used.",
     "status": "blocked",
-    "checked_date": "2026-10-13",
+    "checked_date": "2026-10-14",
     "access": "blocked",
     "rights": "link-and-original-paraphrase-only; no full-text redistributed"
   },
   {
     "id": "efti-legal",
     "url": "https://eur-lex.europa.eu/eli/reg/2020/1056/oj/eng",
-    "claim": "UNVERIFIED: operative text was not retrieved. No excerpt used.",
-    "status": "blocked",
-    "checked_date": "2026-10-13",
-    "access": "blocked",
+    "claim": "Original OJ text opened; page lists consolidation 9 January 2025, whose text was blocked. No current article mapping or excerpt imported.",
+    "status": "original_text_only_current_blocked",
+    "checked_date": "2026-10-14",
+    "access": "browser_open_then_challenge",
     "rights": "link-and-original-paraphrase-only; no full-text redistributed"
   },
   {
@@ -166,7 +166,7 @@
     "url": "https://eur-lex.europa.eu/content/legal-notice/legal-notice.html",
     "claim": "UNVERIFIED: reuse terms were not retrieved. Do not import legal excerpts yet.",
     "status": "blocked",
-    "checked_date": "2026-10-13",
+    "checked_date": "2026-10-14",
     "access": "blocked",
     "rights": "link-and-original-paraphrase-only; no full-text redistributed"
   },
@@ -232,5 +232,41 @@
     "checked_date": "2026-10-13",
     "access": "browser_open",
     "rights": "linked; no copied slide or image"
+  },
+  {
+    "id": "ai-omnibus-operative",
+    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202601744",
+    "claim": "Article 1(40) amends Article 113(c) application dates; Article 4 specifies entry into force. No case risk classification or compliance claim.",
+    "status": "operative_text_verified",
+    "checked_date": "2026-10-14",
+    "access": "browser_open",
+    "rights": "link-and-original-paraphrase-only; no full-text redistributed"
+  },
+  {
+    "id": "qwen-b10-licence",
+    "url": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/blob/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/LICENSE",
+    "claim": "Pinned repository LICENSE is Apache-2.0; no weights or conversions redistributed.",
+    "status": "licence_text_verified",
+    "checked_date": "2026-10-14",
+    "access": "browser_open",
+    "rights": "link-and-original-paraphrase-only; no full-text redistributed"
+  },
+  {
+    "id": "mistral-b10-card",
+    "url": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3/blob/c170c708c41dac9275d15a8fff4eca08d52bab71/README.md",
+    "claim": "Pinned card declares Apache-2.0; separate licence terms verification remains pending.",
+    "status": "card_metadata_verified",
+    "checked_date": "2026-10-14",
+    "access": "browser_open",
+    "rights": "link-and-original-paraphrase-only; no full-text redistributed"
+  },
+  {
+    "id": "mistral-b10-revision",
+    "url": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3/commit/c170c708c41dac9275d15a8fff4eca08d52bab71",
+    "claim": "Full repository commit opened; local runtime remains unverified.",
+    "status": "revision_verified",
+    "checked_date": "2026-10-14",
+    "access": "browser_open",
+    "rights": "link-and-original-paraphrase-only; no full-text redistributed"
   }
 ]

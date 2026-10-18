@@ -56,6 +56,26 @@ def analyze(model: CaseModel, passed: dict[str, set[str]], root: Path) -> dict[s
         check(actor.id, actor.stakeholder_id, "stakeholders")
     for trustee in model.trustees:
         check(trustee.id, trustee.stakeholder_id, "stakeholders")
+    for condition in model.conditions:
+        for evidence_id in condition.required_evidence:
+            check(condition.id, evidence_id, "evidence")
+    for evidence in model.evidence:
+        p = (root / evidence.path).resolve()
+        if not p.is_relative_to(root.resolve()) or not p.is_file():
+            errors.append(f"{evidence.id}: missing or unsafe evidence path")
+    for risk in model.risks:
+        for stakeholder in risk.affected_stakeholders:
+            check(risk.id, stakeholder, "stakeholders")
+    for concern in model.concerns:
+        if concern.provenance == "document" and not concern.documentary_sources:
+            errors.append(f"{concern.id}: document provenance needs a source")
+        for source in concern.documentary_sources:
+            check(concern.id, source, "regulatory_sources")
+            if (
+                source in indexes["regulatory_sources"]
+                and indexes["regulatory_sources"][source].status != "verified"
+            ):
+                errors.append(f"{concern.id}: documentary source {source} is not verified")
     for scenario in model.scenarios:
         check(scenario.id, scenario.requirement, "requirements")
     for tactic in model.tactics:
@@ -82,7 +102,7 @@ def analyze(model: CaseModel, passed: dict[str, set[str]], root: Path) -> dict[s
             (req.condition, "conditions"),
         ]:
             check(req.id, target, group)
-        for group in ["decisions", "components", "tests", "conflicts"]:
+        for group in ["decisions", "components", "tests", "conflicts", "risks", "tactics"]:
             for target in getattr(req, group):
                 check(req.id, target, group)
         matching_scenarios = [s for s in model.scenarios if s.requirement == req.id]

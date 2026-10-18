@@ -3,6 +3,7 @@ from pathlib import Path
 
 import typer
 
+from trusttrace.b10 import ExecutionSpec, eligibility
 from trusttrace.models import CaseModel
 from trusttrace.trace import analyze, junit_passes, load_case, save_report
 
@@ -31,6 +32,23 @@ def trace(
     typer.echo(json.dumps({k: v for k, v in report.items() if k != "rows"}, indent=2))
     if not report["gate_pass"]:
         raise typer.Exit(1)
+
+
+@app.command()
+def prepare_b10(
+    config: Path = Path("configs/b10_execution.json"),
+    sources: Path = Path("data/synthetic_annotation_inputs.jsonl"),
+    gold: Path | None = None,
+    output: Path = Path("results/derived/b10_eligibility.json"),
+) -> None:
+    report = eligibility(
+        Path.cwd(), ExecutionSpec.model_validate_json(config.read_text()), sources, gold
+    )
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(report, indent=2) + "\n")
+    typer.echo(json.dumps(report, indent=2))
+    if not report["prerequisites_complete"]:
+        raise typer.Exit(2)
 
 
 @app.command()

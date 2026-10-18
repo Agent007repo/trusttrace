@@ -1,0 +1,46 @@
+{
+  "protocol_sha256": "83385462bec1bd8ee67c153683c77da8bc8ab6ed9129748fd811377c22f117d1",
+  "source_set_sha256": "bc03662fcb465abe76099a8df0b9f69723807b2be9f8e0a5c41848a78ecf5295",
+  "models": [
+    {
+      "id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "family": "qwen2",
+      "revision": "989aa7980e4cf806f80c7fef2b1adb7bc71aa306",
+      "licence_url": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/blob/989aa7980e4cf806f80c7fef2b1adb7bc71aa306/LICENSE",
+      "licence_verified": true,
+      "runtime_verified": false
+    },
+    {
+      "id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "family": "mistral",
+      "revision": "c170c708c41dac9275d15a8fff4eca08d52bab71",
+      "licence_url": "https://huggingface.co/mistralai/Mistral-7B-Instruct-v0.3/blob/c170c708c41dac9275d15a8fff4eca08d52bab71/README.md",
+      "licence_verified": false,
+      "runtime_verified": false
+    }
+  ],
+  "seeds": [
+    20261013,
+    20261014,
+    20261015,
+    20261016,
+    20261017
+  ],
+  "conditions": [
+    "naive",
+    "guided",
+    "guided-retrieval"
+  ],
+  "artifact_sha256": {
+    "configs/b10_decoding.json": "d8c52ddccf3ca5ed6062a746cbd821b51081bf1562533845469e0df64c7b3d31",
+    "configs/b10_prompts.json": "4d71295d308801b0fc0c626f8a8b7db39e10e35bcc841010311430fced18c7eb",
+    "data/b10_output.schema.json": "e76408fe8fbc3c5111d128eafb2b15d4e588f4854cc9cd315a119af3cf98a801",
+    "scripts/adjudicate.py": "6e809c206055d69d109df93798bef42be8f96f25588ae3071052cac651c5ec32",
+    "docs/protocols/2026-10-14-b10-execution-appendix.md": "986399115937ac5e1de9625cecadab6d6e20275a50da6c2d5d01d3821faef9bc",
+    "src/trusttrace/adjudication.py": "9b1b29b6c15791af2700651dfdb258e96c01f900dadfa0119282ec31d33996bb",
+    "scripts/annotate.py": "a6b05f66bc4f8f0a42bdbc59256c275d86284c0e1ae301b235f2b75e6fcbc3c2"
+  },
+  "annotation_sha256": null,
+  "human_review_record": null,
+  "collection_enabled": false
+}
