@@ -42,7 +42,7 @@ def tex_escape(s: str) -> str:
 
 
 def write(name: str, text: str) -> None:
-    (gen / name).write_text(text.strip() + "\n")
+    (gen / name).write_text(text.strip() + "%\n")
 
 
 # --- traceability numbers (RQ1) -------------------------------------------------
@@ -91,8 +91,6 @@ if {"gold", "runs", "cache"} & set(missing):
 \begin{table}[t]\centering\small\caption{B10 pilot results (pending).}\label{tab:b10}\begin{tabular}{l}\toprule Pending\\\bottomrule\end{tabular}\end{table}""",
     )
     write("abstract_results.tex", "Pilot results are pending in this build.")
-    write("b10_pertext.tex", "")
-    write("b10_errors.tex", "")
     raise SystemExit(0)
 
 gold_rows = [Annotation.model_validate_json(x) for x in paths["gold"].read_text().splitlines() if x]
@@ -120,6 +118,35 @@ with (derived / "b10_pilot_rows.jsonl").open("w") as fh:
     for row in rows:
         fh.write(json.dumps(row) + "\n")
 summary = summarize(rows)
+
+# Backend robustness check promised in DEVIATIONS.md: archived cloud Mistral runs vs Mac reruns.
+archive_path = root / "results/b10-pilot/archive/cloud_mistral_partial.jsonl"
+if archive_path.is_file():
+    archived = [
+        ExtractionRun.model_validate_json(x) for x in archive_path.read_text().splitlines() if x
+    ]
+    by_id = {r["run_id"]: r for r in rows}
+    run_by_id_all = {r.run_id: r for r in runs}
+    differ = scorable = f1_changed = 0
+    for ar in archived:
+        mac_run = run_by_id_all.get(ar.run_id)
+        if mac_run is None:
+            continue
+        differ += ar.raw_response != mac_run.raw_response
+        try:
+            arow = match_run(ar, gold[ar.source_id], cosine, weights, threshold)
+        except KeyError:
+            continue  # a statement pair absent from the cosine cache
+        scorable += 1
+        f_a, f_m = arow["f1"], by_id[ar.run_id]["f1"]
+        same = (math.isnan(f_a) and math.isnan(f_m)) or abs(f_a - f_m) < 1e-9
+        f1_changed += not same
+    summary["backend_check"] = {
+        "archived_cloud_runs": len(archived),
+        "raw_output_differs_from_mac_rerun": differ,
+        "scorable_from_cache": scorable,
+        "run_f1_changed": f1_changed,
+    }
 
 # Blinded audit packet: the human sees text, the two requirements, nothing else.
 sample = audit_sample(rows, int(cfg["matching"]["human_audit"]["sample_size"]), 20261013)
@@ -151,6 +178,18 @@ if len(stamps) > 1:
 summary["labelling_span_minutes"] = labelling_minutes
 summary["gold_requirements"] = sum(len(g.requirements) for g in gold_rows)
 
+
+def wilson(k: int, n: int, z: float = 1.959964) -> list[float] | None:
+    """95% Wilson score interval for k successes out of n."""
+    if n == 0:
+        return None
+    p = k / n
+    den = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / den
+    half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / den
+    return [max(0.0, centre - half), min(1.0, centre + half)]
+
+
 agreement = None
 if paths["audit"].is_file():
     human = {
@@ -169,6 +208,18 @@ if paths["audit"].is_file():
     agreement["missed_matches_among_rejected"] = sum(
         human[s["audit_id"]] for s in sample if not s["algorithm_match"]
     ) / max(1, sum(not s["algorithm_match"] for s in sample))
+    n_acc = sum(bool(s["algorithm_match"]) for s in sample)
+    n_rej = len(sample) - n_acc
+    agreement["matcher_precision_on_accepted_wilson95"] = wilson(
+        sum(human[s["audit_id"]] for s in sample if s["algorithm_match"]), n_acc
+    )
+    agreement["missed_matches_among_rejected_wilson95"] = wilson(
+        sum(human[s["audit_id"]] for s in sample if not s["algorithm_match"]), n_rej
+    )
+    agreement["note"] = (
+        "Stratified 15 accepted / 15 near-miss sample; agreement figures describe this sample "
+        "and do not estimate matcher accuracy over all pairs."
+    )
 summary["audit"] = agreement
 summary["status"] = "complete" if agreement else "awaiting-audit"
 reliable = bool(agreement and agreement["cohen_kappa"] >= 0.6)
@@ -193,8 +244,8 @@ def f(x: float | None, d: int = 2) -> str:
 lines = [
     r"\begin{table}[t]\centering\small",
     r"\caption{B10 pilot by model and condition (10 texts, 3 seeds each). F1 is requirement-level, averaged within text then across texts.}\label{tab:b10}",
-    r"\begin{tabular}{@{}llrrrrr@{}}\toprule",
-    r"Model & Arm & Valid & Macro F1 & Prec. & Rec. & Exact ev.\\\midrule",
+    r"\resizebox{\columnwidth}{!}{\begin{tabular}{@{}llrrrrr@{}}\toprule",
+    r"Model & Arm & Schema-valid & Macro F1 & Prec. & Rec. & Exact ev.\\\midrule",
 ]
 for model, m in summary["models"].items():
     for arm in ("naive", "guided"):
@@ -203,32 +254,53 @@ for model, m in summary["models"].items():
             f"{short.get(model, model)} & {arm} & {f(a['valid_json_rate'])} & {f(a['macro_f1'])} & "
             f"{f(a['mean_precision'])} & {f(a['mean_recall'])} & {f(a['evidence_exact_rate'])}\\\\"
         )
-lines += [r"\bottomrule\end{tabular}\end{table}"]
+lines += [r"\bottomrule\end{tabular}}\end{table}"]
 contrast_txt = []
 for model, m in summary["models"].items():
     c = m["guided_minus_naive"]
     contrast_txt.append(
         f"{short.get(model, model)}: {c['mean_difference']:+.3f} [{c['ci_lower']:+.3f}, {c['ci_upper']:+.3f}], "
-        f"guided better on {c['texts_guided_better']} of {c['paired_texts']} texts"
+        f"guided better on {c['texts_guided_better']}, naive better on {c['texts_naive_better']}, "
+        f"tied on {c['paired_texts'] - c['texts_guided_better'] - c['texts_naive_better']} of {c['paired_texts']} texts"
     )
 lat = {
     short.get(model, model): f"{m['arms']['guided']['latency_median_s']:.0f}"
     for model, m in summary["models"].items()
 }
 if agreement:
+    pa, ma = (
+        agreement["matcher_precision_on_accepted_wilson95"],
+        agreement["missed_matches_among_rejected_wilson95"],
+    )
     agree_txt = (
         f"On the 30 audited pairs the matcher agreed with the author's blinded judgement on "
         f"{agreement['percent_agreement'] * 100:.0f}\\% of items (Cohen's $\\kappa={agreement['cohen_kappa']:.2f}$). "
-        f"{agreement['matcher_precision_on_accepted'] * 100:.0f}\\% of the pairs it accepted were judged the same obligation, "
-        f"and {agreement['missed_matches_among_rejected'] * 100:.0f}\\% of the near-misses it rejected were judged the same obligation. "
+        f"{agreement['matcher_precision_on_accepted'] * 100:.0f}\\% of the pairs it accepted were judged the same obligation "
+        f"(95\\% Wilson interval {pa[0] * 100:.0f} to {pa[1] * 100:.0f}\\%), "
+        f"and {agreement['missed_matches_among_rejected'] * 100:.0f}\\% of the near-misses it rejected were judged the same obligation "
+        f"({ma[0] * 100:.0f} to {ma[1] * 100:.0f}\\%). Because the sample was stratified 15/15, these figures describe the audited pairs, not matcher accuracy over all pairs. "
         + (
-            "By the pre-registered rule ($\\kappa\\geq0.6$), F1 values are treated as reliable for this pilot."
+            "By the rule fixed before collection ($\\kappa\\geq0.6$), F1 values are treated as reliable for this pilot."
             if reliable
-            else "By the pre-registered rule ($\\kappa<0.6$), F1 values are treated as unreliable and we make no directional statement about guidance."
+            else "By the rule fixed before collection ($\\kappa<0.6$), F1 values are treated as unreliable and we make no directional statement about guidance."
         )
     )
 else:
-    agree_txt = "The blinded matcher audit is pending in this build, so F1 values are provisional."
+    agree_txt = "The blinded matcher audit is pending in this build, so all F1 values above are provisional."
+ev = {
+    short.get(mo, mo): (
+        m["arms"]["naive"]["evidence_exact_rate"],
+        m["arms"]["guided"]["evidence_exact_rate"],
+    )
+    for mo, m in summary["models"].items()
+}
+ev_txt = (
+    "The guided prompt lowered the share of predictions whose evidence span was copied exactly from the source ("
+    + "; ".join(f"{k} {a:.2f} naive vs {b:.2f} guided" for k, (a, b) in ev.items())
+    + "), so any recall gain came with weaker grounding. "
+    if all(b < a for a, b in ev.values())
+    else ""
+)
 body = (
     r"\textbf{Results.} "
     + f"The author labelled {summary['gold_requirements']} atomic obligations across the ten texts"
@@ -241,6 +313,7 @@ body = (
     + "The guided minus naive difference in macro F1, with 95\\% bootstrap intervals over texts, was "
     + "; ".join(contrast_txt)
     + ". "
+    + ev_txt
     + agree_txt
     + " Median generation time for the guided arm was "
     + ", ".join(f"{k} {v}\\,s ({BACKEND.get(k, 'unknown backend')})" for k, v in lat.items())
@@ -256,15 +329,44 @@ write(
         for mo, m in best.items()
     )
     + (
-        f", and the automatic matcher agreed with blinded human judgement at $\\kappa={agreement['cohen_kappa']:.2f}$."
+        f", and the automatic matcher agreed with blinded human judgement at $\\kappa={agreement['cohen_kappa']:.2f}$"
+        + (
+            "."
+            if reliable
+            else ", below the pre-registered 0.6, so these F1 values are not treated as reliable."
+        )
         if agreement
-        else "."
+        else " (provisional: the blinded matcher audit is pending)."
     ),
+)
+write(
+    "audit_method.tex",
+    "The author judged 30 pairs (15 the rule accepted, 15 near-misses it rejected), blinded to model, condition and the rule's decision."
+    if agreement
+    else "The author judges 30 pairs (15 the rule accepted, 15 near-misses it rejected), blinded to model, condition and the rule's decision; this audit is pending in this build.",
+)
+bc = summary.get("backend_check")
+write(
+    "backend_check.tex",
+    (
+        f"Comparing the {bc['archived_cloud_runs']} archived cloud Mistral runs with their Mac reruns, "
+        f"{bc['raw_output_differs_from_mac_rerun']} produced different raw output; of the {bc['scorable_from_cache']} "
+        f"that could be scored from the cached similarities, {bc['run_f1_changed']} changed run-level F1, "
+        "so backend is a source of variance, not a neutral detail."
+    )
+    if bc
+    else "",
+)
+write(
+    "audit_ai.tex",
+    "the gold labels and the blinded matcher audit"
+    if agreement
+    else "the gold labels (the blinded matcher audit is pending)",
 )
 # --- README and docs/results.md block --------------------------------------------
 md = [
     "<!-- results:start (generated by scripts/b10_pilot_analyze.py; do not edit by hand) -->",
-    "| Model (backend) | Arm | Valid JSON | Macro F1 | Precision | Recall | Exact evidence |",
+    "| Model (backend) | Arm | Schema-valid | Macro F1 | Precision | Recall | Exact evidence |",
     "| :--- | :--- | ---: | ---: | ---: | ---: | ---: |",
 ]
 for model, m in summary["models"].items():
@@ -289,9 +391,9 @@ if agreement:
         f"**Matcher audit.** On 30 blinded pairs the automatic matcher agreed with the author on "
         f"{agreement['percent_agreement'] * 100:.0f}% of items (Cohen's kappa {agreement['cohen_kappa']:.2f}). "
         + (
-            "By the pre-registered rule (kappa at least 0.6) the F1 values are treated as reliable for this pilot."
+            "By the rule fixed before collection (kappa at least 0.6) the F1 values are treated as reliable for this pilot."
             if reliable
-            else "By the pre-registered rule (kappa below 0.6) the F1 values are unreliable, and no directional claim about guidance is made."
+            else "By the rule fixed before collection (kappa below 0.6) the F1 values are unreliable, and no directional claim about guidance is made."
         )
     )
 else:

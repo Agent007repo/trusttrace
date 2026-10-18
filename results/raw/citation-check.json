@@ -1,5 +1,47 @@
 [
  {
+  "reference": "gotel1994",
+  "id": "10.1109/ICRE.1994.292398",
+  "registered_title": "An analysis of the requirements traceability problem",
+  "status": "pass"
+ },
+ {
+  "reference": "cleland2014",
+  "id": "10.1145/2593882.2593891",
+  "registered_title": "Software traceability: trends and future directions",
+  "status": "pass"
+ },
+ {
+  "reference": "breaux2008",
+  "id": "10.1109/TSE.2007.70746",
+  "registered_title": "Analyzing Regulatory Rules for Privacy and Security Requirements",
+  "status": "pass"
+ },
+ {
+  "reference": "sleimi2018",
+  "id": "10.1109/RE.2018.00022",
+  "registered_title": "Automated Extraction of Semantic Legal Metadata using Natural Language Processing",
+  "status": "pass"
+ },
+ {
+  "reference": "hawkins2021",
+  "id": "2102.01564",
+  "registered_title": "Guidance on the Assurance of Machine Learning in Autonomous Systems (AMLAS)",
+  "status": "pass"
+ },
+ {
+  "reference": "zhang2020",
+  "id": "1904.09675",
+  "registered_title": "BERTScore: Evaluating Text Generation with BERT",
+  "status": "pass"
+ },
+ {
+  "reference": "lu2023ra",
+  "id": "2311.13148",
+  "registered_title": "Towards Responsible Generative AI: A Reference Architecture for Designing Foundation Model based Agents",
+  "status": "pass"
+ },
+ {
   "reference": "mayer1995",
   "id": "10.2307/258792",
   "registered_title": "An Integrative Model of Organizational Trust",
@@ -56,7 +98,7 @@
   "reference": "lu2024",
   "id": "10.1145/3626234",
   "registered_title": "Responsible AI Pattern Catalogue: A Collection of Best Practices for AI Governance and Engineering",
-  "status": "FAIL"
+  "status": "pass"
  },
  {
   "reference": "ronanki2023",
@@ -173,7 +215,7 @@
  },
  {
   "reference": "omnibus2026",
-  "id": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=OJ:L_202601744",
+  "id": "https://eur-lex.europa.eu/eli/reg/2026/1744/oj",
   "status": "url-only"
  },
  {

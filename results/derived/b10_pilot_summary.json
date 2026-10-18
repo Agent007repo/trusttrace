@@ -121,6 +121,12 @@
       }
     }
   },
+  "backend_check": {
+    "archived_cloud_runs": 20,
+    "raw_output_differs_from_mac_rerun": 18,
+    "scorable_from_cache": 16,
+    "run_f1_changed": 1
+  },
   "labelling_span_minutes": 3.1,
   "gold_requirements": 17,
   "audit": null,
