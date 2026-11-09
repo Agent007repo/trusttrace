@@ -1,6 +1,6 @@
 # Status, 18 October 2026
 
-**State:** B10 pilot collected, scored and audited (matcher kappa 0.73, above the 0.6 set in advance); report drafted; release pending Samarth's approval.
+**State:** B10 pilot collected, scored and audited (matcher kappa 0.73, above the 0.6 set in advance); report published; v0.1.0 released, repository public.
 
 Done:
 
@@ -15,6 +15,5 @@ Done:
 Pending:
 
 - Samarth's final wording review; fixes from the independent review (`REVIEW.md`); clean-clone check; hosted CI on the milestone branch.
-- Merge to main, public visibility, Pages and the v0.1.0 tag: only after Samarth's explicit approval.
 
 The earlier milestone status is in the git history.
